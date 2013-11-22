@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains MySQL statements for WebMail -->
+
+<!DOCTYPE BUNDLE SYSTEM "resource.dtd">
+
+<BUNDLE default="en">
+
+  <!-- Section common to all locales -->
+  <COMMON>
+    <RESOURCE name="stmt_get_countuser">2
+      SELECT COUNT(*) FROM users
+      WHERE login=? AND domain=?
+    </RESOURCE>
+    <RESOURCE name="stmt_get_loginuser">
+      SELECT password FROM users
+      WHERE login=? AND domain=?
+    </RESOURCE>
+    <RESOURCE name="stmt_get_userid">
+      SELECT users.id AS id
+      FROM users, virtual_domains
+      WHERE login=?
+            AND users.domain=virtual_domains.id
+            AND virtual_domains.domain=?
+    </RESOURCE>
+    <RESOURCE name="stmt_get_userdata">
+      SELECT login,password,full_name,email,signature,first_login,
+             last_login,count_login,sent_folder,locale,msg_per_page,
+             flag_savesent, flag_setflags, flag_showfancy, flag_showimages,
+             userdata.id AS id, virtual_domains.domain AS domain
+      FROM users,userdata,users2userdata, virtual_domains
+      WHERE users.id=users2userdata.r_user
+             AND users2userdata.r_data=userdata.id
+             AND virtual_domains.id=users.domain
+             AND users.login=?
+             AND users.domain=?
+    </RESOURCE>
+    <RESOURCE name="stmt_get_mailhosts">
+      SELECT host,mailhosts.login AS login,mailhosts.password AS password
+      FROM mailhosts,users,users2mailhosts
+      WHERE users.id=users2mailhosts.r_user
+             AND mailhosts.id=user2mailhosts.r_host
+             AND users.login=?
+             AND users.domain=?
+    </RESOURCE>
+    <RESOURCE name="stmt_get_userlist">
+      SELECT login, virtual_domains.domain AS domain
+      FROM users,virtual_domains
+      WHERE virtual_domains.id=users.domain
+             OR users.domain IS NULL
+    </RESOURCE>
+    <RESOURCE name="stmt_add_loginuser">
+      INSERT INTO users VALUES ('',?,?,?)
+    </RESOURCE>
+    <RESOURCE name="stmt_set_loginuser">
+      UPDATE users SET ?=? WHERE login=? AND domain=?
+    </RESOURCE>
+    <RESOURCE name="stmt_set_userdata">
+      UPDATE userdata SET ?=? WHERE userdata.id=?
+    </RESOURCE>
+    <RESOURCE name="stmt_add_userdata">
+      INSERT INTO userdata VALUES ('',?,?,?,?,?,?,?,?,?,?,?,?,?)
+    </RESOURCE>
+    <RESOURCE name="stmt_add_user2data">
+      INSERT INTO users2userdata VALUES ('',?,?)
+    </RESOURCE>
+    <RESOURCE name="stmt_add_mailhost">
+      INSERT INTO mailhosts VALUES('',?,?,?,?)
+    </RESOURCE>
+    <RESOURCE name="stmt_del_mailhost">
+      DELETE FROM mailhosts WHERE id=?
+    </RESOURCE>
+    <RESOURCE name="stmt_set_mailhost">
+      UPDATE mailhosts SET host=?, login=?, password=?, name=? WHERE name=?
+    </RESOURCE>
+    <RESOURCE name="stmt_get_mailhost">
+      SELECT mailhosts.id AS id,
+             mailhosts.host AS host,
+             mailhosts.login AS login,
+             mailhosts.password AS password,
+             mailhosts.name AS name
+      FROM mailhosts,users2mailhosts,users
+      WHERE mailhosts.id=users2mailhosts.r_host
+             AND users2mailhosts.r_user=users.id
+             AND users.login=?
+    </RESOURCE>
+    <RESOURCE name="stmt_get_mailhost_byname">
+      SELECT mailhosts.id AS id,
+             mailhosts.host AS host,
+             mailhosts.login AS login,
+             mailhosts.password AS password,
+             mailhosts.name AS name
+      FROM mailhosts,users2mailhosts,users
+      WHERE mailhosts.id=users2mailhosts.r_host
+             AND users2mailhosts.r_user=users.id
+             AND users.login=?
+             AND mailhosts.name=?
+    </RESOURCE>
+    <RESOURCE name="stmt_add_users2mh">
+      INSERT INTO users2mailhosts VALUES ('',?,?)
+    </RESOURCE>
+    <RESOURCE name="stmt_del_users2mh_byuser">
+      DELETE FROM users2mailhosts WHERE r_user=?
+    </RESOURCE>
+    <RESOURCE name="stmt_del_users2mh_byhost">
+      DELETE FROM users2mailhosts WHERE r_host=?
+    </RESOURCE>
+    <RESOURCE name="stmt_set_lastlogin">
+      UPDATE userdata
+      SET last_login=NOW(), count_login=count_login+1
+      WHERE id=?
+    </RESOURCE>
+    <RESOURCE name="stmt_exists_vdom">
+      SELECT COUNT(*) FROM virtual_domains WHERE domain=?
+    </RESOURCE>
+    <RESOURCE name="stmt_count_vdom">
+      SELECT COUNT(*) FROM virtual_domains
+    </RESOURCE>
+    <RESOURCE name="stmt_get_vdom">
+      SELECT domain, default_server, auth_server, host_restriction, allowed_hosts, id
+      FROM virtual_domains WHERE domain=?
+    </RESOURCE>
+    <RESOURCE name="stmt_add_vdom">
+      INSERT INTO virtual_domains VALUES ('',?,?,?,?,?)
+    </RESOURCE>
+    <RESOURCE name="stmt_del_vdom">
+      DELETE FROM virtual_domains WHERE domain=?
+    </RESOURCE>
+    <RESOURCE name="stmt_list_vdoms">
+      SELECT domain FROM virtual_domains
+    </RESOURCE>
+  </COMMON>
+</BUNDLE>

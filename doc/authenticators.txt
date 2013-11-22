@@ -1,0 +1,77 @@
+$Id: authenticators.txt 140 2008-10-31 21:49:50Z unsaved $
+
+WebMail Authentication System
+==============================
+
+The WebMail authentication system uses plugin authenticators.  Any new
+authenticator can be placed in the webmail/lib/authenticators, and it will
+then appear as an authentication option in the Administrator's main setup
+screen.
+
+WebMail supports (since version 0.7.3) normal login and password
+authenticaton as well as challenge/response authentication.  Presently the
+types of authentication used are:
+
+Normal Authenticators:
+Simple -- Authenticate using a hashed password stored in the user's config file
+Unix -- Authenticate using the Unix password "database" (/etc/passwd)
+IMAP -- Authenticate using an IMAP server
+POP -- Authenticate using a POP server
+
+Challenge/Response Authenticators:
+OTP -- Authenticate using an  RFC1938 (S/Key like) One Time Pass.
+
+The only other added twist in authentication is the use of
+org.webengruven.webmail.auth.AuthDisplayMngr, this class provides
+information about which templates should be used, and any special variables
+that may need to be set.
+
+
+Creating an normal authentication plugin
+========================================
+Each authenticator must be dervied from net.wastl.webmail.server.Authenticator.
+The functions which MUST be defined are:
+
+void init(Storage) -- This basically acts as the constructor.
+void register(ConfigScheme) -- This will register the authenticator with
+    the system.
+
+There are two functions that can be used for authentication.  The only
+difference what data is available when they get called.  So only one of
+them needs to be over-ridden.
+
+authenticatePreUserData(String login, String passwd, String domain)
+authenticatePostUserData(UserData ud, String passwd, String domain)
+
+Additionally there are three other functions which may be of interest:
+
+boolean canChangePassword()
+void changePassword(UserData ud, String passwd, String verify)
+AuthDisplayMngr getAuthDisplayMngr()
+
+Note that canChangePassword() defaults to true, but changePassword() is
+empty.
+
+Also note that getAuthDisplayMngr() returns a resonable default, which will
+display the standard screens used for the normal authenticators.
+
+
+Creating a challenge/response authenticator
+===========================================
+Each challenge/resoponse authenticator must be derived from
+org.webengruven.webmail.auth.CRAuthenticator.  Beyond that they are almost
+the same as normal authenticators.  There is one additional function which
+MUST be defined:
+
+String getChallenge(UserData ud) -- Get a challenge for the user specified
+                                    in ud, and return it as a string.
+
+getChallenge() is used to display a challenge, which the user can then
+respond to.
+
+The only other thing worth noting is that the getAuthDisplayMngr() returns
+an instance of org.webengruven.webmail.auth.CRAuthDisplayMngr, which
+changes the layout of the login screen so that there is no password prompt,
+and sends the user to "/challenge" before authenticating them.  Any
+challenge/response authenticator that needs a custom AuthDisplayMngr should
+probably derive it from CRAuthDisplayMngr.

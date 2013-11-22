@@ -1,0 +1,133 @@
+$Id: INSTALL.txt 140 2008-10-31 21:49:50Z unsaved $
+
+Installation instructions for JWebMail
+======================================
+
+
+I. Requirements
+===============
+
+For running JWebMail you need the following software:
+
+- A mailserver for sending (SMTP) and receiving (IMAP) mails; by default,
+  JWebMail will use "localhost" for both
+- A Java servlet container which supports the 2.4 servlet spec. and
+  runs on a Java 1.5 or greater
+  JVM (either JRE or JDK).  Anything from a stripped down servlet-container
+  like Tomcat, to a J2EE application server like JBoss or
+  WebSphere will work.
+- Your servlet container needs modern versions of the following libraries
+  installed:
+      JavaMail API (typically mailapi-*.jar)
+      JavaMail SMTP provider (typically smtp-*.jar)
+      JAF/Java Activation Framework (not necessary if your servlet container
+               runs Java 1.6, since Java 1.6 includes the activation
+               framework).
+
+If you wish to build a custom app, or develop, you will also need a
+standalone Java JDK 1.5 or later, and Ant 1.7 or later, as described below.
+Any or no Java IDE will work.
+
+
+II. Installation
+================
+
+There are two approaches to installing JWebMail >= 0.7.7, both require a
+servlet container as described above.
+
+1. Installation of a pre-compiled WAR-file (Webapp Archive)
+2. Build and install from source
+
+The first installation method is almost always the preferred choice. Building
+from source may be relevant to you if you need to do modifications to the
+source.
+
+1. Installation of a pre-built WAR-file
+---------------------------------------
+
+This installation method is very simple:
+
+Install "jwebmail.war" as you would install any War file.
+
+With Tomcat, the easiest way is to use the Manager webapp, which serves
+http://localhost:8080/manager/html by default.  Log in and deploy the
+war using the Gui (you can see or add manager accounts in the file
+$CATALINA_BASE/config/tomcat-users.xml).
+
+For every application server that I know of, if you have auto-deploy on
+(usually the default mode) you can become the app-server "owner" (the
+account under which the server process(es) run), and just copy the war
+file into the webapp landing directory.  If you don't have access to that
+account, see your app server docs, because the war file permission
+requirements vary (if you have superuser privileges, you can always
+change the file to be owned by the app-server owner).  Rest assured,
+your app server has several easy ways to deploy war files.
+
+JWebMail is then available by visiting http://yourhost:PORT/jwebmail
+with a web browser.
+
+Please don't forget to visit the administration interface first. You can access
+it by browsing http://yourhost:PORT/jwebmail/WebMail/admin.  Initial password
+is "Secret".
+
+See the document "jwebmail-guide.html" in your distribution.
+
+
+2. Build and install from source
+--------------------------------
+
+JWebMail is compiled by using the Ant build-system.  You will need Ant
+version 1.7 or greater and Java JDK 1.5 or greater to build JWebMail.
+
+You can obtain the JWebMail source code by extracing a source code
+distribution package, or by exporting or checking out our code from
+SourceForge.  You can get our distro packages at 
+https://sourceforge.net/project/showfiles.php?group_id=2056 .
+You can use any Subversion client to get our trunk code from
+https://jwebmail.svn.sourceforge.net/svnroot/jwebmail/trunk .
+
+The following steps are required (for a quick-start):
+1. Set your JAVA_HOME environment variable (to the directory where the JDK is
+   installed)
+2. Make sure that the "bin" directory of your Ant installation is in your
+   search path.  Run "ant -v" to verify.
+3. You will need Internet access the first time you run the build, so that
+   the build process can download the needed third party libraries
+   (automatically).
+4. Just run 'ant' to build a war file in subdirectory "dist".
+   If you don't have an Ivy jar file in your CLASSPATH, the Ant command
+   above will display the simple command that you can copy-and-paste to your
+   command line to satisfy it.
+   An error message like '...doesn't support the nested "matches" element...'
+   means you need to upgrade Ant to 1.7 or later.
+5. Deploy the file at dist/jwebmail.jar to your servlet container, as
+   explained in the previous section.
+   Alternatively, you set Ant property 'exploded.dir'
+   and deploy the exploded webapp to a live deployment directory.
+   Since you are building software, we figure you
+   are handy enough to figure this out without further instruction from us.
+6. Run "ant javadoc gen-guide" to build the API spec docs and
+   jwebmail-guide.html file referred to in the previous section.
+   (They get written to the build/apidocs and doc subdirectories respectively).
+
+IDE developers need to see the JWebMail User's Guide (this document explains
+where to get it).
+
+Run "ant -p" for further possible targets that may be used.
+To customize any Ant properties, create a standard Java properties file in
+this directory with name "local.properties".
+
+The "gen-guide" task requires the program "xsltproc".
+You have a few alternatives to access a User's Guide if you don't have xsltproc.
+  + Read it online at http://jwebmail.sourceforge.net/jwebmail-guide.html .
+    Just be aware that it's not guaranteed to match the version of JWebMail
+    that you are working with.
+  + Use your own XSLT processor program to generate jwebmail-guide.html file
+    from the guide.* artifacts in the doc-src directory.
+  + Download the desired version of the binary distribution of
+    JWebMail.  These include a pre-build User's Guide.
+
+The build system uses Apache Ivy to fetch third party libraries.  The
+configuration allows you to change the library repository location by
+editing local.properties and ivy-settings.xml.  See
+http://ant.apache.org/ivy/ for details about Apache Ivy.

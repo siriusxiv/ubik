@@ -1,0 +1,313 @@
+# $Id: changes.txt 140 2008-10-31 21:49:50Z unsaved $
+# changed/fixed, + added, - removed
+
+Release tag 1.0.1rc1 = rev. 140
+
+v1.0.1rc1 rev. 136
+# Satisfied all serious compilation warnings.
++ Eclipse integration
+# Many labelling updates, WebMail -> JWebMail
+# Automated product release packaging, incl. verify build Java 1.5-compat
+  binaries.
+# Tested and verified that our app no longer writes under the deployment
+  context root (unless user configures it to do so against our
+  recommendation).
+# Applied workaround to browser-password-caching problem with Classic theme
+  (did same with Bibop theme several revs back).
+
+v1.0.1e rev. 105
+# Removed tons of printStackTrace commands.  I think all stdout/stderr
+  usage is finally gone.
+  Fixed folder removal but.
+  Improved error-handling and diagnostics for XPath problems.
+  Generally adjusted error messages so useful messages make it to logs and
+   user where possible, short warnings given where a work-around is invoked,
+   and details logged in the few cases where the problem needs more work.
+# All Java classes now have proper classes.
+# Separate directory branches for source with different build needs.
++ Added nice logging method for dumping given problematic XML doc to log file.
+# Major fixes for mbox IMAP server support.
+# Significant performance improvement by counting messages in a folder only
+   when necessary.
+
+v1.0.1b rev. 67
+# Fixed terrible bug where Webapp should not be stopped without hanging
+  the servlet container.  Removed all System.exit()s from code which
+  can be run by Servlet Container.
+# Added thread tracking and logging infrastructure.
+
+v1.0.1b rev. 54
+# Docs much better.  User's Guide renamed from README.html to
+  jwebmail-guide.html.
+# Much more cleanup of code formatting, comments, whitespace.
+# Updated many license references.
+# Completely refactored logging.
+# The XML Data Store is now store entirely outside of application, by
+  default and automatically.
+# Completely refactored third-party library usage.
+# Updated to newest version of every 3rd-party library we're using.
+
+v1.0.1a rev. 29
+# Now (at very least) builds with Sun JDK 1.4/1.5/1.6, and runs on
+  Tomcat with JDK 1.6.
+# Updated code for modern Java SDK's by fixing naming conflicts.
+# Fixed minor build classpath issues.
+# Updated the more glaring documentation inaccuracies.
+# Standardized on file naming (incremental progress)
+# Refer to the product (nearly) consistently as JWebMail (not "WebMail").
+# XSLT bug fix
+# XPath bug fix
+- Removed Docuverse/domsdk usage, since it is obsolete and no longer available.
+
+v0.7.10 => v0.7.11
+# Change XML manipulation to XPath APIs
+# Upgraded Xalan to version 2.4.1
+# net/wastl/webmail/server/Storage.java added IOException/SAXException handling
+# net/wastl/webmail/xml/XMLAdminModel.java added IOException/SAXException handling
+# net/wastl/webmail/server/URLHandler.java broke net.wastl.webmail.ui.* into two pieces to make J2SDK 1.4.1 happy
+# Fixed sysdata.dtd, DOMAIN and GROUP can co-exist
+# net/wastl/webmail/xml/XMLData.java missed initialise xpath_api when it was created with a document
+# add Xalan namespace to all xsl files, as well as content-handler to output
+# net/wastl/webmail/xml/XMLUserData.java ensureElement missed default BOOLVAR value (needed for 'break lines')
+# Display multiple 'from' fields in every language
+# Do not append domain to user name in mail address and signature if it's already contains it
+# Fix for exception when changed the default email address
++ Added hungarian translation of resources.xml
+# Better handling for unknown encodings in incoming mails (don't stop processing, and fall back on the undecoded strings)
+# Fix for national accents in incoming/sent mail attachements
+
+v0.7.9 => v0.7.10
+# bugfix: usersetup of classic theme did not display properly in some
+  configurations
+# bugfix: adding attachments threw an exception if the name could not be parsed
+# bugfix: attachments got corrupted. Changed file upload to use O'Reilly's servlet
+  helper package (COS).
++ added Hungarian translation (Deim 'ago' Agoston)
+
+v0.7.8 => v0.7.9
+# Moved from Xerces 1/Xalan 1 to JAXP and Trax (i.e. Xerces 2 or equivalent
+  parser, Xalan 2 or equivalent transformer) (mostly by Leonard Sitongia)
+# Moved from servlet API 2.2 to 2.3 (requires Tomcat 4.1)
+# Moved from JTidy to nekoHTML for parsing HTML messages
+# Updated jaf and javamail libraries
+- removed gnu.regexp package
+# now requires JDK 1.4 (regexp support)
+# bugfix: Sending messages works again for non-English locales
+# bugfix: HTML messages are displayed again
+# bugfix: better support for MS Windows (Christian Senet)
+# bugfix: compose message now 80 columns instead 40
+# French translation (Christian Senet)
+- removed the Shockwave banner from bibop template
+
+v0.7.7 => v0.7.7.1
+# Modified to support Catalina, with new target install-catalina
+# The build script can use the system wide TOMCAT_HOME or CATALINA_HOME
+
+v0.7.6 => v0.7.7
++ Added support for zh_TW locale (thanks to Steve E. Lee)
+# Fixed some problems with UTF-8 message encoding (Steve E. Lee)
+# Switched to Ant build instead of Unix makefile (Nathan Chandler)
+# Switched to Servlet API 2.2 with WebApp structure (Nathan Chandler, me)
+# Binary installation now through WAR-file (Webapp ARchive)
+# Bugfixes (me)
+
+v0.7.5 => v0.7.6
+# Fixed a problem with "@" in the user's name
+# Improved Makefile; Should at some point switch to "Ant";
++ Added/improved authentication and challenge/response authentication patches from
+  Devin Kowatch (devink@webengruven.org)
++ Improved Servlet support; WebMail now runs with the Servlet API 2.2 and Tomcat
+  web.xml file provided
++ Added HTML parser that parses HTML attachments and marks malicious code (e.g.
+  JavaScript, IMG tags, etc). Users will be presented a warning message together
+  with the code of the tag.
+
+v0.7.4 => v0.7.5
++ Added generic installation script for JServ servlet installation (bin/install.sh)
++ Added bibop templates
++ Added theme support
++ WebMail advertisments can now be turned off and/or adminstrator-configured
+  (i.e. you can turn off that users have "WebMail 0.x HTML<->Mail ..." in their
+  signatures)
+# bugfix
+! TODO: Translate bibop theme to German and Spanish
+
+v0.7.3 => v0.7.4
+# Fixed the makefile so it won't even start with make other than GNU make
+  (Problem was deleting /bin/ on BSD systems)
++ Added Spanish templates (thanks to Ale Feltes Quenhan)
+
+v0.7.2 => v0.7.3
+# Fixed encoding problems for non-Latin languages. Since WebMail now does a lot
+  of character transformation, I hope this also works for double-byte languages.
+# Fixed a bug were an empty CC or TO header could cause a message or mailbox not
+  to display
+
+v0.7.1 => v0.7.2
+# Fixed a bug where WebMail added an (empty) Reply-To header to messages where none
+  was given
+# Fixed a bug where composed messages got a "no subject" even if the user entered one
+# Added a workaround for email clients/servers that don't add a message id to
+  messages. WebMail will now try to give a unique message ID to such messages.
+# Changed the default behaviour to show all folders instead to hide them all
+# Fixed bug in "showmessage" template when you tried to delete a message
+# Fixed a bug with session timeouts (last access time wasn't updated in every case)
+# worked around a possible login bug (">" prepended before crypted password in xml file)
+# Updated the README and fixed the numbering problem there
+# added many "synchronized" modifiers to the model classes to avoid clashes on fast machines
++ Added Challenge/Response authentication (contributed by Devin Kowatch)
+
+v0.7.0 => v0.7.1
+# Fixed bug in folder template that prevented creating message folders
+# Fixed bug where only localhost could be used as SMTP server
+# Switched to UTF-8 as message encoding instead of Latin1. I hope this allows
+  to send messages with non-Latin characters in the future. Perhaps there will
+  be an option to choose a message encoding some time.
+# Replacement of "%DTDDIR%" in webmail.xml is now done in SystemCheck.java
+  instead of webmail.sh
+# Various startup speedups (cache for language list, etc)
+# Fixed a bug where the /tmp directory contained debug files
+# WebMail now displays error messages instead of "message contains no data" or
+  plain gray page when an exception occurs
+# Changed some of the icons to GIF again since Netscape does not support transparent
+  PNG
+# Emoticons now work as they should (forgot to include them in the 0.7 release)
++ A user can now hide/unhide folders so that only a selected list gets displayed
+  in the mailbox overview. (Works great with Cyrus IMAPD, don't know whether
+  other IMAPDs support that, POP3 certainly does not)
++ German translation of the templates (hope this inspires others to do it for
+  other languages)
+
+v0.7.0pre3 => v0.7.0
+# Fixed bug with administrator session not being invalidated on logout
+# Fixed bug with "final int" being modified in SimpleStorage.java
+# Changed Authenticators to better support virtual domain support (this also
+  fixes a bug where only the first authentication host was choosen)
+# Fixed bug where email address was not shown in messages and message list
+  in certain cases
+# Upgraded to Xerces 1.1.1 XML parser
+# Now using MD5 to calculate unique folder IDs that stay over multiple sessions
++ Added new help system that allows users to get context dependent help for most
+  screens
++ Added option to turn off "autoexpunge" on folders
+- TODO: numbering in README incorrect
+- TODO: help for administrator session
+- TODO: translation
+
+
+v0.7.0pre2 => v0.7.0pre3
++ the WebMail administration now also uses the XML/XSL model and has a new
+  look'n'feel. Virtual domain support is now also supported in the user editor
+# message list now sorts correctly
+# Many smaller bugs fixed
+# WebMail was tested on JDK 1.3 from IBM
+- still missing until release: README updates, user and admin help
+
+v0.7.0pre1 => v0.7.0pre2
++ WebMail now uses an XML model to store session information
++ WebMail now uses XSL stylesheets to display HTML
++ the new folder setup now is understandable by most users; together with an
+  "intelligent" IMAP server (like Cyrus) it works fantastic.:-)
+# There have been many major changes, most parts of WebMail were rewritten to
+  use the new XML/XSL WebMail model
+- MySQL support temporarily removed (first need a converter from SQL to XML)
+
+v0.6.1pre2 => v0.7.0pre1
++ WebMail now has virtual domain support (users can be splitted into several
+  domains with each having specific settings (e.g. different authentication
+  hosts, different available folder hosts, ...). This is a big change,
+  therefore there is a new major number for WebMail instead of 0.6.2
+# WebMail now runs and compiles on JDK 1.1. This now supports all you *BSD
+  users as well as increases WebMail's performance greatly on Linux using
+  the IBM JDK 1.1.8 (this is now the recommended JDK on Linux).
+
+v0.6.1 => v0.6.2pre1
++ WebMail support for MySQL storage added
+# Changed storage structure to support a more modular storage scheme
+# Fixed a bug where user configuration was erased (serious)
+- removed old telnet administration because it was constantly confused with
+  the webbased admin interface
+
+v0.6.0 => v0.6.1
++ Now support for Java Servlet. The WebMail package has been splitted into a
+  common part, one for the standalone server and one for the Servlet server
+  See README.Servlet for more information on the Servlet release
++ WebMail is now able to get a folderlist from an IMAP server
++ Recognize MULTIPART/ALTERNATIVE and choose HTML or Plain text
++ Now filters JavaScript from HTML attachments
+# Fixed bug in file cache
+# Runs again with JDK 1.1. Note however, that JDK 1.2 is about 50% faster.
+# Fixed some memory problems on high load machines with HTTP connection limits
+  (please configure your connection limits to fit your system, the default is
+  20 now which is a fairly reasonable value to avoid crashes).
+# Fixed some bugs in the Spanish templates
+# Fixed a bug where the SMTP server could only be on localhost
+# Some cosmetic changes
+# Expiration time now set to five minutes so that there are less problems with
+  resizing the browser window.
+# Session overview in administration interface now refreshes every 5 seconds
+
+v0.5.4 => v0.6.0
++ Added POPAuthenticator to allow remote authentication not only over IMAP but
+  also over POP
++ Improved HTTP speed by 100-200% by using a dedicated asynchronous thread to
+  write log messages (!!!).
++ "make doc" in source distribution now generates javadoc documentation
++ Developer documentation included. "make doc" in the source distribution now
+  creates javadoc documentation in webmail/src/doc/javadoc
++ New plugin that allows to change the configuration with a HTML form.
++ New plugin concept makes WebMail much more modular and thus easier to extend.
+  The plugin concept handles dependencies between plugins.
++ New URL-handler with a hashtree structure makes handling of URLs much faster.
++ New configuration scheme makes configuration more bullet-proof (less invalid
+  parameters are accepted, program parts register configuration parameters they
+  need and are notified on change).
+# Fixed bug in the "save sent" option (mime headers where not correct)
+# Cannot pass parameters to webmail.sh any longer (see README)
+# Fixed the display for "Login count"
+# UserCache is now no longer unlimited but will expire cached UserData object
+  when a certain limit is reached. This will ensure a longer uptime on large
+  installations
+# WebMail configuration is now stored in plain text as default
+# WebMail now makes second attempt with login password if authentication to
+  an IMAP server fails. This is useful if you are on a system that forces you
+  to change your passwords regularly. WebMail then trys to "auto-guess" for
+  the folders, too ("Uni Giessen patch").
+# WebMail now auto-detects available languages
+# Users can now "forward" emails
+# Further reorganized directory structure to fit closer in a Unix environment
+- Removed the Swing administration interface
+
+v0.5.3 => v0.5.4
+# IE 5 now works (with a workaround)
+# Outsourced most of the userdependent Strings to StringResources to allow
+  a more complete translation to other languages
+# fixed a Charset bug in the send part
+# reorganized directory structure
+
+v0.5.2 => v0.5.3
++ AdminInterface written in Java/Swing to make administration easier.
++ The Adminserver's commands are now parsed with CUP and JFLEX, resulting in
+  easier command specification (no `"' needed if no special chars in a string)
++ SSL support now functional (see README)
++ Parsing of HTTP protocol now done properly (this results in some changes in
+  the html-templates though!), using CUP and JFLEX.
+# Now switched to HTTP/1.1. WebMail will now use "Persistant Connections"
+  (Keep-Alive) to improve speed and reduce network load, if the client supports
+  it. Unfortunately, IE5 doesn't seem to work yet (Perhaps someone can help me
+  here!?!).
+# fixed some bugs with MIME/QP encoding of 8bit messages
+# root accounts (UID 0) now cannot access WebMail via the UnixAuth method
+# UnixAuth now entirely written in Java (=> WebMail is pure Java now)
+# enhanced security: Passwords are no longer saved in "plain String"
+# switched to JavaMail 1.1.2 which should solve the IMAP-Authentication bug
+
+v0.5.1 => v0.5.2
++ Default folder path now Admin-configurable (default: /home/%user/mail)
++ Messages that are sent are now kept until the send was really successful
+# Admin connections are now not closed when the admin changes the admin port
+# fixed the infamous reply-bug
+# fixed a problem when parameters where given at command line
+# Changed the 10 minute default timeout to one hour
+# Number of total messages is now shown correctly in the folder overview
+# BCC field and CC field showed the same values

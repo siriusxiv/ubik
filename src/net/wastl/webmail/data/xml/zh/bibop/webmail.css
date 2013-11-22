@@ -1,0 +1,145 @@
+.testoBianco {
+               font-family: Verdana, Arial, Helvetica, sans-serif;
+               font-size: 10px;
+               font-style: normal;
+               font-weight: normal;
+               color: #FFFFFF
+               }
+
+.testoChiaro {
+               font-family: Verdana, Arial, Helvetica, sans-serif;
+               font-size: 10px;
+               font-style: normal;
+               font-weight: normal;
+               margin-top: 5px;
+               margin-right: 5px;
+               margin-bottom: 5px;
+               margin-left: 5px;
+               color: #666666
+               }
+
+.testoScuro {
+              font-family: Verdana, Arial, Helvetica, sans-serif;
+              font-size: 10px;
+              font-style: normal;
+              font-weight: bold;
+              color: #394864
+              }
+
+.testoVerde {
+              font-family: Verdana, Arial, Helvetica, sans-serif;
+              font-style: normal;
+              font-weight: bold;
+              color: #006600
+              }
+
+.testoRosso {
+              font-family: Verdana, Arial, Helvetica, sans-serif;
+              font-style: normal;
+              font-weight: bold;
+              color: #CC0000
+              }
+
+.testoGrande {
+               font-family: Verdana, Arial, Helvetica, sans-serif;
+               font-size: 12px;
+               font-weight: bold;
+               color: #333366
+               }
+
+.testoNero {
+             font-family: Verdana, Arial, Helvetica, sans-serif;
+             font-size: 12px;
+             font-weight: normal;
+             color: #000000
+             }
+
+.testo {
+         font-family: Verdana, Arial, Helvetica, sans-serif;
+         font-size: 10px;
+         font-style: normal;
+         font-weight: normal;
+         color: #000000
+}
+
+.bold {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-weight: bold
+}
+
+a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #0069D2
+}
+
+a.seen {
+    font-weight: normal;
+    text-decoration: none;
+    color: #0069D2
+}
+
+a.unseen {
+    font-weight: bold;
+    text-decoration: none;
+    color: #040282
+}
+
+
+.testoScuroSx {
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+                font-size: 10px;
+                font-style: normal;
+                font-weight: normal;
+                color: #394864;
+                letter-spacing: -1px
+}
+
+.mailbox {
+           font-family: Verdana, Arial, Helvetica, sans-serif;
+           font-size: 10px;
+           font-style: normal;
+           font-weight: normal;
+           color: #FFFFFF;
+           background-color: #697791;
+           margin-top: 5px;
+           text-transform: uppercase
+}
+
+.mailbold {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 10px;
+            font-style: normal;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-transform: uppercase
+}
+
+.nemorino {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 8px;
+            font-style: normal;
+            font-weight: normal;
+            color: #FFFFFF;
+            margin-top: 5px
+}
+
+.testoMesg {
+             font-family: Verdana, Arial, Helvetica, sans-serif;
+             font-size: 12px;
+             font-style: normal;
+             font-weight: normal;
+             margin-top: 5px;
+             margin-right: 5px;
+             margin-bottom: 5px;
+             margin-left: 5px;
+             color: #000000
+}
+
+/*
+XEmacs Local Variable Declarations:
+
+Local Variables:
+mode:css
+End:
+*/

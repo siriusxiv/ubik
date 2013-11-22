@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the JWebMail help for users, English language -->
+
+<!-- $Id: help.xml 126 2008-10-31 03:41:09Z unsaved $ -->
+
+<!--
+ * Copyright (C) 2000 Sebastian Schaffert
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+
+<!DOCTYPE help SYSTEM "../../../xml/webmail_help.dtd">
+
+
+<help>
+  <helptopic id="mailbox" title="JWebMail «H½c/¦¬«H§X ¥þÄý">
+    <icon href="icona_mail2.gif"/>
+    <helpdata>
+      <p>
+        ¦b³o­Óµe­±¡A±z¥i¥H¨£¨ì±z©Ò¦³ªº«H½c»P¨C­Ó«H½c¤ºªº¦¬«H§X¡C
+        ¨C­Ó¦¬«H§X³£·|¦³­ÓÄæ¦ìÅã¥Ü¥X¡y«H¥óÁ`¼Æ¡z»P¡y·s«H¥ó¼Æ¡z¡C
+        ¦³¨Ç¦¬«H§X¥u¬O¥Î¨Ó¦s©ñ¤l¦¬«H§X¦Ó¤£¦s©ñ¥ô¦ó«H¥ó¡C
+        ±z¥i¥H¦b¦¬«H§X¤W¡]¸Ì­±¦s¦³«H¥óªº¡^«ö¤@¤U¡A¬Ý¬Ý«H¥ó²M³æ¡C
+      </p>
+      <note>¦pªG¦b³o¸Ì±z¨S¨£¨ì±zÄ±±o¸Ó¨£¨ìªº¦¬«H§X¡A¤]³\¥L­Ì¬O³]©w¦¨ÁôÂÃ¤F¡C
+      ½Ð¨ì¡y¦¬«H§X³]©w¡z±N¦¬«H§XÅã¥Ü¥X¨Ó¡C</note>
+    </helpdata>
+    <ref ref-id="messagelist"/>
+    <ref ref-id="folder-setup-mailboxes"/>
+    <ref ref-id="folder-setup-folders"/>
+  </helptopic>
+
+  <helptopic id="messagelist" title="¦¬«H§Xªº«H¥ó²M³æ">
+    <helpdata>
+      <p>
+        ¦b«H¥ó²M³æ¤¤¡A±z¥i¥H¬Ý¨ì±zªº¦¬«H§X¤¤ªº«H¥ó¡C
+        ±z¥i¥H¨£¨ì«H¥ó¥DÃD¡B±H¥ó¤H¡B«H¥ó¤j¤p¡A»P¤@¨Ç«H¥óºX¼Ð¡]¡y·s«H¥ó¡z¡B¡y¤w¦^«H¡z¡B¡yMIME¡zµ¥µ¥¡^¡C
+        ±z¥i¥H¦b«H¥ó¥DÃD¤W«ö¤@¤U¡A±N«H¥ó¤º®eÅã¥Ü¥X¨Ó¡C
+        ±z¥i¥H±N¤@¨Ç«H¥ó¿ï¾Ü°_¨Ó¡AµM«á¦b¥L­Ì¤§¤W°õ¦æ¤@¨Ç°Ê§@¡A¨Ò¦p³]©w¥H¤WªººX¼Ð¡A©ÎªÌ²¾°Ê/«þ¨©«H¥ó¨ì¨ä¥L¦¬«H§X¡C
+      </p>
+      <note><p>§A¥²¶·±N¦b¡y¨Ï¥ÎªÌ³]©w¡z¤¤ªº¡y«H¥óºX¼Ð¡z¥\¯à±Ò°Ê¡A¤~¯à­×§ï«H¥óªººX¼Ð</p></note>
+    </helpdata>
+    <ref ref-id="user-setup"/>
+    <ref ref-id="showmessage"/>
+  </helptopic>
+
+  <helptopic id="showmessage" title="Åã¥Ü«H¥ó¤º®e">
+    <helpdata>
+      <p>
+        «H¥óªºÅã¥Ü¥]¬A¤T­Ó³¡¤À¡G«H¥ó¼ÐÀY¡B«H¥ó¤º®e¡B«H¨£µ²§À¡C<br/>
+        <p>
+          ¦b <bold>«H¥ó¼ÐÀY</bold> ³¡¤À¡A±z¥i¥H±o¨ì¤@¨Ç¼ÐÀY´£¨Ñµ¹±zªº¸ê°T¡G±H¥ó¤H¡B¦¬¥ó¤H¡B«H¥ó¥DÃD¡B¤é´Áµ¥µ¥¡C
+        </p>
+        <p>
+          ¦b <bold>«H¥ó¤º®e</bold> ³¡¤À¡AÅã¥Üªº¬O«H¥óªº¥»¤å¡C
+          ¦pªG¸Ó«Ê«H¥ó¦³ªþ¥[ÀÉ®×¡A±z¥i¥H±q«H¥ó¤º®e¤¤ª½±µ¬Ý¨ì¥L­Ì¡]¨Ò¦p¹Ï¤ù©Î¤å¦r¸ê®Æ¡^¡A©ÎªÌ±z¤]¥i¥H±q¦øªA¾¹¤W¤U¸ü¡C
+          ªþ¥[ÀÉ®×ªº¸ê°T·|¦b«H¥ó¥»¤å«áÅã¥Ü¥X¨Ó¡C
+        </p>
+        <p>
+          ¦b <bold>«H¥óµ²§À</bold> ªº³¡¤À¡A³o¸Ì¥ç´£¨Ñ±z¹ï³o«Ê«H¥ó°õ¦æ¤@¨Ç°Ê§@ªº¿ï¶µ¡]¨Ò¦p²¾°Ê/«þ¨©¨ì¨ä¥Lªº¦¬«H§X¡B³]©w«H¥óºX¼Ðµ¥µ¥¡^¡C
+        </p>
+      </p>
+    </helpdata>
+  </helptopic>
+
+  <helptopic id="compose" title="½s¿è¤@«Ê·s«H¥ó">
+    <icon href="icona_composer2.gif"/>
+    <helpdata>
+      <p>
+    ¦b½s¿èªí³æ¤¤¡A±z¥i¥H½s¿è¤@«Ê·s«H¥ó¡C
+    ¦b¼ÐÀY¸Ì¡A±z¦Ü¤Ö¥²¶·¶ñ§´¦¬«H¤H¦a§}»P¥DÃD¡C
+    ¦b¤U­±ªº¤j½s¿è¤è¶ô¸Ì¡A±z¥i¥H¿é¤J±zªº«H¥ó¤º®e¡C
+      </p>
+      <p>
+    ±z¤]¥i¥Hªþ¥[ÀÉ®×¡A¥u­n¦b <bold>ªþ¥[ÀÉ®×</bold> «ö¶s¤W«ö¤@¤U§Y¥i¡C
+    ¦b½s¿èªþ¥[ÀÉ®×ªº¹Lµ{¤¤¡A±zªº«H¥ó·|³QÀx¦s°_¨Óªº¡C
+      </p>
+    </helpdata>
+    <ref ref-id="compose-attach"/>
+  </helptopic>
+
+  <helptopic id="compose-attach" title="ªþ¥[ÀÉ®×">
+    <helpdata>
+      <p>
+    ·í±z¦b½s¿è¤@«Ê«H¥ó®É¡A±z¥i¥H±q±z¥»¾÷¨t²Î¤¤ªþ¥[ÀÉ®×¨ì«H¥ó¸Ì¥h¡C
+    ±z©Ò¿ï¾Üªº¥»¾÷ÀÉ®×·|³Q°e¨ì JWebMail ¦øªA¾¹¡A¨Ã¥Bªþ¥[¨ì±zªº«H¥ó¤¤¡]³o¥i¯à»Ý­n¤@¨Ç®É¶¡¡AªøµuºÝ¿à±zªº³s½u³t«×¦Ó©w¡^¡C
+      </p>
+      <p>
+        <bold>ªþ¥[ÀÉ®×µøµ¡</bold> ´£¨Ñ±zÂsÄý±zªºµwºÐ¥H±NÀÉ®×ªþ¥[¨ì«H¥ó¤¤ªº¥\¯à¡A¦pªG±z«ö¤U¤F <bold>ÂsÄý</bold> «ö¶sªº¸Ü¡C¦b±z¿ï¾Ü¤F¬Y­ÓÀÉ®×«á¡A±z¥i¥H¬°¥L¿é¤J¤@¬q´y­z¤å¦r¡A³Ì«á¦A«ö¤U <bold>¥[¤J·sÀÉ®×</bold> ¥H±N¤§¥[¤J«H¥ó¤¤¡C
+        ªþ¥[ÀÉ®×ªº¤j¤p¦³­Ó¤W­­¡A³oÀ³¸Ó¬O±zªº¨t²ÎºÞ²z­û³]©wªº¡C
+      </p>
+      <p>
+    ¤w¸g³Q¥[¤JªºÀÉ®×·|³QÅã¥Ü¦bµøµ¡ªº¥ªÃä¡C
+    ­n§R°£¬Y­Óªþ¥[ÀÉ®×¡A¦b²M³æ¤W¿ï¾Ü¨º¨ÇÀÉ®×¡AµM«á«ö¤U <bold>§R°£¿ï¾ÜªºÀÉ®×</bold> «ö¶s´N¥i¥H¤F¡C
+      </p>
+    </helpdata>
+    <ref ref-id="compose"/>
+  </helptopic>
+
+  <helptopic id="folder-setup" title="¦¬«H§X³]©w">
+    <icon href="icona_folder2.gif"/>
+    <helpdata>
+      <p>
+    ¦b <bold>¦¬«H§X³]©w</bold> ¤¤±z¥²¶·¿ï¾Ü±z¬O§_·Q­n­×§ï±zªº«H½c³]©w©ÎªÌ³]©w¥Ø«e¤w¦s¦b«H½c¤¤ªº¦¬«H§X¡C
+      </p>
+      <p>
+        <bold>³]©w«H½c¡G</bold> JWebMail ¤¹³\±z¸g¥Ñ IMAP ©Î POP3 ³q°T¨ó©w¡A¦s¨ú¦h­Ó©¼¦¹§¹¥þµLÃöªº«H½c¡C
+        ¹ï¨C­Ó«H½cªº³]©w¡A±z¥²¶·´£¨Ñ«H½c¥D¾÷¡B³q°T¨ó©w¡A»Pµn¤J¸ê°T¡C
+      </p>
+      <p>
+        <bold>³]©w¦¬«H§X¡G</bold> ¤@­Ó«H½c¤¤¥i¯à·|¦³¦n´X­Ó¦¬«H§X¡]¥H¾ðª¬µ²ºc²ÕÂ´¦Ó¦¨¡^¡A³o¼Ëªº²ÕÂ´¤è¦¡¦b IMAP ³q°T¨ó©w¤§¤U¥i¥H¥¿±`°õ¦æ¡A¦ý¥Î¦b POP3 ¤W¥i¯à´N¦³°ÝÃD¤F¡C
+        ¦b³o¸Ì±z¥i¥H¦b¾ðª¬µ²ºc¸Ì·s¼W©Î§R°£¦¬«H§X¡C
+      </p>
+    </helpdata>
+    <ref ref-id="folder-setup-folders"/>
+    <ref ref-id="folder-setup-mailboxes"/>
+  </helptopic>
+
+  <helptopic id="folder-setup-folders" title="³]©w¦¬«H§X">
+    <helpdata>
+      <p>
+    ¦p¦P¤§«e´£¨ìªº¡A¤@­Ó¡]IMAP¡^«H½c¤]³\·|¦³¦n´X­Ó¦¬«H§X¡C
+    ¦¬«H§X³]©wµøµ¡¤¹³\±z±q±zªº«H½c¤¤·s¼W©Î§R°£¦¬«H§X¡C
+    ±zªº¨C­Ó«H½c¸Ìªº¦¬«H§X³£¥H¾ðª¬ªº¤è¦¡²ÕÂ´°_¨Ó¡A¨Ã¥BÅã¥Ü¦b³o­Óµøµ¡¤¤¡C
+    ¹ï¨C­Ó¦¬«H§X¡A±z³£¥i¥H¿ï¾Ü±N¨ä§R°£¡F¦pªG¸Ó¦¬«H§X¥i¥H¥]§t¨ä¥L¦¬«H§Xªº¸Ü¡A±z¤]¥i¥H±N¤l¦¬«H§X¥[¨ì¨ä¤¤¡C
+      </p>
+      <warning>
+        <p>¦¬«H§X·|<bold>¯u¥¿¦a±q±zªº«H½c¤¤§R°£</bold>¡]¥]¬A¸Ì­±©Ò¦³ªº«H¥ó©M¦¬«H§X¡^¡A<bold>¤£¥u±q JWebMail ¨t²Î¤¤³Q§R°£</bold>¡I
+        ³o¬O­Ó¬Û·í<bold>¦MÀIªº°Ê§@</bold> ¦Ó¥B±z¨S¦³¿ìªk«ì´_­ìª¬¡I</p>
+      </warning>
+    </helpdata>
+  </helptopic>
+
+  <helptopic id="folder-setup-mailboxes" title="³]©w«H½c">
+    <helpdata>
+      <p>
+        JWebMail ¤¹³\±z±q³æ¤@ªº¤¶­±´N¥i¥H¦s¨ú¼Æ­Ó§¹¥þµLÃöªº POP3/IMAP «H½c¡C
+        ­n³]©w³o¼Ëªº¥\¯à¡A±z¥i¥H¨Ï¥Î <bold>«H½c³]©w</bold> ¿ï³æ¡C
+      </p>
+      <p>
+    ¦bµøµ¡ªº²Ä¤@­Ó³¡¤À¡A¬O±z¥Ø«e¤w¸g³]©w¦nªº«H½c²M³æ¡C
+    ±z¥i¥H¨Ï¥Î <bold>§R°£</bold> ³sµ²¥H±q JWebMail ¨t²Î¤¤§R°£¤@­Ó«H½c¡C
+      </p>
+      <note>
+        <p>¬Û¹ï©ó«H¥ó§X³]©w¡A¤@­Ó«H½c±N¥u¯à±q JWebMail ¨t²Î¤¤³Q§R°£¡A¦pªG±z«ö¤U¤F³o¸Ìªº <bold>§R°£</bold>¡C
+        ±z±N¤´µM¥i¥H±q¨ä¥Lªº¹q¤l¶l¥ó¦¬µo³nÅé¦s¨ú¸Ó«H½c¡C</p>
+      </note>
+      <p>
+    µøµ¡ªº²Ä¤G³¡¥÷¡A¥u­n±z´£¨Ñ¥²­nªº¸ê°T¡]«H½cªº¥D¾÷¦WºÙ¡B³q°T¨ó©w¡Bµn¤J±b¸¹¡B±K½X¡X¦pªG±z¤£ª¾¹D¸Ó«ç»ò¿ìªº¸Ü¡A½Ð¸ß°Ý±zªº¨t²ÎºÞ²z­û¡^¡A±z´N¥i¥H¥[¤J¤@­Ó·sªº«H½c¡C
+      </p>
+    </helpdata>
+ </helptopic>
+
+  <helptopic id="setup" title="¨Ï¥ÎªÌ³]©w">
+    <icon href="icona_user2.gif"/>
+    <helpdata>
+      <p>
+        ¦b <bold>¨Ï¥ÎªÌ³]©w</bold> ¤¤¡A±z¥i¥H­×§ï±zªº¤@¯ë³]©w¡A¨Ò¦p¦W¦r¡BÃ±¦W¡B©Î»y¨¥µ¥µ¥¡C
+      </p>
+      <p>
+        <ul>
+          <li><bold>¥þ¦W</bold>¡G ¥X²{¦b±H¥Xªº«H¥ó»P JWebMail Åwªïµøµ¡¤¤ªº¦W¦r¡C</li>
+          <li><bold>»y¨¥</bold>¡G JWebMail ¨t²Î¬°±z¨Ï¥Îªº»y¨¥¡C</li>
+          <li><bold>±K½X</bold> »P <bold>½T»{</bold>¡G¦pªG±zªº³]©w¤¹³\±z­×§ï±zªº±K½X¡A±z¥i¥H¦b³o¸Ì­×§ï¡]½Ð¬¢±zªº¨t²ÎºÞ²z­û¡^¡C½Ð§O§Ñ¤F¦b¨â­ÓÄæ¦ì³£¿é¤J¦P¼Ëªº±K½X¡C</li>
+          <li><bold>¨C­¶ªºÅã¥Ü«H¥ó¼Æ</bold>¡G³]©w«H¥ó²M³æ¤¤¥i¥HÅã¥Ü¦h¤Ö­·«H¥ó¡]¹w³]­È¬O 20¡^¡C</li>
+          <li><bold>Åã¥Üº}º}ªºµe­±</bold>¡GÅã¥Ü¤@¨Ç°£¤F¥i¥HÅý¡yÅýµe­±§óº}«G¡zªº¯S®Ä¥~¨S¬Æ»ò¥Î³~ªº¥\¯à¡F¨Ò¦p·L¯º²Å¸¹ªº´À´«¡B³sµ²ªº°ª«G«×Åã¥Üµ¥µ¥..¡C</li>
+<!--      <li><bold>¹LÂo JavaScript</bold>¡G¸ÕµÛ¿ë»{¥X«H¥ó¤¤ªº JavaScript ¨Ã¥¼±z¹LÂo±¼¡A¥HÁ×§K¦w¥þ©Êªº°ÝÃD¡]³oÀ³¸Ó­n³Q³]©w°_¨Ó¡^¡C</li> -->
+          <li><bold>¦Û°Ê²M°£¦¬«H§X</bold>¡G±±¨î±N¨º¨Ç³Q³]©w¬°¡y¤w§R°£¡zºX¼Ðªº«H¥ó¬O§_À³¸Ó³Q¦Û°Ê©Î¤â°Ê³Q²M°£¡C</li>
+          <li><bold>Åã¥Üªþ¥ó¤¤ªº¹Ï¤ù</bold>¡Gª½±µ¦b«H¥ó¤º®e¤¤Åã¥Üªþ¥[ªº¹Ï¤ù¡C§_«h¥L­Ì±N·|¹³¨ä¥Lªþ¥[ÀÉ®×¤@¼Ë³æ¯Â¦a³QÅã¥Ü¥X¨Ó¦Ó¤w¡C</li>
+          <li><bold>³]©w«H¥óºX¼Ð</bold>¡G±Ò°Ê¦¬«H§Xªº¼g¤J¼Ò¦¡¡C¦pªG³o¥¼³Q³]©w¡A±z¤]³\´N¤£¯à­×§ï«H¥óªº¥ô¦óª¬ºA¡]¨Ò¦pºX¼Ð¡B«þ¨©¡B²¾°Ê¡^¡C</li>
+          <li><bold>Â_¦æ</bold> »P <bold>³æ¦æªº³Ì¤jªø«×</bold>¡G³]©w¦b½s¿è«H¥ó»PÅã¥Üªºµøµ¡¤¤¡A¬O§_»P¦ó³BÂ_¦æ¡C</li>
+          <li><bold>Àx¦s¤w°e¥Xªº«H¥ó</bold> »P <bold>Àx¦s¦b¨º­Ó¦¬«H§X¤¤</bold>¡G¬O§_»P¦ó³B­n±N°e¥Xªº«H¥ó³Æ¥÷¡C</li>
+          <li><bold>¹q¤l¶l¥ó¦a§}</bold>¡GÅã¥Ü¦b°e¥Xªº«H¥ó¤¤ªº¹q¤l¶l¥ó¦a§}¡C</li>
+          <li><bold>Ã±¦WÀÉ¤º®e</bold>¡GÀ³¸Ó³Qªþ¥[¦b«H¥ó¤º®e³Ì¤U­±ªºÃ±¦WÀÉ¡C</li>
+        </ul>
+      </p>
+    </helpdata>
+  </helptopic>
+
+  <helptopic id="logout" title="µn¥X¨t²Î">
+    <helpdata>
+      <p>
+    Â÷¶}³o­Ó³s½u¡A¨Ã¥BÅý¦øªA¾¹Àx¦s±zªº¨Ï¥ÎªÌ³]©w¡C
+    ±z±N¦b´X¬íÄÁ«á¡A³Q±a¦^¨ìµn¤Jµøµ¡¡C
+    ¦pªG±z§Ñ¤Fµn¥X¨t²Î¡A±zªº³s½u±N¦b¨t²Î¹w³]ªº¹O®É®É¶¡¤§«á¦Û°Ê³QÃö³¬¡C
+      </p>
+    </helpdata>
+  </helptopic>
+</help>

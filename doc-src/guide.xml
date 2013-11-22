@@ -1,0 +1,1087 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!--
+$Id: guide.xml 140 2008-10-31 21:49:50Z unsaved $
+
+Copyright 2008 by the JWebMail Development Team and Sebastian Schaffert.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE GUIDE SYSTEM "guide.dtd">
+
+<GUIDE>
+  <TITLE>JWebMail v1.0.1*</TITLE>
+  <REVISION>$Revision: 140 $</REVISION>
+  <AUTHOR>Blaine Simpson, blaine.simpson@admc.com</AUTHOR>
+  <SECTION name="Contents" id="contents"><CONTENTS/></SECTION>
+  <SECTION name="What is JWebMail" id="about">
+    <P>
+      JWebMail is a <A href="http://en.wikipedia.org/wiki/Web_mail">web mail</A>
+      server.
+      Web mail allows an organization to provide a WWW interface for each user
+      to his mailbox(es).
+      Unlike Yahoo Mail, Hotmail, and Gmail, JWebMail presents a web interface
+      to traditional email accounts which you or somebody else provide.
+      The target email account servers may be restricted by
+      JWebMail.
+    </P> <P>
+      By virtue of JWebMail being a pure Java appplication, it has excellent
+      portability, scalability, and performance.
+      We have designed JWebMail so that it works out-of-the-box for a home
+      LAN setup by just dropping the .war file into your servlet container
+      (which includes all modern application servers).
+    </P>
+    <SUBSECTION name="Use Cases" id="about:usecases">
+      <P>Common use-cases
+        <LIST>
+          <ITEM>
+            Serve JWebMail on the same host that your traditional email
+            server runs on, to provide web access in addition to dedicated
+            email client access.
+          </ITEM>
+          <ITEM>
+            Run JWebMail to provide members Internet web access to their email
+            accounts on an internal mail server.
+          </ITEM>
+          <ITEM>
+            Run a single JWebMail server to allow for a single, unified
+            interface to all of the email accounts for your users, whether
+            the target email accounts are internal organizational accounts
+            and/or external accounts.
+          </ITEM>
+        </LIST>
+      </P>
+    </SUBSECTION>
+
+    <SUBSECTION name="Features" id="about:features">
+      <P>
+        Features include:
+        <LIST>
+          <ITEM>Product is independent of the target email account
+            <EM>provider(s)</EM>.</ITEM>
+          <ITEM>Gives a user full access to his/her IMAP mailbox through a simple-to-use WWW interface</ITEM>
+          <ITEM>Supports multiple folders on multiple hosts, depending on mail protocol used
+            (IMAP supports different folders on the same host, POP doesn't)</ITEM>
+          <ITEM>Supports SSL protocols <CODE>imaps</CODE> and <CODE>pop3s</CODE>.</ITEM>
+          <ITEM>Sophisticated folder management system</ITEM>
+          <ITEM>100% HTML 3.2/4.0 output, no Java on the Client side</ITEM>
+          <ITEM>Supports multiple languages, configurable for each user</ITEM>
+          <ITEM>Flexible template system to personalize look and feel and write new language files using XML and
+            XSL</ITEM>
+          <ITEM>Runs as a <EM>web application</EM> in a Java servlet container</ITEM>
+          <ITEM>Improved session management keeps mail connections alive</ITEM>
+          <ITEM>Performance, scalability, and portability
+                of a pure Java application</ITEM>
+          <ITEM>Usage of JavaMail-API ensures compatibility to many mail
+                standards</ITEM>
+          <ITEM>Open Source distribution allows easy customization</ITEM>
+          <ITEM>Web-based administration interface</ITEM>
+          <ITEM>Support for multiple virtual user domains</ITEM>
+          <ITEM>Easily add new features through the JWebMail modular plugin concept
+            (support for dependencies, hooking into URLs, etc)</ITEM>
+          <ITEM>Application/Data separation allows for redeployments and
+            upgrades without losing any configuration or user data.</ITEM>
+        </LIST>
+      </P>
+    </SUBSECTION>
+  </SECTION>
+
+  <SECTION name="Installation" id="install">
+    <SUBSECTION name="Introduction" id="install:introduction">
+      The basic installation instructions here can also be found in plain
+      text format in the file INSTALL.txt in the distribution.
+    </SUBSECTION>
+    <SUBSECTION name="Requirements" id="install:requirements">
+      <P>For running JWebMail you need the following software:
+        <LIST>
+          <ITEM>
+            A mailserver for sending (SMTP) and receiving (IMAP) mails; by default,
+            JWebMail will use <CODE>localhost</CODE> for both
+          </ITEM> <ITEM>
+            A Java servlet container which supports the 2.4 servlet spec,
+            and runs on a Java 1.5 or greater JVM (either JRE or JDK).
+            Anything from a stripped down servlet-container
+            like <A href="http://tomcat.apache.org/">Tomcat</A>,
+            to a J2EE application server like
+            <A href="http://www.jboss.org/jbossas">JBoss</A> or
+            <A href="http://www.ibm.com/software/webservers/appserv/was/">
+              WebSphere</A> will work.
+          </ITEM> <ITEM>
+            Your servlet container needs modern versions of the following libraries
+            installed:
+            <LIST>
+              <ITEM>
+                JavaMail API (typically <CODE>mailapi-*.jar</CODE>)
+                You can download
+                <A href="http://pub.admc.com/lib-repos/mailapi-1.4.1.jar">
+                   version 1.4.1 of the JavaMail API library here</A>.
+              </ITEM> <ITEM>
+                JavaMail SMTP provider (typically <CODE>smtp-*.jar</CODE>).
+                You can download
+                <A href="http://pub.admc.com/lib-repos/smtp-1.4.1.jar">
+                  version 1.4.1 of the SMTP library here</A>.
+              </ITEM> <ITEM>
+                JAF/Java Activation Framework
+                (<EM>not necessary if your servlet container uses Java 1.6</EM>,
+                since Java 1.6 includes the activation framework).
+                Java 1.5-users can download
+                <A href="http://pub.admc.com/lib-repos/jaf-1.1.1.jar">
+                version 1.1.1 of JAF library here</A>.
+              </ITEM>
+            </LIST>
+          </ITEM>
+        </LIST>
+      </P> <P>
+        If you wish to build a custom app, or develop, you will also need a
+        standalone Java JDK 1.5 or later, and Ant 1.7 or later, as described below.
+        Any or no Java IDE will work.
+      </P>
+    </SUBSECTION>
+    <SUBSECTION name="Installing" id="install:intro">
+      <P>
+        There are separate sections below, depending on whether you want to
+        just <EM>run</EM> JWebMail, or to build it on the command-line or
+        with an IDE.
+      </P>
+    <SUBSUBSECTION name="Installing Application (binary install)"
+                id="install:binary">
+      <P>
+        This is the preferred installation method if you just want to run
+        JWebMail, and have no need to customize the application iteself.
+      </P> <P>
+        This installation is very simple:
+      </P> <P>
+        Install <CODE>jwebmail.war</CODE> as you would install any War file.
+      </P> <P>
+        With Tomcat, the easiest way is to use the Manager webapp, which serves
+        http://localhost:8080/manager/html by default.  Log in and deploy the
+        war using the Gui (you can see or add manager accounts in the file
+        $CATALINA_BASE/config/tomcat-users.xml).
+      </P> <P>
+        For every application server that I know of, if you have auto-deploy on
+        (usually the default mode) you can become the app-server <EM>owner</EM> (the
+        account under which the server process(es) run), and just copy the war
+        file into the webapp landing directory.  If you don't have access to that
+        account, see your app server docs, because the war file permission
+        requirements vary (if you have superuser privileges, you can always
+        change the file to be owned by the app-server owner).  Rest assured,
+        your app server has several easy ways to deploy war files.
+      </P> <P>
+        JWebMail is then available by visiting http://yourhost:PORT/jwebmail
+        with a web browser.
+      </P> <P>
+        Please don't forget to visit the administration interface first. You can access
+        it by browsing http://yourhost:PORT/jwebmail/admin.  Initial password
+        is <CODE>Secret</CODE>.
+      </P>
+    </SUBSUBSECTION>
+    <SUBSUBSECTION name="Build and Install from source" id="install:build">
+      <P>
+        JWebMail is compiled by using the Ant build-system.  You will need
+        <A href="http://ant.apache.org/">Ant</A> version 1.7 or greater and
+        <A href="http://java.sun.com/javase/">Java JDK 1.5 or greater</A>
+        to build JWebMail.
+      </P> <P>
+        You can obtain the JWebMail source code by extracing a source code
+        distribution package, or by exporting or checking out our code from
+        SourceForge.  You can get our distro packages at 
+        <A href="https://sourceforge.net/project/showfiles.php?group_id=2056">
+        https://sourceforge.net/project/showfiles.php?group_id=2056</A>.
+        You can use any Subversion client to get our trunk code from
+        <CODE>https://jwebmail.svn.sourceforge.net/svnroot/jwebmail/trunk</CODE>.
+      </P> <P>
+        The following steps are required (for a quick-start):<NLIST>
+          <ITEM>
+            Set your JAVA_HOME environment variable (to the directory where the JDK is
+            installed)
+          </ITEM> <ITEM>
+            Make sure that the <CODE>bin</CODE> directory of your Ant installation is in your
+            search path.  Run "<CODE>ant -v</CODE>" to verify.
+          </ITEM> <ITEM>
+            You will need Internet access the first time you run the build, so that
+            build process can download the needed third party libraries
+            (automatically).
+          </ITEM> <ITEM>
+            Just run 'ant' to build a war file in subdirectory
+            <CODE>dist</CODE>.
+            If you don't have an
+            <A href="http://ant.apache.org/ivy/">Ivy</A>
+            jar file in your CLASSPATH, the Ant command
+            above will display the simple command that you can copy-and-paste to your
+            command line to satisfy it.
+            <NOTE>
+              An error message like
+              <CODE>...doesn't support the nested "matches" element...</CODE>
+              means you need to upgrade Ant to 1.7 or later.</NOTE>
+          </ITEM> <ITEM>
+            Deploy the file at <CODE>dist/jwebmail.jar</CODE> to your servlet container, as
+            explained in the previous section.
+            Alternatively, you set Ant property <CODE>exploded.dir</CODE>
+            and deploy the exploded webapp to a live deployment directory.
+            Since you are building software, we figure you
+            are handy enough to figure this out without further instruction from us.
+          </ITEM>
+        </NLIST>
+      </P> <P>
+        Run "<CODE>ant -p</CODE>" for further possible targets that may be used.
+        To customize any Ant properties, create a standard Java properties file in
+        this directory with name <CODE>local.properties</CODE>.
+        Most developers will want to use the targets
+        <CODE>gen-guide</CODE> and <CODE>javadoc</CODE> to build documentation.
+        (They get written to the <CODE>build/apidocs</CODE> and
+        <CODE>doc</CODE> subdirectories respectively).
+      </P> <P>
+        Unless the version of the User's Guide you are reading is out-of-date,
+        you probably won't need this, but...
+        The <CODE>gen-guide</CODE> task requires the program "xsltproc".
+        You have a few alternatives to access a User's Guide if you don't
+        have <CODE>xsltproc</CODE>.
+        <LIST>
+          <ITEM>Read it online at <A href="http://jwebmail.sourceforge.net/jwebmail-guide.html">
+              http://jwebmail.sourceforge.net/jwebmail-guide.html</A></ITEM>
+          <ITEM>Use your own XSLT processor program to generate 
+                jwebmail-guide.html file from
+                the guide.* artifacts in the doc-src directory.</ITEM>
+          <ITEM>Download the desired version of the binary distribution of
+                JWebMail.  These include a pre-build User's Guide.</ITEM>
+        </LIST>
+      </P> <P>
+        The build system uses
+        <A href="http://ant.apache.org/ivy/">Apache Ivy</A>
+        to fetch third party libraries.  The configuration allows you to
+        change the library repository location by editing local.properties
+        and ivy-settings.xml.  See
+        <A href="http://ant.apache.org/ivy/">http://ant.apache.org/ivy/</A>
+        for details about Apache Ivy.
+      </P> <P>
+        Code contributors must read and follow the coding conventions listed
+        in the <CODE>conventions.txt</CODE> file located in the <CODE>doc</CODE>
+        subdirectory.
+        It's important to not submit files which should not be
+        change-controlled, and to set the right Subversion file properties.
+        The easiest way to accomplish this is to put
+        the supplied file <CODE>samples/config-svn.txt</CODE> into
+        place at <CODE>$HOME/.subversion/config</CODE> on UNIX-like OSes,
+        or wherever your Subversion client wants it on Windows.
+        When you submit code, always add a meaningful subversion commit
+        message which very briefly describes what you have changed, added,
+        or removed.
+      </P>
+    </SUBSUBSECTION>
+    <SUBSUBSECTION name="IDE Setup" id="install:ide">
+      <P>
+        At this point in time, we only have the JWebMail pre-configured for
+        Eclipse.
+        Any developer who has a strong preference for a different IDE should
+        be capable of getting things working in it.
+        If you do this in a way to share the configuration in a fool-proof
+        manner, like we do for Eclipse, please contact me to get these
+        improvements into the code baseline.
+      </P> <P>
+        Here are the steps to start from 0 and get JWebMail building.
+        Most developers will skip many of these steps because they probably
+        already have some of the components in place.
+        <NLIST>
+          <ITEM>Install a 1.5 or later JDK and set a Windows env. variable for
+            JAVA_HOME, with value of the absolute path to your JDK
+            installation root.
+            You can download a JDK from
+            <A href="http://java.sun.com/javase/">Sun</A>.
+          </ITEM> <ITEM>
+            Install or have deployment access to a 2.4-spec-compliant servlet
+            container like
+            <A href="http://tomcat.apache.org/">Tomcat</A> version 6.
+            (Could be installed on a different computer).
+          </ITEM> <ITEM>
+            Install a JDT variant of Eclipse, version 3.4.1 or later.
+            I prefer the plain <EM>Java</EM> package, because it doesn't
+            include tons of stuff that you will never use, like the much
+            larger distributions have.
+            After you extract the distribution, execute the startup binary
+            once with the <CODE>-initialize</CODE> switch.
+          </ITEM> <ITEM>
+            To install Subversive, the Subversion client plugin,
+            use pulldown menu <CODE>Help / Software Updates</CODE> and click
+            the <CODE>Install</CODE> button.
+            Bring up a web browser at the same time and browse to
+            <A href="http://www.polarion.com/products/svn/subversive.php?src=eclipseproject">
+    http://www.polarion.com/products/svn/subversive.php?src=eclipseproject</A>.
+            Back in Eclipse, click the <CODE>Available Software</CODE> tab 
+            and Add the two "required" URLs listed in the "Latest Release"
+            section of that web page.
+            Select the latest available release of each of the four following
+            items and install them.<LIST>
+              <ITEM>SVN Team Provider</ITEM>
+              <ITEM>JDT Ignore Extensions</ITEM>
+              <ITEM>Connectors / Subversive SVN Connectors</ITEM>
+              <ITEM>Connectors / SVNKit</ITEM>
+            </LIST>
+            When done, you will be prompted to restart Eclipse.  Do so.
+          </ITEM> <ITEM>
+            After Eclipse restarts, use pulldown menu <CODE>File / Import</CODE>
+            and import from Subversion.
+            Enter URL of <CODE>https://jwebmail.svn.sourceforge.net/svnroot/jwebmail/trunk</CODE>
+            and no other detals (unless you're a team developer).
+            If it craps out, restart Eclipse and retry... or it could be a
+            bad Internet connection to Sourceforge.
+          </ITEM> <ITEM>
+            Get rid of any Eclipse views that you don't need.
+            Use pulldown <CODE>Window / Show View / Ant</CODE>.
+            Click the target icon in the Ant view toolbar to hide internal
+            Ant targets.
+            Right click in the view and add the Ant build file
+            <CODE>build.xml</CODE> from the root directory of the project.
+            At this point all of the listed Ant targets should work,
+            except for <CODE>gen-guide</CODE> and <CODE>all</CODE>, if you
+            don't have <CODE>xsltproc</CODE> installed.
+            Double click on <CODE>jwebmail</CODE> to execute the default target,
+            which builds the war file.
+            You will probably also want to execute the target
+            <CODE>javadoc</CODE> to build the JWebMail API spec docs with
+            entry point of <CODE>build/apidocs/index.html</CODE>.
+          </ITEM> <ITEM>
+            Now you just need to get IDE compilation working, and cooperating
+            with the Ant build.
+            Go to <CODE>Preferences / General / Workspace</CODE> to turn
+            <CODE>Build automatically</CODE> off and <CODE>Refresh</CODE>
+            and <CODE>Save</CODE> on.
+          </ITEM> <ITEM>
+            Use pulldown <CODE>Project / Clean...</CODE> to clean just
+            the <CODE>jwebmail</CODE> project...
+            and turn off the nasty <CODE>Start a build immediately</CODE>
+            button (definitely a bad thing for shared Ant setups).
+          </ITEM> <ITEM>
+            Execute the ant target <CODE>eclipse-setup</CODE> and set the
+            build variable as you instructed in the console output.
+          </ITEM> <ITEM>
+            Anybody who will be contributing code to this project, or to any
+            other project with professional standards should read the next
+            section too.
+          </ITEM>
+        </NLIST>
+      </P>
+    </SUBSUBSECTION>
+    </SUBSECTION>
+
+    <SUBSECTION name="IDE Code Contributors" id="install:ide">
+      <P>
+        People contributing code to the JWebMail project must create code
+        that isn't difficult for other developers to work with, and must
+        commit resources in a way that doesn't clobber other workers.
+        Even if you aren't going to commit code to our project,
+        you're welcome to use these procedures if you just like developing
+        like a professional, or if you are sharing with somebody else.
+      </P> <P> <NLIST>
+        <ITEM>
+          Even though you are a graphical developer, you need to read
+          and understand the development rules above in the
+          <CODE>Build and Install from source</CODE> section bove.
+        </ITEM> <ITEM>
+          Back to eclipse.
+          A general tip is to be liberal with hitting <CODE>Apply</CODE>
+          and <CODE>OK</CODE> when changing Eclipse preferences.
+          It's much better now than with older versions, but Eclipse is known
+          to sometimes <EM>not get</EM> your changes.
+          If that happens, just repeat and make sure you apply.
+          Back to the task at hand, go to
+          <CODE>Windows / Preferences / Team / SVN / Properties Configuration</CODE>
+          and Import the file <CODE>samples/config-svn.txt</CODE>.
+          This file has specifically been massaged to do what it needs to do
+          while accommodating several serious parsing bugs in the Eclipse
+          Subversive plugin.
+        </ITEM> <ITEM>
+          The remaining items all involve importing Eclipse XML Java
+          style profiles.
+          <CODE>Window / Preferences / Java / Code Style</CODE>
+          First, go to the <CODE>Clean Up</CODE> and Import the file
+          <CODE>samples/cleanup-ecpro.xml</CODE>.
+        </ITEM> <ITEM>
+          Go to the <CODE>Formatter</CODE> and Import the file
+          <CODE>samples/formatter-ecpro.xml</CODE>.
+          Note that this formatter disabled word-wrapping for Java files,
+          because Eclipse does a truly terrible job at it.
+          It doesn't even enforce the rules as it explains and exemplifies them.
+          Sorry to say, but after running Eclipse's code formatter, you'll
+          need to apply word-wrapping manually (according to
+          <CODE>doc/conventions.txt</CODE>.
+          (The formatter works perfectly well for Javadoc and non-Javadoc
+          comments).
+        </ITEM> <ITEM>
+          Finally, go to <CODE>Code Templates</CODE>, but this time don't
+          load the profile at the global level.
+          That's because, whereas the other settings are good for any
+          Java project, these templates may not be appropriate for other
+          Java projects that you may work on in the same Eclipse workspace.
+          The only known issues with the code templates is that they will
+          insert useless blank Javadoc lines like "    *" if there are no
+          tags for a method, and it will insert a blank line after {'s and
+          before }'s.
+        </ITEM> <ITEM>
+          Click on the <CODE>Configure Project Specific Settings...</CODE>.
+          Select the <CODE>jwebmail</CODE> project and click <CODE>OK</CODE>.
+          Click the <CODE>Enable project specific settings</CODE> checkbox.
+          Import the file <CODE>samples/codetemplates-ecpro.xml</CODE>.
+        </ITEM> <ITEM>
+          In the upper tree, select <CODE>Comments / Types</CODE> and hit
+          the <CODE>Edit...</CODE> button.
+          (IMO it's rather counterintuitive that the lower box there is not
+          an editable box-- you must hit the <CODE>Edit...</CODE> button to
+          edit.
+          Change the text "Your Name Here" to your name, spelled out and
+          capitalized like that.
+        </ITEM> <ITEM>
+          Before exiting the <CODE>Properties for jwebmail...</CODE> screen,
+          make sure to check the <CODE>Automatically add comments...</CODE>
+          button and click the <CODE>Apply</CODE> and <CODE>OK</CODE> buttons.
+        </ITEM>
+      </NLIST></P>
+    </SUBSECTION>
+    <SUBSECTION name="Logging setup" id="install:logging">
+      <P>
+        Webapp logging is best administered at the container level.
+        Most servlet containers were designed to work this way, and many
+        technology companies expend much effort to defeat Classloader
+        design and manage logging with delivered application artifacts.
+        Remember that logging settings are a runtime consideration which
+        should be modifiable after deployment by operations personnel.
+        JWebMail is exceptional in that it facilitates logging
+      </P> <P>
+        Webapp bundles just Apache Commons Logging.
+        Commons Logging provides the front end for logging, where the
+        JWebMail application sends log messages.
+        Your servlet container will connect these generated messages to
+        a logging <EM>back end</EM> to write log files, database records, or
+        emails from them.
+        If you have a straight-forward servlet container, and you have
+        not added a logging product to it, then Commons Logging will
+        also handle the back end in the container space, just logging
+        to the console or stdout/stderr log with default settings.
+        But it is very easy to improve on that.
+        Some application servers have logging management utilities,
+        and you can use them to pipe the JWebMail log entries to
+        destinations using Gui tools or text files.
+        You'll have to see your App Server documentation about these
+        tools.
+        Otherwise, you can put text files in container-level classloader
+        directories to easily set up text, HTML, and even email-alert
+        logging.
+      </P> <P>
+        I will explain how to set up really nice JWebMail logs using
+        Log4J as the back end (container-side) logging product on
+        Tomcat.  In my experience, everybody is satisfied with Log4j.
+        The procedure is very much the same to use another logging
+        back end product (see the Commons Logging documentation about
+        how to do it).  The setup procedure is the same for other
+        servlet containers (that don't force their logging management
+        system on you), except you just need to find out where the
+        system classpath directories are (or how to add them).
+      </P> <P>Container logging setup with Log4j and Tomcat<LIST>
+        <ITEM>
+          The default container classpath directory on Tomcat 6.x
+          is <CODE>CATALINA_HOME/lib</CODE> by default.
+          I.e., the "lib" subdirectory
+          of the Tomcat installation root directory.
+          You can put both Jar files and in .class files (in package
+          directory trees) into it.
+          (You can add other classpath directories by changing the
+          setting <CODE>common.loader</CODE> in the file
+          <CODE>conf/catalina.properties</CODE>).
+        </ITEM> <ITEM>
+          Copy a recent version of the file
+          <A HREF="http://pub.admc.com/lib-repos/log4j-1.2.15.jar">
+          log4j.jar</A> into the servlet container classpath directory.
+        </ITEM> <ITEM>
+          Copy a recent version of the file
+          <A HREF="http://pub.admc.com/lib-repos/admc-log4j-1.2_2.jar">
+          admc-log4j.jar</A> into the servlet container classpath directory.
+        </ITEM> <ITEM>
+          Copy the file <CODE>log4j.xml</CODE> from the samples directory
+          of your JWebMail distribution into the servlet container classpath directory.
+        </ITEM> <ITEM>
+          Set the Java System Property <CODE>logdir.common</CODE> for Tomcat.
+          Our <CODE>log4j.xml</CODE> file uses this variable to set the
+          destination directory for log files independently of where Tomcat
+          is started from.  The best way to set Java System Properties for
+          Tomcat is by setting the environmental variable CATALINA_OPTS.
+          Where to set this variable depends on how you start Tomcat.
+          If you use one of Tomcat's startup scripts directly on the
+          command-line, then set the variable according to these samples.
+          On Windows,
+          <P><CODE>
+              CATALINA_OPTS="-Djava.awt.headless=true -Xms512m -Xmx1024m -XX:MaxPermSize=256m -Dlogdir.common=$HOME/logs"
+          </CODE></P>
+          On Unix,
+          <P><CODE>
+              set CATALINA_OPTS=-Djava.awt.headless=true -Xms512m -Xmx1024m -XX:MaxPermSize=256m -Dlogdir.common=c:/logs
+          </CODE></P>
+          The samples shows unrelated settings which are often useful.
+          See the Tomcat docs for details about them.
+        </ITEM> <ITEM>
+          Restart Tomcat.
+        </ITEM>
+      </LIST>
+        If you prefer working with .properties files instead of .xml files,
+        you can make a <CODE>log4j.properties</CODE> file instead.
+        See the Log4j documentation about how to set up email alerts
+        with the SMTP appender, how to log to a database, etc.
+      </P> <P>
+        Be aware that the file (<CODE>log4j.xml</CODE> or
+        <CODE>log4j.properties</CODE>) will control all messages which
+        reach Log4j in the container space.
+        If you have three other web apps deployed to this container without
+        log4j jar files bundled, their log messages will also be filtered
+        by this file.
+      </P> <P>
+        Regardless of the container and logging product, if you manage
+        logging at the container level without a Gui, the server classpath
+        file will be the central point of application log management for
+        the container.
+        You can use package names to route messages to application-specific
+        destinations (files, emails, etc.).
+        The only tricky part of container-managed logs is routing messages
+        initiated by classes common to more than one webapp.
+        This isn't the place to discuss how to route such messages, but
+        you generally don't have to worry about it if your app catches all
+        throwables, and you have the same app deployed more than
+        once-at-a-time.
+      </P>
+    </SUBSECTION>
+  </SECTION>
+
+  <SECTION name="Configuration" id="config">
+    <P>
+      JWebMail has an administration interface which allows you to perform
+      several runtime administration tasks, including:
+      <LIST>
+        <ITEM>Changing all configuration settings</ITEM>
+        <!--  At this time, it does not shut down the server "properly".
+        <ITEM>Shutting down the server properly</ITEM>
+        -->
+        <ITEM>Adding, deleting or editing JWebMail virtual domains</ITEM>
+        <ITEM>Adding, deleting or editing JWebMail users</ITEM>
+        <ITEM>Getting status information</ITEM>
+      </LIST>
+      See the JWebMail Administrator Plugin section for details.
+    </P>
+      <SUBSUBSECTION name="General information" id="install:servlet:general">
+        <P>
+          The JWebMail servlet is called <CODE>net.wastl.webmail.servlet.WebMailServlet</CODE>. This
+          class is contained in the <CODE>webmail-servlet.jar</CODE> Java archive. Usually you will
+          need all of the provided JAR files.
+          JWebMail Servlet.
+        </P>
+        <NOTE>
+          JWebMail is being redesigned to entirely separate configuration data
+          from the application.
+          Be aware that if you change init parameters, or anything else in
+          the application itself, those changes will be lost if you ever
+          redeploy or upgrade the application.
+        </NOTE>
+        <P>
+          The JWebMail servlet uses the following <CODE>initArgs</CODE>:
+          <TABLE>
+            <TR>
+              <TD><CODE>webmail.plugin.path</CODE></TD>
+              <TD>Path to the plugin directory</TD>
+            </TR>
+            <TR>
+              <TD><CODE>webmail.auth.path</CODE></TD>
+              <TD>Path to the authenticator directory </TD>
+            </TR>
+            <TR>
+              <TD><CODE>webmail.data.path</CODE></TD> <TD>Path were data will be stored (this has to be
+                writeable by the process owner of the webserver)</TD>
+            </TR>
+            <TR>
+              <TD><CODE>webmail.lib.path</CODE></TD>
+              <TD>Path to JWebMail libraries</TD>
+            </TR>
+            <TR>
+              <TD><CODE>webmail.template.path</CODE></TD>
+              <TD>Path to language dependent template files</TD>
+            </TR>
+            <TR>
+              <TD><CODE>webmail.storage</CODE></TD>
+              <TD>Set this to <CODE>net.wastl.webmail.storage.simple.SimpleStorage</CODE> for the simple
+                storage. Other storage methods might come in the future</TD>
+            </TR>
+          </TABLE>
+        </P>
+      </SUBSUBSECTION>
+
+    <SUBSECTION name="Storage Methods" id="install:mysql">
+      <P>
+        By default, when you install the web application, a XML storage
+        are will be set up under the servlet container owner's home
+        directory.
+        The location, and many other things can be changed, but data should
+        not be written under the context root (appication deployment directory).
+      </P>
+      <NOTE>
+        A database storage option (JDBC) is planned, but implementation has not
+        yet begun.
+      </NOTE>
+<!--      <P>
+        There are also several ways to store data:
+        <LIST>
+          <ITEM>
+            You could use the simple file-based storage which stores configuration data in XML documents
+            and is very easy to set up, but perhaps not very fast.
+          </ITEM>
+          <ITEM>
+            The performance method however is to store the configuration in a SQL database. Currently
+            only MySQL is supported, but it is easy to implement storage on Oracle or PostgreSQL.
+            Using a SQL database for storage has several advantages which I will describe below.
+          </ITEM>
+        </LIST>
+      </P>-->
+<!--      <P>
+        A more performant method is JWebMail's MySQL storage where the data is stored in a MySQL database
+        instead. This has all the advantages of a standardized database management system plus a smaller
+        memory footprint (per session) since data doesn't need to be cached.
+      </P>
+
+      <SUBSUBSECTION name="Why and when use JWebMail with MySQL" id="install:mysql:advantages">
+        <P>
+          Using MySQL to store the JWebMail data has several advantages, e.g.:
+          <LIST>
+            <ITEM>User configuration is compatible over different JWebMail versions</ITEM>
+            <ITEM>DBMS allow easy backup and management</ITEM>
+            <ITEM>DBMS might be faster than file access</ITEM>
+            <ITEM>You can change the JWebMail configuration with any tool you like (you can
+              edit users even while JWebMail is running, changes are active immediately)</ITEM>
+            <ITEM>you could write simple PHP3 or Perl scripts that perform some kind of user
+              creation, perhaps asking the user for extra information like address etc and
+              storing that separately</ITEM>
+          </LIST>
+        </P>
+        <P>
+          Clearly, this also has some disadvantages:
+          <LIST>
+            <ITEM>You will have to do some extra configuration work to set up MySQL as well as
+              JWebMail before you can start</ITEM>
+            <ITEM>DBMS also might be slower than file access, depending on configuration</ITEM>
+          </LIST>
+        </P>
+        <P>
+          When you should consider using MySQL:
+          <LIST>
+            <ITEM>You have a large userbase</ITEM>
+            <ITEM>You are running MySQL commercially</ITEM>
+            <ITEM>You already have a (My)SQL database that stores user data (e.g. addresses,
+              passwords, ...) and want to give your users JWebMail access</ITEM>
+            <ITEM>You use JWebMail on a load balancing Apache server as servlet. Thus you can set
+              up an additional MySQL server that stores all the data.</ITEM>
+            <ITEM>etc.</ITEM>
+          </LIST>
+        </P>
+      </SUBSUBSECTION>
+      <SUBSUBSECTION name="Preparing MySQL" id="install:mysql:prepare">
+        <P>
+          This document assumes that you already have a running MySQL server. If you
+          don't, please set up MySQL and consult the documents provided with it.
+        </P>
+        <P>
+          <NLIST>
+            <ITEM>
+              Set up a user/password for webmail that has access from the host WebMail
+              will be running on (don't forget to <CODE>FLUSH PRIVILEGES</CODE> after that).
+              Give it all privileges (i.e. set everything to 'Y'=). You may change that
+              to access only the "webmail"-database after the database is set up.
+            </ITEM>
+            <ITEM>
+              In the JWebMail contrib directory, have a look at the file mysql_scheme.sql.
+              This file contains the DDL statements for creating a database called
+              "webmail" and creating the necessary tables and relations. You might want
+              to change the database name to something different than "webmail"
+            </ITEM>
+            <ITEM>
+              Execute <CODE>mysql -u [webmailuser] -p &lt; mysql_scheme.sql</CODE>.
+              Please substitute [webmailuser] with the user you configured in step 1.<BR/>
+              This will first ask you for the password that you gave the webmail user in
+              step 1 and then execute the DDL statements.
+            </ITEM>
+          </NLIST>
+        </P>
+        <P>
+          MySQL is now set up to work with JWebMail.
+        </P>
+      </SUBSUBSECTION>
+      <SUBSUBSECTION name="Setting up JWebMail for use with MySQL" id="install:mysql:webmail">
+        <P>
+          Setting up JWebMail is quite simple. All changes will be done in the startup
+          script <CODE>webmail.sh</CODE> (or <CODE>webmail.bat</CODE> under Windows or initArgs
+          in case of a servlet installation) in the bin/ directory. The corresponding servlet configuration
+          options are given in "(" and ")".
+        </P>
+        <P>
+          <NLIST>
+            <ITEM>Change the value of the <CODE>STORAGE</CODE> variable
+              (or <CODE>webmail.storage</CODE> initArg) to
+              <CODE>net.wastl.webmail.storage.mysql.MySQLStorage</CODE>
+            </ITEM>
+            <ITEM>
+              Change the variables <CODE>SQL_LOGIN</CODE> and <CODE>SQL_PASS</CODE>
+              (or <CODE>webmail.storage.sqllogin</CODE> and <CODE> webmail.storage.sqlpass</CODE> initArgs)
+              to the values you configured in section 4, step 1
+            </ITEM>
+            <ITEM>
+              Change the <CODE>SQL_HOST</CODE> variable (or the <CODE>webmail.storage.sqlhost</CODE> initArg)
+              to the DNS name of the MySQL server (most likely <CODE>localhost</CODE> is just fine if
+              you only have a single server)
+            </ITEM>
+            <ITEM>
+              Possibly change the value of <CODE>SQL_DB</CODE> (or <CODE>webmail.storage.sqldb</CODE>) to
+              another database name (whatever you configured in section 4, step 2)
+            </ITEM>
+          </NLIST>
+        </P>
+        <P>
+          Now you should be able to start WebMail standalone with "./webmail.sh".
+        </P>
+      </SUBSUBSECTION>
+      <SUBSUBSECTION name="Further suggestions" id="install:mysql:suggestions">
+        <P>
+          If you are also running Apache with PHP3 on the same (or a different) host:
+          <LIST>
+            <ITEM>
+              Consider fetching "phpMyAdmin" (see freshmeat.net). It gives you a web-based
+              interface for changing all kinds of MySQL data, including the WebMail
+              configuration
+            </ITEM>
+            <ITEM>
+              If you want to provide some logon scheme for new users to logon, you can
+              write that by yourself using PHP3 without too much trouble.
+            </ITEM>
+          </LIST>
+        </P>
+        <P>
+          Also, you can write your own set of administration tools in Perl (or other
+          languages).
+        </P>
+      </SUBSUBSECTION>
+      <SUBSUBSECTION name="WebMail SQL Scheme" id="install:mysql:sqlscheme">
+        <P>
+          The JWebMail SQL scheme is not yet well documented, but not too difficult to
+          understand. It consists of the relations "users2userdata" and "users2mailhosts"
+          that connect the data tables as well as the data tables "users", "userdata"
+          and "mailhosts" containing the real data.
+        </P>
+      </SUBSUBSECTION>-->
+    </SUBSECTION>
+
+    <SUBSECTION name="JWebMail Administrator Plugin" id="config:admin">
+      <SUBSUBSECTION name="Connecting" id="config:admin:connecting">
+        <P>
+          You can connect to the administration interface with your browser by simply entering
+          the URL <CODE>http(s)://webmail_server:port/jwebmail/admin</CODE> in the address field of your browser.
+          (set http/https and replace webmail_server and port with the correct values).
+        </P>
+        <P>
+          You'll be presented the administrator's login screen then. Enter the password there
+          (on first startup the password is "Secret") and click the login button. You should see
+          the system settings form then.
+        </P>
+      </SUBSUBSECTION>
+      <SUBSUBSECTION name="System Settings" id="config:admin:system">
+        <P>
+          The first page gives you a list of JWebMail system variables and their values. You can
+          change any variables you like (there is a short description for each of them) and then
+          hit the submit button on the bottom of the page.
+        </P>
+        <P>
+          There are basically 4 kinds of input fields (although you will probably only recognize
+          2 on first look):
+          <LIST>
+            <ITEM>simple text input fields</ITEM>
+            <ITEM>drop down selects</ITEM>
+            <ITEM>integer input fields (look like text input fields)</ITEM>
+            <ITEM>password input fields (look like text input fields and show the encrypted password!)</ITEM>
+          </LIST>
+        </P>
+        <P>
+          All of these fields will check whether the value entered is (more or less) correct if you submit
+          the form.
+        </P>
+        <P>
+          <NOTE>Special note on password fields: The password is shown encrypted (Unix crypt()), but
+            if you want to change your password, please enter it in plain text. It will then show
+            up encrypted again, after you hit the submit button (but still be the password you just
+            entered).</NOTE>
+        </P>
+        <!--  Need to look into it, but Shutdown is badly broken.
+        It could well be that these functions were never intended to work in a
+        servlet container.
+        <P>
+          To shutdown or restart the JWebMail server, enter the time in seconds until the action
+          will be performed and hit the appropriate button ("SHUTDOWN" or "REBOOT").
+          <STRONG>ATTENTION</STRONG>: You will not get anything like an answer after you do this
+          (since you are shutting down the server this is quite difficult) and you will not be asked
+          whether you really want to do this! Most likely you will get a "connection timed out" or
+          "document contains no data" dialog.
+        </P>
+        -->
+      </SUBSUBSECTION>
+      <SUBSUBSECTION name="JWebMail Virtual Domain Support" id="config:admin:vdom">
+        <P>
+          Virtual Domains in JWebMail are a quite new concept (thanks to Oswaldo E. Aguirre M. for
+          the idea).
+        </P>
+        <P>
+          They basically provide the following features:
+          <LIST>
+            <ITEM>users are associated to a domain (even if you only have one domain)</ITEM>
+            <ITEM>each domain can have its own authentication host (if IMAP/POP authentication is used)</ITEM>
+            <ITEM>the administrator of JWebMail can impose certain restrictions on users of a JWebMail
+              domain. e.g. you can restrict the hosts where users may connect to here</ITEM>
+            <ITEM>each domain has its own default host where the user's primary folder will be found</ITEM>
+            <ITEM>the user's default email address will be set to
+              "<CODE>user@domain</CODE>"</ITEM>
+          </LIST>
+        </P>
+        <P>
+          Naturally, with this concept you will need to have at least one domain even if you don't
+          plan to use virtual domains really.
+        </P>
+        <P>
+          The JWebMail virtual domain setup form is quite simple and self explanatory, I think.
+          There is one column where you have to enter the domain name, one where you have to
+          enter this domain's default host (user's primary folder host), one for the authenti-
+          cation host (not necessarily the same as the default host), and some fields that
+          control the restrictions for users of this domain. With the checkbox, you can turn on/off
+          host restriction completely, in the allowed hosts column, you can enter a comma-separated
+          list of domains/hosts where users may access IMAP folders (e.g. "wastl.net" would allow
+          them to use "mail.wastl.net" and "pop.wastl.net" while setting it to "mail.wastl.net"
+          would just allow "mail.wastl.net" (and certainly "imap.mail.watl.net") and so on (suffix
+          is matched to say it simple)).
+        </P>
+      </SUBSUBSECTION>
+      <SUBSUBSECTION name="Editing Users" id="config:admin:users">
+        <P>
+          You can add, edit and delete users from the administration interface (Note that you don't
+          have to create users before they may use JWebMail since they get default settings when they
+          first log on authenticating against IMAP, POP or Unix).
+        </P>
+        <P>
+          To create a user,
+          <LIST>
+            <ITEM>enter the user name and the domain in the user field (in the form "<CODE>user@domain</CODE>")</ITEM>
+            <ITEM>optionally change all the other fields from the default settings</ITEM>
+            <ITEM>hit the create/edit button on the bottom of the page</ITEM>
+          </LIST>
+        </P>
+        <P>
+          To edit a user,
+          <LIST>
+            <ITEM>select the user in the drop down menu OR enter the user name (with domain) in the short
+              text field</ITEM>
+            <ITEM>edit the user settings</ITEM>
+            <ITEM>hit the create/edit button on the bottom of the page</ITEM>
+          </LIST>
+        </P>
+        <P>
+          To delete a user,
+          <LIST>
+            <ITEM>select the user in the drop down menu OR enter the user name (with domain) in the short
+              text field</ITEM>
+            <ITEM>Hit the delete button</ITEM>
+          </LIST>
+        </P>
+      </SUBSUBSECTION>
+      <SUBSUBSECTION name="Viewing JWebMail Status" id="config:admin:status">
+        <P>
+          Last but not least you can get an overview of currently active sessions with
+          the "view sessions" link. You will get some status information there as well as
+          the possibility to explicitly kill an active session (whatever maybe the reason).
+          Please be careful however with this feature, as you are very likely to kill a
+          session that is currently in use and its user will probably not be very happy about
+          that. The sessions will expire after a configured time anyway.
+        </P>
+        <P>
+          The Administrator Interface is currently available in English only, but the
+          templates are already prepared for translation The system's default language will then be
+          used (determined by the LANG environment setting).
+        </P>
+        <P>
+          I hope the rest is quite self explanatory at the moment, but I'll add some
+          documentation later.
+        </P>
+      </SUBSUBSECTION>
+    </SUBSECTION>
+
+    <!-- This probably should not work in a Servlet Container:
+    <SUBSECTION name="File-Based Shutdown" id="config:admin:shutdown">
+      <P>
+        You can initiate a JWebMail shutdown when you create a file "shutdown"
+        (or whatever you configured) in the data directory with only the
+        admin password in it. This option can be disabled. It is useful in
+        automatic system startup/shutdown.
+      </P>
+    </SUBSECTION>
+    -->
+  </SECTION>
+
+
+  <SECTION name="User Authentication" id="auth">
+    <P>
+      JWebMail supports extended user authentication. At the moment, the
+      following authentication methods are supported:
+      <LIST>
+        <ITEM><STRONG>SIMPLE</STRONG>: Use JWebMail's former authentication method. Password is only
+          checked against the user's configuration. The user may change his password from within JWebMail</ITEM>
+        <ITEM><STRONG>IMAP</STRONG>: Check login/password on a remote IMAP host. JWebMail tries to
+          login on a remote IMAP host with the given login and password.<BR/>
+          If login fails, JWebMail doesn't allow access.</ITEM>
+        <ITEM><STRONG>POP</STRONG>: Same for a POP3 server</ITEM>
+        <ITEM><STRONG>UNIX</STRONG>: Check login/password using Unix's login facility.
+          login/password are checked against the Unix passwd/shadow files.<BR/>
+          Note: JWebMail must be run as user root to use Unix Authentication</ITEM>
+      </LIST>
+    </P>
+    <P>
+      Changing authentication method can be achieved using the Administration
+      Interface and changing the <CODE>AUTH</CODE> variable.
+      For IMAP authentication there is an extra configuration variable called
+      <CODE>AUTHHOST</CODE>.
+    </P>
+  </SECTION>
+
+
+  <SECTION name="Usage" id="usage">
+    <SUBSECTION name="General Usage" id="usage:general">
+      <P>
+        The JWebMail daemon listens on whatever port you have configure.
+        Just point your browser´s URL to http://yourhost:yourport/jwebmail
+        and see the login screen.
+      </P>
+      <P>
+        A user will get the password he logs in with the first time. Passwords
+        may be changed by the user in the options dialog.
+        JWebMail will try to establish a default connection to the configured
+        default IMAP host with the user ID and password it was given, so it may
+        be useful to use the same ID and password as on the IMAP host.
+      </P>
+      <P>
+        For further information, just click on the "?" at the navigation bar.
+      </P>
+      <P>
+        JWebMail should also work with Proxy Servers and other Clients than
+        Netscape Communicator.
+      </P>
+    </SUBSECTION>
+
+    <SUBSECTION name="Folders" id="usage:folders">
+      <P>
+        JWebMail supports as many IMAP folders on as many different hosts you like.
+      </P>
+      <P>
+        JWebMail mailboxes are configured by each user, however the administrator can
+        change the default mailbox for each virtual domain. The default mailbox is the
+        mailbox the user gets on the first login. He can than choose to remove it at any time
+        and also add other mailboxes (the administrator can restrict that in the virtual
+        domain configuration).
+      </P>
+    </SUBSECTION>
+  </SECTION>
+
+
+  <SECTION name="Different Languages, Translating JWebMail" id="lang">
+    <P>
+      JWebMail supports the usage of different languages on a per user basis.
+      Since v0.6.0 JWebMail scans for available languages automatically and adds
+      the corresponding locales to the user's setup dialog ("de" will add the
+      locales "de_DE", "de_AT", "de_CH", ...).<BR/>
+      To translate JWebMail to a new language, please read the file "Translating"
+      in the developers' documentation (source only).
+    </P>
+  </SECTION>
+
+
+  <SECTION name="Notes" id="notes">
+    <SUBSECTION name="JWebMail Status" id="notes:status">
+      <P>
+        JWebMail Pre-1.0.1 is BETA.
+      </P>
+      <P>
+        Some features on the wish-list are
+        <LIST>
+          <ITEM>Captcha</ITEM> to prevent robots, trojans, and miners from
+            sapping our servers.
+          <ITEM>JDBC Integration</ITEM>
+          <ITEM>Refactor and modernize the authentication methods</ITEM>
+          <ITEM>Different XSL stylesheets to convert the JWebMail UI to other
+            formats than HTML (perhaps WML for mobile phones)</ITEM>
+          <ITEM>PGP</ITEM>
+          <ITEM><EM>Extras</EM> like calendar and so on
+            (will be realized as JWebMail Plugins)</ITEM>
+        </LIST>
+      </P>
+    </SUBSECTION>
+    <SUBSECTION name="Changes" id="notes:changes">
+      <P>
+        See the file <CODE>changes.txt</CODE> for a list of changes in the different
+        JWebMail releases.
+      </P>
+    </SUBSECTION>
+  </SECTION>
+
+  <SECTION name="License" id="license">
+        <P>
+      JWebMail is copyright 2008 by the JWebMail Development Team and Sebastian Schaffert.
+    </P>
+        <P>
+      The base JWebMail product
+      is distributed under the terms of the Apache 2.0 license.
+      You can find a copy in the file <A HREF="LICENSE.txt">LICENSE.txt</A>,
+      or at <A HREF="http://www.apache.org/licenses/LICENSE-2.0">
+      http://www.apache.org/licenses/LICENSE-2.0</A>.
+    </P> <P>
+      The Bibop theme is copyrighted under the supplied GPL 2 license.
+    </P>
+  </SECTION>
+
+  <SECTION name="Contributed Documentation" id="doc_contrib">
+    <P>
+      <EM>Contributed Documentation</EM> is documentation that has been provided by people that are not
+      core JWebMail developers but have managed to run JWebMail on different platforms/systems and taken the
+      effort to provide you with some sort of extra documentation (thanks a lot, BTW). I (Sebastian
+      Schaffert) have not tested what you will find here.
+    </P>
+  </SECTION>
+
+  <SECTION name="Credits" id="credits">
+    <P>
+      Appreciation to all who reported bugs and made suggestions to
+      improve JWebMail.
+    </P>
+    <P>
+      Some, however, I want to mention explicitly:
+      <LIST>
+        <ITEM>Sebastian Schaffert, schaffer@informatik.uni-muenchen.de,
+        who was the project lead before me.</ITEM>
+        <ITEM>Devin Kowatch, devink@webengruven.org, for contributing challenge/response authentication</ITEM>
+        <ITEM>Homero Borgo, homero@apoyo.uson.mx, for testing JWebMail under rough conditions
+          and helping much to find bugs in the product.</ITEM>
+        <ITEM>Sebastian's girlfriend for her patience and the cool icons for JWebMail 0.5 and 0.6</ITEM>
+        <ITEM>The people at Bibop in Italy, especially Gianugo Rabellino and Ricardo Rocha for
+          doing the Bibop Theme and lots of inspirations</ITEM>
+        <ITEM>Sacha Berger, bergers@informatik.uni-muenchen.de, for some very interesting
+        discussions about how to do things right.:-)</ITEM>
+      </LIST>
+    </P>
+    <P>
+      <STRONG>Blaine Simpson, blaine.simpson@admc.com</STRONG>
+    </P>
+  </SECTION>
+</GUIDE>

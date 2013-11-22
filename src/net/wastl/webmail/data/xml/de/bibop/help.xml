@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- This file contains the JWebMail help for users, English language -->
+
+<!-- $Id: help.xml 126 2008-10-31 03:41:09Z unsaved $ -->
+
+<!--
+ * Copyright (C) 2000 Sebastian Schaffert
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+
+<!-- This is part of the German translation of JWebMail -->
+
+<!DOCTYPE help SYSTEM "../../../xml/webmail_help.dtd">
+
+<help>
+  <helptopic id="mailbox" title="JWebMail Briefkasten-/Ordnerübersicht">
+    <icon href="icona_mail2.gif"/>
+    <helpdata>
+      <p>
+        Hier bekommst Du eine Übersicht über alle Deine Briefkästen und die darin enthaltenen Ordner (die nicht
+        als "versteckt" markiert sind - siehe Ordnereinstellungen).<br/>
+        Jeder Ordner hat eine Spalte mit der Anzahl an Nachrichten insgesamt und der Anzahl an neuen Nachrichten.
+        Möglicherweise gibt es auch Ordner die keine Nachrichten enthalten können sondern nur Unterordner (oder
+        der Ordner ist versteckt, aber ein Unterordner sichtbar).<br/>
+        Du kannst auf jeden Ordner (der Nachrichten enthalten kann) klicken um eine Übersicht über die Nachrichten
+        zu erhalten.
+      </p>
+      <note>Wenn Du einen Ordner hier nicht findest, der eigentlich da sein sollte, dann ist er möglicherweise
+        versteckt. Gehe zu den Ordnereinstellungen, um das zu ändern</note>
+    </helpdata>
+    <ref ref-id="messagelist"/>
+    <ref ref-id="folder-setup-mailboxes"/>
+    <ref ref-id="folder-setup-folders"/>
+  </helptopic>
+  <helptopic id="messagelist" title="Nachrichtenliste für einen Ordner">
+    <helpdata>
+      <p>
+        In der Nachrichtenliste bekommst Du eine Übersicht der Nachrichten in Deinem Ordner (je nachdem wird
+        nur ein bestimmter Teil der Liste angezeigt, das kann in den Benutzereinstellungen konfiguriert werden).
+        Du wirst von einer Nachricht das Thema, den Absender, die Größe und einige Markierungen, die gesetzt sind
+        ("neu","gelesen","beantwortet","mehrere Teile") sehen.<br/>
+        Du kannst eine Nachricht anzeigen, indem Du auf ihr Thema klickst.<br/>
+        Du hast die Möglichkeit eine oder mehrere Nachrichten auszuwählen und Aktionen darauf auszuführen, wie das
+        Setzen/Entfernen obiger Markierungen oder das Kopieren/Verschieben in andere Ordner (und andere
+        Briefkästen).
+      </p>
+      <note>Du mußt den Schreibmodus in den Benutzereinstellungen aktivieren, um Nachrichtenmarkierungen zu ändern!</note>
+    </helpdata>
+    <ref ref-id="user-setup"/>
+    <ref ref-id="showmessage"/>
+  </helptopic>
+  <helptopic id="showmessage" title="Anzeigen einer Nachricht">
+    <helpdata>
+      <p>
+        Die Nachrichtenanzeige besteht aus drei Teilen: Einem Kopf, einem Körper und einem Fuß.<br/>
+        <p>
+          Im <em>Kopf</em> erhälst Du Informationen aus dem Nachrichtenkopf, wie dem Absender, den Empfängern,
+          dem Thema und dem Datum.
+        </p>
+        <p>
+          Im <em>Körper</em> wird der Nachrichtentext angezeigt. Wenn es angehängte Teile gibt, so hast Du die
+          Möglichkeit, diese entweder eingebettet (Bilder oder Text) anzuzeigen oder Du bekommst einen Link
+          zum Herunterladen auf Deinen Rechner. Informationen über die angehängte Datei werden nach dem
+          Nachrichtentext angezeigt.
+        </p>
+        <p>
+          Im <em>Fuß</em> hast Du wieder die Möglichkeit Aktionen auf diese Nachricht auszuführen
+          (verschieben/kopieren in anderen Ordner, Markierungen setzen).
+        </p>
+      </p>
+    </helpdata>
+  </helptopic>
+  <helptopic id="compose" title="Schreiben einer Nachricht">
+    <icon href="icona_composer2.gif"/>
+    <helpdata>
+      <p>
+        Im Formular zum Schreiben neuer Nachrichten kannst Du (logischerweise) neue Nachrichten schreiben. Im Kopf
+        mußt Du mindestens den Empfänger und das Thema ausfüllen. Im großen Feld darunter kannst Du den
+        Nachrichtentext schreiben.
+      </p>
+      <p>
+        Du kannst Dateien anhängen, indem Du den <em>Dateien anhängen</em> Knopf drückst. Deine Nachricht wird dann
+        zwischengespeichert während Du die Anhängsel bearbeitest.
+      </p>
+    </helpdata>
+    <ref ref-id="compose-attach"/>
+  </helptopic>
+  <helptopic id="compose-attach" title="Dateien anhängen">
+    <helpdata>
+      <p>
+        Während Du eine Nachricht bearbeitest, kannst Du Dateien von Deinem eigenen Rechner anhängen. Diese
+        werden an den JWebMail-Server übertragen und an Deine Nachricht angehängt (das kann einige Zeit dauern,
+        abhängig davon wie groß die Datei ist und wie schnell Deine Verbindung).
+      </p>
+      <p>
+        Der <em>Dateien anhängen</em>-Schirm gibt Dir die Möglichkeit, Deine Festplatte zu durchsuchen und eine
+        Datei anzuhängen, wenn Du den "Durchsuchen"-Knopf drückst. Nachdem Du eine Datei ausgewählt hast, kannst
+        Du eine Beschreibung dazu eingeben und schließlich alles mit <em>Neue Datei hinzufügen</em> an die
+        Nachricht anhängen. Abhängig von der Systemkonfiguration gibt es ein Limit für die maximale Gesamtgröße
+        der Attachments. Das kann von Deinem Systemadministrator konfiguriert werden.
+      </p>
+      <p>
+        Bereits angehängte Dateien werden an der linken Seite des Bildschirms dargestellt. Um eine Datei wieder
+        zu entfernen, wähle sie in der Liste aus und drücke den <em>Gewählte Dateien löschen</em> Knopf.
+      </p>
+    </helpdata>
+    <ref ref-id="compose"/>
+  </helptopic>
+  <helptopic id="folder-setup" title="Ordnereinstellungen">
+    <icon href="icona_folder2.gif"/>
+    <helpdata>
+      <p>
+        In den <em>Ordnereinstellungen</em> hast due die Wahl entweder Deine Briefkasteneinstellungen oder Deine
+        Ordnereinstellungen innerhalb eines existierenden Briefkastens zu ändern.
+      </p>
+      <p>
+        <em>Briefkasten hinzufügen/löschen</em>: JWebMail erlaubt es, auf mehrere voneinander unabhängige IMAP oder
+        POP3 Briefkästen zuzugreifen. Dazu mußt Du den Servernamen, das Protokoll und die Anmeldeinformationen
+        angeben.
+      </p>
+      <p>
+        <em>Unterordner hinzufügen/löschen</em>: Innerhalb eines Briefkastens können sich mehrere Ordner befinden
+        (in einer Baumstruktur organisiert). Das funktioniert mit IMAP aber nicht mit POP3-Briefkästen. Hier kannst
+        Du Ordner zu Briefkästen hinzufügen oder löschen und einzelne Ordner verstecken/anzeigen.
+      </p>
+    </helpdata>
+    <ref ref-id="folder-setup-folders"/>
+    <ref ref-id="folder-setup-mailboxes"/>
+  </helptopic>
+  <helptopic id="folder-setup-folders" title="Unterordner einrichten">
+    <helpdata>
+      <p>
+        Wie bereits erwähnt kann ein (IMAP-) Briefkasten mehrere Ordner haben. Der
+        <em>Unterordner hinzufügen/löschen</em>-Schirm erlaubt Dir, in jedem Deiner Briefkästen Ordner hinzuzufügen
+        oder zu löschen. Außerdem kannst Du angeben, welche Ordner in der Übersicht angezeigt werden sollen und
+        welche nicht.<br/>
+        Ordner sind für jeden Deiner Briefkästen in einer Baumstruktur organisiert. Bei jedem Ordner hast Du die
+        Möglichkeit, ihn zu löschen oder, wenn der Ordner andere Ordner enthalten kann, einen Unterordner
+        hinzuzufügen. Versteckte Ordner bieten ausserdem die Option, sie wieder anzuzeigen, sichtbare die Option
+        sie zu verstecken.
+      </p>
+      <warning>
+        <strong>Achtung!</strong> Wenn Du einen Ordner löschst, werden alle darin enthaltenen Nachrichten und
+        Ordner <strong>gelöscht</strong>, und zwar nicht nur aus JWebMail, sondern <strong>physisch auf dem
+          Mailserver</strong>! Das ist gefährlich und kann nicht rückgängig gemacht werden!
+      </warning>
+    </helpdata>
+  </helptopic>
+  <helptopic id="folder-setup-mailboxes" title="Briefkästen einrichten">
+    <helpdata>
+      <p>
+        JWebMail gibt Dir die Möglichkeit, mehrere voneinander unabhängige Briefkästen unter einer Oberfläche
+        zu verwalten. Um das zu konfigurieren kannst Du <em>Briefkästen einrichten</em> benutzen.
+      </p>
+      <p>
+        Im ersten Teil Deines Schimrs hast Du eine Liste Deiner momentan eingerichteten Briefkästen. Du kannst den
+        <em>Löschen</em>-Link verwenden um einen Briefkasten aus JWebMail zu entfernen.
+      </p>
+      <note>
+        Im Gegensatz zu den Ordnereinstellungen wird ein Briefkasten nur aus JWebMail entfernt, wenn Du hier auf
+        <em>löschen</em> klickst. Du hast weiterhin Zugriff darauf von anderen EMail-Clients aus.
+      </note>
+      <p>
+        Im zweiten Teil des Bildschirms kannst Du einen neuen Briefkasten hinzufügen indem Du die notwendigen
+        Informationen einträgst (Kennung, Passwort, Servername und Protokoll für den Briefkasten - Kontaktiere
+        Deinen Administrator, wenn Du nicht weißt, was zu tun ist).
+      </p>
+    </helpdata>
+  </helptopic>
+  <helptopic id="setup" title="Benutzereinstellungen">
+    <icon href="icona_user2.gif"/>
+    <helpdata>
+      <p>
+        In den <em>Benutzereinstellungen</em> kannst Du Deine allgemeinen Einstellungen, wie Sprache, Name,
+        Unterschrift und Anzeigeoptionen ändern.
+      </p>
+      <p>
+        <ul>
+          <li><em>Vollständiger Name</em>: Der Name, der in ausgehenden Nachrichten und als JWebMail-Begrüßung
+          erscheint</li>
+          <li><em>Sprache</em>: Die Sprache, in der JWebMail angezeigt wird</li>
+          <li><em>Passwort</em> und <em>Wiederholung</em>: Wenn die Systemkonfiguration das Ändern des Passworts
+            erlaubt (frage Deinen Administrator), dann kannst Du das hier tun. Bitte vergiß nicht, das Passwort in
+            beiden Feldern einzutragen.</li>
+          <li><em>Nachrichten pro Seite</em>: Festlegen wieviele Nachrichten aufeinmal angezeigt werden in der
+            Nachrichtenliste (default: 20)</li>
+          <li><em>Verzierungen anzeigen</em>: Anzeigen von graphischen "Verschönerungen", die ansonsten nicht sehr
+          viel Funktionalität bieten</li>
+<!--      <li><em>Filter JavaScript</em>: Try to recognize JavaScript in emails and filter it out so you
+            don't have security problems (this should be enabled).</li> -->
+          <li><em>Ordner automatisch leeren</em>: Hier kann man einstellen, ob Nachrichten sofort gelöscht werden,
+            oder erst beim Abmelden</li>
+          <li><em>Angehängte Bilder zeigen</em>: An Nachrichten angehängte Bilder eingebettet zeigen. Ansonsten
+            werden sie wie normale Dateien behandelt.</li>
+          <li><em>Schreibmodus</em>: Schreibmodus auf Ordnern aktivieren. Wenn das nicht gesetzt ist, kann man weder
+            Nachrichten löschen noch Markierungen setzen. Allerdings setzt dann JWebMail auch nicht automatisch die
+            "gelesen" und "beantwortet" Markierung.</li>
+          <li><em>Zeilenumbruch</em> und <em>max. Zeilenlänge</em>: Ob und wo ein Zeilenumbruch eingefügt werden
+            soll beim Lesen und Bearbeiten von Nachrichten.</li>
+          <li><em>Gesendete speichern</em> und <em>in Ordner</em>: Ob und wo gesendete Nachrichten gespeichert
+          werden sollen.</li>
+          <li><em>Email Adresse</em>: Die Email Adresse die in ausgehenden Nachrichten gezeigt wird.</li>
+          <li><em>Unterschrift</em>: Die Unterschrift, die an Nachrichten angehängt werden soll, die Du schreibst</li>
+        </ul>
+      </p>
+    </helpdata>
+  </helptopic>
+  <helptopic id="logout" title="Abmelden">
+    <helpdata>
+      <p>
+        Diese Sitzung verlassen und den Server Deine Benutzerkonfiguration speichern lassen. Du bekommst nach
+        einigen Sekunden den Login-Schirm angezeigt. Wenn Du vergißt, Dich abzumelden, wird Deine Sitzung nach
+        einer festgelegten Zeit automatisch geschlossen.
+      </p>
+    </helpdata>
+  </helptopic>
+</help>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE SYSDATA SYSTEM "%DTDDIR%/sysdata.dtd">
+
+<SYSDATA>
+
+  <VIRTUALS enabled="true"/>
+
+  <DOMAIN>
+    <NAME>localnet</NAME>
+    <DEFAULT_HOST>localhost</DEFAULT_HOST>
+    <AUTHENTICATION_HOST>localhost</AUTHENTICATION_HOST>
+    <RESTRICTED/>
+    <ALLOWED_HOST>localhost</ALLOWED_HOST>
+  </DOMAIN>
+</SYSDATA>

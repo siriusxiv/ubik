@@ -1,0 +1,55 @@
+$Id: README.webengruven 52 2008-10-25 04:29:12Z unsaved $
+
+Readme for challenge/response authentication patches.
+
+This tar ball has almost everything you will need to setup jwebmail to
+handle Challenge/Response authenticators, and it has an OTPAuthenticator as
+well.  The other thing that is needed is my javaOTP package, which is an
+RFC 1938 compliant OTP server-side implementation. It's available at:
+http://www.webengruven.org/code/javaOTP-bin.tgz
+
+All the patches except webmail-servlet.properties.diff should be applied in
+the webmail/src directory with a command like:
+patch -p0 < patch.file
+
+webmail-servlet.properties.diff should be applied in the base webmail dir
+with the same command.
+
+The various files inculded in this tar ball are:
+
+webmail-servlet.properties.template.diff -- diff for
+    webmail/webmail-serverlet.properties.template file.  This tells mod_jserv
+    to look for javaOTP.jar.
+
+webmail.src.net.diff -- The main diff file for the webmail/src/net source
+    tree.  This is a big one which contains almost all the changes to the
+    src/net tree.
+
+xsl.diff -- This also contains diffs for files under src/net, but only the
+    .xsl files for the classic theme in the english language.  Right now
+    that is the only language which I've made the changes too, and thus the
+    only one which can really handle OTP's and Challenge/Response
+    authentication in general.
+
+changepass.xsl -- This file should be moved to
+    src/net/wastl/webmail/data/xml/*/*.  It controls some of the look
+    and feel of various authentication mechanisms, (normal or
+    Challenge/response).
+
+makefile1.diff -- This contains a few changes to the makefile relating to
+    how LIBDIR, CONTRIBDIR, and DATADIR are set.  I found that if
+    webmail/lib doesn't exist then the first time you make webmail it will
+    start cleaning lib at the root directory.  This will fix that and make
+    it easier to override BASEDIR and get the expected behavior of changing
+    LIBDIR, CONTRIBDIR, and DATADIR as well.
+
+makefile2.diff -- This contains some changes so that the make file now
+    handles javaOTP.jar and the webengruven plugins dir.
+
+doc/Authenticators -- document explaining how to create your own
+    authenticator and how authentication works.
+
+org/webengruven/webmail/* -- All the files relating to Challenge/Response
+    and OTP authentication, plus a few others that were added while making
+    changes.  It is probably best to completely remove the
+    org/webengruven/webmail dir that comes with webmail v0.7.4

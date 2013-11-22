@@ -1,0 +1,25 @@
+$Id: templates.txt 140 2008-10-31 21:49:50Z unsaved $
+
+WebMail templates
+=================
+
+WebMail pages are assembled using templates in normal HTML with special tags that are
+enclosed in "<<" and ">>". The tag name is looked up in the current session's
+environment table and the tag replaced with the value found there.
+WebMail uses the gnu.regexp package for this.
+There is currently no list of all available tags, but those are the most common:
+
+<<SESSION>>             The current session ID. Mainly used in URLs
+<<VERSION>>             Version of WebMail
+<<DATE>>                Current date in locale specific format
+<<OS>>                  Name of the operating system
+<<LOGIN>>               Login name of the user
+<<EMAIL>>               EMail address of the user
+<<SIGNATURE>>           Signature of the user
+<<FULL NAME>>           Full name of the user
+<<FOLDERS WELCOME>>     A list of folders for the welcome screen (include number of
+                        messages, status, ...)
+<<FOLDERS CONFIG>>      List of folders for the folder setup dialog
+<<FOLDERS>>             Standard <SELECT> style list of folders
+
+See the method setEnv() in WebMailSession for more tags.

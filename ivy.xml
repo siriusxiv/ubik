@@ -1,0 +1,36 @@
+<ivy-module version="2.0">
+	<!-- $Id: ivy.xml 57 2008-10-25 15:55:43Z unsaved $ -->
+	<info organisation="admc" module="jwebmail" />
+
+	<configurations>
+		<conf name="baseconf" visibility="private"
+			description="Dependencies which hold for all other confs" />
+		<conf name="build" description="Build-time" extends="baseconf" />
+		<conf name="bundle" description="Include with webapp dist"
+			extends="baseconf" />
+	</configurations>
+
+	<dependencies>
+		<dependency org="xalan" name="xalan" rev="2.7.1"
+			transitive="false" conf="build,bundle->default" />
+		<dependency org="xalan" name="serializer" rev="2.7.1"
+			transitive="false" conf="bundle->default" />
+		<dependency org="commons-logging" name="commons-logging"
+			rev="1.1.1" transitive="false" conf="build,bundle->default" />
+		<dependency org="cos" name="cos" rev="20021105" transitive="false"
+			conf="build,bundle->default" />
+		<!-- webengruven OTP auth library. Version num faked because unknown. -->
+		<dependency org="otpauth" name="otpauth" rev="0.1"
+			transitive="false" conf="build,bundle->default" />
+		<dependency org="servlet-api" name="servlet-api" rev="2.4"
+			transitive="false" conf="build->default" />
+		<dependency org="mail" name="mailapi" rev="1.4.1"
+			transitive="false" conf="build->default" />
+		<dependency org="mail" name="pop3" rev="1.4.1" transitive="false"
+			conf="bundle->default" />
+		<dependency org="mail" name="imap" rev="1.4.1" transitive="false"
+			conf="bundle->default" />
+		<dependency org="mail" name="smtp" rev="1.4.1" transitive="false"
+			conf="bundle->default" />
+	</dependencies>
+</ivy-module>

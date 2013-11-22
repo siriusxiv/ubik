@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the JWebMail help for users, French language -->
+
+<!-- $Id: help.xml 126 2008-10-31 03:41:09Z unsaved $ -->
+
+<!--
+ * Copyright (C) 2000 Sebastian Schaffert
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+<!-- This is part of the French translation of JWebMail - Christian SENET - senet@lpm.u-nancy.fr - 2002 -->
+
+<!DOCTYPE help SYSTEM "../../../xml/webmail_help.dtd">
+
+
+<help>
+  <helptopic id="mailbox" title="Dossier-Boîte aux Lettres JWebMail - Vue d'ensemble">
+    <icon href="icona_mail2.gif"/>
+    <helpdata>
+      <p>
+        Vous pouvez obtenir une vue d'ensemble de toutes vos boîtes aux lettres et des dossiers qu'elles contiennent.
+        Chaque dossier-boîte a une colonne affichant le nombre total de messages et le nombre de nouveaux messages.
+        Il peut aussi y avoir des dossiers qui ne contiennent aucun message, mais seulement des sous-dossiers.
+        Vous pouvez cliquer sur chaque dossier (contenant des messages) pour voir la liste des messages.
+      </p>
+      <note>Si vous ne voyez pas des dossiers pourtant attendus (IMAP), il se peut qu'il soit marqués 'masqués'. Dans ce cas,
+      allez dans le 'Setup Dossier' pour les rendre visibles.</note>
+    </helpdata>
+    <ref ref-id="messagelist"/>
+    <ref ref-id="folder-setup-mailboxes"/>
+    <ref ref-id="folder-setup-folders"/>
+  </helptopic>
+
+  <helptopic id="messagelist" title="Lister les Messages d'un Dossier">
+    <helpdata>
+      <p>
+        Dans la liste des messages, vous avez une vue d'ensemble des messages contenus dans le dossier. Vous verrez
+        le sujet, l'expéditeur, la date, la taille et des marqueurs positionnés ou non ('nouveau', 'lu',
+        'répondu', 'doc. attaché', 'effacé').<br/>
+        Vous pouvez afficher le message en cliquant sur son sujet.<br/>
+        Vous avez la possibilité de sélectionner un ou plusieurs messages afin d'effectuer certaines actions
+        comme le positionnement de marqueurs ou le déplacement/copie vers d'autres dossiers.
+      </p>
+      <note><p>Vous devez auparavant COCHER 'activer marqueurs de message' dans le 'Setup Utilisateur' pour pouvoir les modifier effectivement</p></note>
+    </helpdata>
+    <ref ref-id="user-setup"/>
+    <ref ref-id="showmessage"/>
+  </helptopic>
+
+  <helptopic id="showmessage" title="Afficher un Message">
+    <helpdata>
+      <p>
+        L'affichage du message est constitué de 3 parties: un entête, un corps et un pied.<br/>
+        <p>
+          Dans <bold>l'entête</bold>, vous avez des informations fournies par l'entête du message: l'expéditeur, le(s)
+          destinataire(s), à qui répondre , le destinataire de la Copie Carbone, le sujet, et la date.
+        </p>
+        <p>
+          Dans le <bold>corps</bold>, le texte du message est affiché. S'il y a des documents attachés au message, il
+          sera possible de les voir soit en ligne (ex. images ou texte), soit de les télécharger depuis le serveur.
+          Les informations concernant le document attaché sont affichées après le texte du message.
+        </p>
+        <p>
+          Dans le <bold>pied</bold>, vous avez à nouveau de quoi effectuer des actions sur ce message (déplacer/copier vers d'autres
+          dossiers, positionner les marqueurs de message) et ceci, uniquement pour les boîtes IMAP.
+        </p>
+      </p>
+    </helpdata>
+  </helptopic>
+
+  <helptopic id="compose" title="Composer un Message">
+    <icon href="icona_composer2.gif"/>
+    <helpdata>
+      <p>
+        Dans la fenêtre de composition vous pouvez écrire un nouveau message. Dans l'entête, vous devez
+        remplir au moins les champs 'Destinataire' et 'Sujet'. Dans le grand cadre, vous pouvez taper le texte du message.
+      </p>
+      <p>
+        Vous pouvez attacher des documents via le bouton <bold>'Attacher Fichiers'</bold>. Votre texte est conservé
+        le temps de la manipulation des fichiers à attacher.
+      </p>
+    </helpdata>
+    <ref ref-id="compose-attach"/>
+  </helptopic>
+
+  <helptopic id="compose-attach" title="Attacher des Fichiers">
+    <helpdata>
+      <p>
+        Lorsque vous composez un message, vous pouvez attacher des fichiers de votre système local. Ceux-ci
+        seront envoyés au Serveur JWebMail et attaché à votre message (ceci peut prendre du temps, notamment
+        pour des connexion Internet lentes de type modem).
+      </p>
+      <p>
+        La <bold>fenêtre d'attachement</bold> vous permet de parcourir votre disque dur pour ajouter un fichier
+        si vous appuyez sur le bouton <bold>'Parcourir'</bold>. Après avoir sélectionné un fichier,
+        vous pouvez entrer une description pour celui-ci et finalement cliquer sur <bold>'Ajouter Nouveau Fichier'</bold>
+        pour l'ajouter au message. Il peut exister une taille limite totale de documents attachés. Cette limite, si elle existe,
+        est configurée par votre administrateur système (affichée en octet).
+      </p>
+      <p>
+        Les fichiers déjà attachés sont affichés dans la section gauche de l'écran.
+        Pour supprimer l'attachement du fichier, sélectionnez le dans la liste et appuyez sur le bouton
+        <bold>'Effacer fichier(s) sélectionné(s)'</bold>.
+      </p>
+    </helpdata>
+    <ref ref-id="compose"/>
+  </helptopic>
+
+  <helptopic id="folder-setup" title="Setup Dossier">
+    <icon href="icona_folder2.gif"/>
+    <helpdata>
+      <p>
+        Dans le <bold>Setup Dossier</bold> vous pouvez d'une part changer vos paramètres de boîte aux lettres,
+        d'autre part configurer les dossiers des boîtes aux lettres (IMAP) existantes.
+      </p>
+      <p>
+        <bold>Configuration des Boîtes aux lettres:</bold> Webmail vous permet d'accéder à plusieurs
+        boîtes aux lettres complètement indépendantes via IMAP ou POP3. Pour chacune, vous devez
+        indiquer l'hôte serveur de mail, le protocole (POP3, IMAP, ...) et les informations de login.
+      </p>
+      <p>
+        <bold>Configuration des Dossiers:</bold> Dans chaque boîte aux lettres, il peut y avoir plusieurs dossiers
+        (organisés en arborescence). Ce système fonctionne UNIQUEMENT avec les boîtes IMAP, pas avec POP3.
+        Avec IMAP, vous pouvez ajouter ou supprimer des dossiers dans l'arborescence.
+      </p>
+    </helpdata>
+    <ref ref-id="folder-setup-folders"/>
+    <ref ref-id="folder-setup-mailboxes"/>
+  </helptopic>
+
+  <helptopic id="folder-setup-folders" title="Configuration des Dossiers">
+    <helpdata>
+      <p>
+        Comme mentionné ci-avant, une boîte aux lettres IMAP peut contenir plusieurs dossiers.
+        La fenêtre 'Setup Dossier' vous permet d'ajouter ou supprimer des dossiers de chacune de
+        vos boîtes aux lettres. Les dossiers sont organisés en structure arborescente pour chaque
+        boîte aux lettres et affichés dans cette fenêtre. Vous avez la possibilité
+        de supprimer chaque dossier ou, si c'est une boîte qui contient d'autres dossiers, d'ajouter des sous-dossiers à celle-ci.
+      </p>
+      <warning>
+        <p>Les dossiers seront <bold>physiquement effacé de votre serveur de messagerie</bold> (en même temps que tous les messages et
+        sous-dossiers qu'ils contiennent), <bold>et non pas seulement de JWebMail</bold>! Ceci est une fonction <bold>dangereuse</bold>
+        et vous ne pourrez plus revenir en arrière !</p>
+      </warning>
+    </helpdata>
+  </helptopic>
+
+  <helptopic id="folder-setup-mailboxes" title="Configuration de Boîtes aux Lettres">
+    <helpdata>
+      <p>
+        Webmail vous permet d'accéder à plusieurs boîtes aux lettres POP3/IMAP indépendantes par la même interface.
+        Pour configurer ceci vous pouvez utiliser <bold>Setup Dossier</bold>.
+      </p>
+      <p>
+        <bold>Dans la première partie</bold> de l'écran, vous avez une liste de vos boîtes actuellement configurées.
+        Vous pouvez utiliser le lien <bold>'Supprimer'</bold> pour supprimer la boîte aux lettres de Webmail.
+      </p>
+      <note>
+        <p>Par opposition aux Setup Dossiers, une boîte aux lettres ne sera supprimée QUE dans Webmail si vous cliquez sur
+        <bold>'Supprimer'</bold> ici. Vous pourrez toujours accéder à celle-ci depuis d'autre clients de messagerie, ou si vous la recréez (cf. ci-après).</p>
+      </note>
+      <p>
+        <bold>Dans la seconde partie</bold> de l'écran, vous pouvez ajouter une nouvelle boîte aux lettres en entrant les informations requises
+        (nom de boîte, nom d'hôte serveur de messagerie, protocole, login et mot de passe, obligatoires pour la création de la boîte aux lettres - demandez à votre administrateur le cas échéant).
+      </p>
+    </helpdata>
+ </helptopic>
+
+  <helptopic id="setup" title="Setup Utilisateur">
+    <icon href="icona_user2.gif"/>
+    <helpdata>
+      <p>
+        Dans le <bold>Setup Utilisateur</bold> vous pouvez changer vos paramètres généraux comme le nom, la signature ou la langue utilisée:
+      </p>
+      <p>
+        <ul>
+          <li><bold>Nom Complet</bold>: Le nom qui apparaîtra dans les messages sortants et dans les invites Webmail.</li>
+          <li><bold>Langue</bold>: La langue que JWebMail utilisera pour l'affichage.</li>
+          <li><bold>Changer Mot de passe</bold> et <bold>Vérification mot de passe</bold>: Si votre configuration vous permet de changer votre mot de passe, vous pouvez le faire ici (demandez à votre administrateur). Ne pas oublier SVP d'entrer le même mot de passe dans les deux champs.</li>
+          <li><bold>Thème</bold>: le style d'affichage utilisé.</li>
+        </ul>
+      <p>
+        Vous pouvez aussi changer vos paramètres d'affichage:
+      </p>
+        <ul>
+          <li><bold>Messages par page</bold>: Change le nombre de messages affichés dans la liste de messages (par défaut: 20)</li>
+          <li><bold>Afficher Trucs et Astuces</bold>: Affiche des 'rehaussements graphiques', comme la substitution des 'smiley', surlignage des liens, ...</li>
+<!--      <li><bold>Filtrer JavaScript</bold>: Essaie de reconnaître du JavaScript dans les messages et le filtre de façon à ce que vous n'ayez pas de problèmes de sécurité (devrait être actif).</li> -->
+          <li><bold>Autonettoyage de dossiers</bold>: Contrôle si les messages qui portent le marqueur 'effacé' doivent être effacés automatiquement ou manuellement.</li>
+          <li><bold>Afficher images attachées</bold>: Affiche 'en ligne' les images qui sont attachées à un message. Sinon elles seront affichées comme de simples fichiers attachés.</li>
+          <li><bold>Activer marqueurs de message</bold>: Active le mode écriture sur les dossiers (IMAP). S'il n'est pas activé, vous ne pourrez pas changer quoi que ce soit sur les messages (marqueur, copie, déplacement).</li>
+          <li><bold>Retour à la ligne</bold> et <bold>longueur de ligne max</bold>: affecte la fenêtre de composition et d'affichage des messages.</li>
+        </ul>
+      <p>
+        Et de composition de message:
+      </p>
+        <ul>
+          <li><bold>Enregistrer message envoyé</bold>: s'il faut et où enregistrer les messages envoyés</li>
+          <li><bold>Adresse Email</bold>: L'adresse Email qui est visible dans les messages sortants</li>
+          <li><bold>Signature</bold>: Le texte qui est ajouté à la fin du message composé</li>
+        </ul>
+      </p>
+    </helpdata>
+  </helptopic>
+
+  <helptopic id="logout" title="Logout Session">
+    <helpdata>
+      <p>
+        Ferme votre session JWebMail et provoque la sauvegarde par le serveur de votre configuration utilisateur.
+        Vous devriez avoir à nouveau la fenêtre de connexion après quelques secondes.
+        Si vous oubliez de vous déconnecter, votre session sera fermée automatiquement après
+        un temps imparti par défaut (Renseignez vous auprès de votre administrateur).
+     </p>
+    </helpdata>
+  </helptopic>
+</help>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+
+<!-- This file contains String resources for WebMail that may be extended to support more languages -->
+
+<!DOCTYPE BUNDLE SYSTEM "resource.dtd">
+
+<BUNDLE default="hu">
+
+  <!-- Section common to all locales -->
+  <COMMON>
+    <!-- First we have the different html document names -->
+    <RESOURCE name="LoginScreen">html-templates/loginscreen.html</RESOURCE>
+    <RESOURCE name="send result">html-templates/mailboxscreen_sendresult.html</RESOURCE>
+    <RESOURCE name="error">html-templates/mailboxscreen_error.html</RESOURCE>
+    <RESOURCE name="folders">html-templates/mailboxscreen_folders.html</RESOURCE>
+    <RESOURCE name="adminlogin">html-templates/adminlogin.html</RESOURCE>
+    <RESOURCE name="adminform">html-templates/adminform.html</RESOURCE>
+    <RESOURCE name="adminuser">html-templates/adminuser.html</RESOURCE>
+    <RESOURCE name="adminsessions">html-templates/adminsessions.html</RESOURCE>
+    <RESOURCE name="adminvdom">html-templates/adminvdom.html</RESOURCE>
+
+    <RESOURCE name="GNU License">html-templates/COPYING</RESOURCE>
+  </COMMON>
+
+  <!-- Language specific parts for hungarian language -->
+  <LOCALE lang="hu">
+
+    <RESOURCE name="no subject">(nincs tárgy)</RESOURCE>
+    <RESOURCE name="no date">(nincs dátum)</RESOURCE>
+    <RESOURCE name="unknown sender">(ismeretlen küldö)</RESOURCE>
+    <RESOURCE name="unknown recipient">(ismeretlen címzett)</RESOURCE>
+
+    <RESOURCE name="reply subject prefix">Vá:</RESOURCE>
+    <RESOURCE name="reply subject postfix"></RESOURCE>
+    <RESOURCE name="reply message prefix">Ön írta:</RESOURCE>
+    <RESOURCE name="reply message postfix"></RESOURCE>
+
+    <RESOURCE name="forward subject prefix">[továbbítva:</RESOURCE>
+    <RESOURCE name="forward subject postfix">]</RESOURCE>
+    <RESOURCE name="forward message prefix">================== továbbított levél kezdete ==================</RESOURCE>
+    <RESOURCE name="forward message postfix">=================== továbbított levél vége ====================</RESOURCE>
+  </LOCALE>
+</BUNDLE>

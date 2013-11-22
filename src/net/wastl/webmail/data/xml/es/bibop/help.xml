@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the JWebMail help for users, English language -->
+
+<!-- $Id: help.xml 126 2008-10-31 03:41:09Z unsaved $ -->
+
+<!--
+ * Copyright (C) 2000 Sebastian Schaffert
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+
+<!DOCTYPE help SYSTEM "../../../xml/webmail_help.dtd">
+
+
+<help>
+  <helptopic id="mailbox" title="JWebMail Mailbox/Folder Overview">
+    <icon href="icona_mail2.gif"/>
+    <helpdata>
+      <p>
+        Obtienes una vista general de todos tus buzones y de las carpetas contenidas en cada uno de ellos.
+        Cada carpeta tiene una columna donde se muestra el n&#250;mero total de mensajes y el n&#250;mero de mensajes nuevos.
+        Tambi&#233;n puede haber carpetas que no contengan mensajes, sino s&#243;lo subcarpetas.
+        Puedes hacer click en cada carpeta para ver la lista de mensajes en ella.
+      </p>
+      <note>Si no ves las carpetas que esperabas encontrar, puede ser que est&#233;n ocultas. Ve a la configuraci&#243;n de carpetas
+        para hacerlas visibles</note>
+    </helpdata>
+    <ref ref-id="messagelist"/>
+    <ref ref-id="folder-setup-mailboxes"/>
+    <ref ref-id="folder-setup-folders"/>
+  </helptopic>
+
+  <helptopic id="messagelist" title="Messagelist for a Folder">
+    <helpdata>
+      <p>
+        In the message list, you get an overview of the messages in your folder. You will see the subject,
+        the sender, the size of the message and some flags that are set on it ("new", "seen",
+        "answered", "mime").<br/>
+        You can display a message by clicking on its subject.<br/>
+        You have the option to select one more messages and perform some kind of action on it like setting
+        some of the above flags or moving/copying to other folders.
+      </p>
+      <note><p>You will have to enable "set message flags" in the user setup to change the flags on messages</p></note>
+    </helpdata>
+    <ref ref-id="user-setup"/>
+    <ref ref-id="showmessage"/>
+  </helptopic>
+
+  <helptopic id="showmessage" title="Displaying a Message">
+    <helpdata>
+      <p>
+        The message display form consists of 3 parts: a header, a body and a footer.<br/>
+        <p>
+          In the <bold>header</bold> you get some information provided by the message header: the sender, the
+          recepient(s), the subject, and the date.
+        </p>
+        <p>
+          In the <bold>body</bold> the message text is displayed. If there are attachments to the message, you
+          will be able to view them either inline (e.g. images or text) or download them from the server.
+          The attachment information is displayed after the message text.
+        </p>
+        <p>
+          In the <bold>footer</bold> you have again the option to perform some actions on this message (move/copy to other
+          folders, set message flags).
+        </p>
+      </p>
+    </helpdata>
+  </helptopic>
+
+  <helptopic id="compose" title="Composing a Message">
+    <icon href="icona_composer2.gif"/>
+    <helpdata>
+      <p>
+        In the compose form you can compose a new message. In the header, you have to fill out the receipient
+        and the subject at least. In the large area below, you can enter your message.
+      </p>
+      <p>
+        You can attach files by hitting the <bold>attach files</bold> button. Your message will be saved while
+        editing attachments.
+      </p>
+    </helpdata>
+    <ref ref-id="compose-attach"/>
+  </helptopic>
+
+  <helptopic id="compose-attach" title="Attaching Files">
+    <helpdata>
+      <p>
+        While you are composing a message, you can attach files from your local system. These will be sent
+        to the JWebMail server and attached to your message (this may take some time, depending on your
+        Internet connection).
+      </p>
+      <p>
+        The <bold>attach screen</bold> offers you to browse your harddisk to add a file if you hit the
+        <bold>browse</bold> button. After you have selected a file you can enter a description for it and
+        finally click on <bold>add new file</bold> to add it to the message. There is a certain limit to the
+        size of attachments. This may be configured by your system administrator.
+      </p>
+      <p>
+        Already attached files will be displayed on the left section of the screen. To remove an attachment,
+        select it in the list and hit the <bold>Delete selected file(s)</bold> button.
+      </p>
+    </helpdata>
+    <ref ref-id="compose"/>
+  </helptopic>
+
+  <helptopic id="folder-setup" title="Folder Setup">
+    <icon href="icona_folder2.gif"/>
+    <helpdata>
+      <p>
+        In the <bold>Folder Setup</bold> you have to select whether you would like to change your mailbox settings
+        or configure folders within existing mailboxes.
+      </p>
+      <p>
+        <bold>Configuring Mailboxes:</bold> JWebMail allows you to access several completely independent mailboxes
+        via IMAP or POP3. For each mailbox you will have to provide the mailhost, the protocol and the
+        login information.
+      </p>
+      <p>
+        <bold>Configuring Folders:</bold> Within mailboxes, there might be several folders (organized in a tree
+        structure). This works with IMAP, but not with POP3 mailboxes. Here you can add or remove folders
+        in the folder tree.
+      </p>
+    </helpdata>
+    <ref ref-id="folder-setup-folders"/>
+    <ref ref-id="folder-setup-mailboxes"/>
+  </helptopic>
+
+  <helptopic id="folder-setup-folders" title="Setting up Folders">
+    <helpdata>
+      <p>
+        As mentioned before, a (IMAP) mailbox might have several folders. The folder setup screen
+        allows you to add or remove folders from each of your mailboxes. Folders are organized in a tree
+        structure for each of your mailboxes and displayed on this screen. For each folder you have the
+        option to remove it or, if it is a folder that can contain other folders, to append a subfolder to it.
+      </p>
+      <warning>
+        <p>Folders will be <bold>physically removed from your mailbox</bold> (together with all mail and
+        subfolders in them), <bold>not only from JWebMail</bold>! This is a <bold>dangerous</bold>
+        option and you cannot undo this step!</p>
+      </warning>
+    </helpdata>
+  </helptopic>
+
+  <helptopic id="folder-setup-mailboxes" title="Setting up Mailboxes">
+    <helpdata>
+      <p>
+        JWebMail allows you to access several independent POP3/IMAP mailboxes within one interface. To configure
+        this you can use the <bold>mailbox setup</bold>.
+      </p>
+      <p>
+        In the first part of the screen you have a list of your currently configured mailboxes. You can use
+        the <bold>Remove</bold> link to remove a mailbox from JWebMail.
+      </p>
+      <note>
+        <p>In contrast to the folder setup, a mailbox will only be removed from JWebMail if you click on
+        <bold>Remove</bold> here. You will still be able to access it from other email clients.</p>
+      </note>
+      <p>
+        In the second part of the screen, you can add a new mailbox by supplying the necessary information
+        (hostname, protocol, login and password for the mailbox - ask your administrator if you don't know
+        what to do).
+      </p>
+    </helpdata>
+ </helptopic>
+
+  <helptopic id="setup" title="User Setup">
+    <icon href="icona_user2.gif"/>
+    <helpdata>
+      <p>
+        In the <bold>User Setup</bold> you can change your general settings like name, signature or language.
+      </p>
+      <p>
+        <ul>
+          <li><bold>Full Name</bold>: The name that will appear in outgoing messages and in JWebMail greetings.</li>
+          <li><bold>Language</bold>: The language JWebMail will use for you.</li>
+          <li><bold>Password</bold> and <bold>Verify</bold>: If your setup allows you to change your password, you can
+            do it here (ask your administrator). Please don't forget to enter the same password in both
+            fields.</li>
+          <li><bold>Messages per Page</bold>: Change how many messages will be displayed in the message list
+            (default: 20)</li>
+          <li><bold>Show fancy stuff</bold>: Display some "graphical enhancements" that are otherwise pretty
+            useless, like smiley substitution, link highlighting, ...</li>
+<!--      <li><bold>Filter JavaScript</bold>: Try to recognize JavaScript in emails and filter it out so you
+            don't have security problems (this should be enabled).</li> -->
+          <li><bold>Autoexpunge folders</bold>: Controls whether messages that carry the "deleted"-flag should
+            be deleted automatically or manually.</li>
+          <li><bold>Show attached images</bold>: Show images that are attached to a message inline. Otherwise
+            they will be displayed like any other attachment.</li>
+          <li><bold>Set message flags</bold>: Enable write mode on folders. If this is not set, you may not change
+            anything on messages (flag, copy, move).</li>
+          <li><bold>Break lines</bold> and <bold>max line length</bold>: If and where to break lines in the compose and
+            show message screens.</li>
+          <li><bold>Save sent</bold> and <bold>in folder</bold>: If and where to save sent messages</li>
+          <li><bold>Email address</bold>: The email address that is shown in outgoing messages</li>
+          <li><bold>Signature</bold>: The signature that should be appended on the bottom of a composed message</li>
+        </ul>
+      </p>
+    </helpdata>
+  </helptopic>
+
+  <helptopic id="logout" title="Logout">
+    <helpdata>
+      <p>
+        Leave this session and have the server save your user configuration. You will be
+        presented the login-screen after a few seconds. If you forget to log out, your
+        session will be closed after a default timeout.
+      </p>
+    </helpdata>
+  </helptopic>
+</help>

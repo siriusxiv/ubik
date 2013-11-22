@@ -1,0 +1,7 @@
+This file will be removed once all references to it have been purged
+from the project's documentation.
+
+JWebMail no longer has any artifacts licenesed by LGPL.
+See the file doc/LICENSE.txt for the Apache 2.0 license covering the base
+product, and doc/bibop_LICENSE_GPL.txt for the GPL 2 license covering the
+Bibop theme.

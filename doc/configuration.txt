@@ -1,0 +1,29 @@
+$Id: configuration.txt 140 2008-10-31 21:49:50Z unsaved $
+
+WebMail Configuration Scheme
+============================
+
+WebMail has a new configuration scheme since v0.6.0.
+Program parts can register configuration parameters with the main configuration scheme.
+It is also possible that objects are notified on configuration changes so an appropriate
+action can be taken. This works much like Java's AWT Listeners, so the corresponding
+interface is called ConfigurationListener.
+
+Unfortunately, this decentralized configuration doesn't allow a effective central
+compile-time configuration any longer. Therefore, there are some system properties
+that can be passed to the WebMail startcommand. Mainly, you will need to use
+--data-path, if your configuration file cannot be found in the default place.
+
+The telnet administration interface will be replaced soon with a HTML configuration form
+that is dynamically generated from the configuration parameters.
+
+Currently there are three types of Configuration Parameters:
+
+- String-parameters: These can take any value
+- Choice-parameters: can only take certain allowed parameters
+- YesNo-parameters: can only take "YES" or "NO" as value and are just a specialized
+                    version of the choice parameters.
+
+Each configuration parameter must be registered with a unique String key
+(name of the parameter), a short description to be used as help text in the
+administration interface and with a default value if not yet set by the user.

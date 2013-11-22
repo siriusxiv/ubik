@@ -1,0 +1,5 @@
+$Id: image-credits.txt 105 2008-10-29 06:22:32Z unsaved $
+
+The image homefolders-icon.jpg is from Wikipedia Commons:
+http://upload.wikimedia.org/wikipedia/commons/e/e8/Crystal_Clear_filesystem_folder_home3.png
+It is licensed LGPL by Everaldo Coelho and YellowIcon.

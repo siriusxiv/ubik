@@ -1,0 +1,13 @@
+<ivysettings>
+	<!-- $Id: ivysettings-sample.xml 35 2008-10-24 05:09:14Z unsaved $ Edit 
+		your copy of this file (named "ivysettings.xml"), or replace it completely. 
+		This file will work with any directory on any web server which holds the 
+		plain jar files with names like BASENAME-VERSION.jar. -->
+
+	<settings defaultResolver="local" />
+	<resolvers>
+		<filesystem name="local">
+			<artifact pattern="${ivy.local.default.root}/[organisation]/[module]/[artifact]-[revision].[ext]" />
+		</filesystem>
+	</resolvers>
+</ivysettings>

@@ -1,0 +1,426 @@
+<project name="jwebmail-internal" default="war" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<!--
+$Id: build.xml 136 2008-10-31 21:14:28Z unsaved $
+
+Copyright 2008 by the JWebMail Development Team and Sebastian Schaffert.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+	<property file="local.properties" />
+	<!-- NON-SHARED build properties -->
+	<regexp id="jvmver.regexp.refid" pattern="^(?:1\.[5-9])|(?:[2-3]\.)" />
+
+	<!-- Default build settings.  Override in your own 'local.properties' file.-->
+	<property name="repos.url" value="http://pub.admc.com/lib-repos" />
+	<property name="exploded.dir" value="dist/webapp" />
+	<property name="contextxml.path" value="config/context.xml" />
+
+	<property name="debug" value="false" />
+	<property name="javac.debug" value="${debug}" />
+	<property name="javac.optimize" value="true" />
+	<property name="javac.deprecation" value="false" />
+	<property name="javac.targetver" value="1.7" />
+	<property name="javac.includeantruntime" value="false" />
+
+	<!-- This sets the JRE version which will be required by USERS of
+       generated classes! -->
+	<property name="Name" value="JWebMail" />
+	<property name="app.version" value="1.0.1rc1" />
+	<property name="year" value="2008" />
+
+	<!-- =================================================================== -->
+	<!-- Initialization target                                               -->
+	<!-- =================================================================== -->
+	<target name="-init" depends="-check-tool-versions">
+		<tstamp />
+
+		<echo message="----------- ${Name} ${app.version} [${year}] ------------" />
+
+		<filter token="year" value="${year}" />
+		<filter token="version" value="${app.version}" />
+		<filter token="debug" value="${debug}" />
+		<filter token="date" value="${TODAY}" />
+		<filter token="log" value="true" />
+		<filter token="verbose" value="true" />
+		<filter token="java-version" value="${ant.java.version}" />
+		<!-- We're not forking our javac's, so use ant.java.version instead
+         of java.version -->
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Prepares the source code                                            -->
+	<!-- =================================================================== -->
+	<target name="-prepare-src" depends="-init">
+		<copy todir="build/src" filtering="true">
+			<fileset dir="src" excludes="**/.*" />
+			<fileset dir="authenticator-src" excludes="**/.*" />
+			<fileset dir="plugin-src" excludes="**/.*" />
+		</copy>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Compiles the source directory                                       -->
+	<!-- =================================================================== -->
+	<target name="compile" depends="-prepare-src, -ivy-setup" description="Compiles the source code (default)">
+		<ivy:cachepath conf="build" pathid="build.refid" />
+		<mkdir dir="build/classes" />
+		<javac srcdir="build/src" destdir="build/classes" debug="${javac.debug}" classpathref="build.refid" optimize="${javac.optimize}" target="${javac.targetver}" deprecation="${javac.deprecation}" includeantruntime="${javac.includeantruntime}">
+			<!--
+      <compilerarg value="-Xlint"/>
+      -->
+		</javac>
+
+		<echo message="     Compiling plugins" />
+		<mkdir dir="build/plugin-classes" />
+		<javac srcdir="plugin-src" target="${javac.targetver}" destdir="build/plugin-classes" classpath="build/classes" debug="${javac.debug}" classpathref="build.refid" optimize="${javac.optimize}" deprecation="${javac.deprecation}" includeantruntime="${javac.includeantruntime}">
+			<!--
+      <compilerarg value="-Xlint"/>
+      -->
+		</javac>
+
+		<echo message="     Compiling authenticators" />
+		<mkdir dir="build/authenticator-classes" />
+		<javac srcdir="authenticator-src" target="${javac.targetver}" destdir="build/authenticator-classes" classpath="build/classes" debug="${javac.debug}" classpathref="build.refid" optimize="${javac.optimize}" deprecation="${javac.deprecation}" includeantruntime="${javac.includeantruntime}">
+			<!--
+      <compilerarg value="-Xlint"/>
+      -->
+		</javac>
+	</target>
+
+	<!--
+            Leaving here in case this helps to reverse engineer
+            plugin installation:
+            Rather than copying these to lib/plugins etc. just waiting till
+            tomcat deploy and copy straight from build.dest to WEB-INF/classes
+            <copy todir="lib/plugins">
+              <fileset dir="build/classes/plugins" />
+            </copy>
+            <copy todir="lib/authenticators">
+              <fileset dir="build/classes/authenticators" />
+            </copy>
+        -->
+
+	<!-- =================================================================== -->
+	<!-- Install all XML XSL DTD's etc.                                      -->
+	<!-- =================================================================== -->
+	<target name="-stage-xml-and-templates">
+		<!-- Populates build/stage/xml and build/stage/templates -->
+		<echo message="Installing webmail.xml ..." />
+		<copy todir="data" flatten="yes" file="src/net/wastl/webmail/data/xml/webmail.xml" />
+		<echo message="Installing XML DTDs ..." />
+
+		<copy todir="build/stage/xml" flatten="yes">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/*.dtd" />
+				<include name="**/data/xml/mysql_statements.xml" />
+				<include name="**/data/xml/userdata.xml" />
+				<include name="**/data/xml/usermodel_template.xml" />
+				<include name="**/data/xml/generic_template.xml" />
+			</fileset>
+		</copy>
+		<echo message="Installing resource.dtd and resources.xml ..." />
+		<copy todir="build/stage/templates" flatten="yes">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/resource*" />
+			</fileset>
+		</copy>
+
+		<!-- English -->
+		<echo message="Installing English Language Templates ..." />
+		<copy todir="build/stage/templates/en" filtering="true">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/en/**" />
+				<exclude name="**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/en/(.*)$$" to="\1" />
+		</copy>
+		<copy todir="build/stage/templates/en" filtering="false">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/en/**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/en/(.*)$$" to="\1" />
+		</copy>
+
+		<!-- Spanish -->
+		<echo message="Installing Spanish Language Templates ..." />
+		<copy todir="build/stage/templates/es" filtering="true">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/es/**" />
+				<exclude name="**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/es/(.*)$$" to="\1" />
+		</copy>
+		<copy todir="build/stage/templates/es" filtering="false">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/es/**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/es/(.*)$$" to="\1" />
+		</copy>
+
+		<!--
+    <echo message="Installing Portugese Language Templates ..."/>
+    <copy todir="build/stage/templates/pt" filtering="true">
+        <fileset dir="src">
+           <include name="**/data/xml/pt/**" />
+        </fileset>
+        <mapper type="regexp" from="^.*/pt/(.*)$$" to="\1" />
+    </copy>
+    -->
+
+		<!-- German -->
+		<echo message="Installing German Language Templates ..." />
+		<copy todir="build/stage/templates/de" filtering="true">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/de/**" />
+				<exclude name="**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/de/(.*)$$" to="\1" />
+		</copy>
+		<copy todir="build/stage/templates/de" filtering="false">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/de/**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/de/(.*)$$" to="\1" />
+		</copy>
+
+		<!-- French -->
+		<echo message="Installing French Language Templates ..." />
+		<copy todir="build/stage/templates/fr" filtering="true">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/fr/**" />
+				<exclude name="**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/fr/(.*)$$" to="\1" />
+		</copy>
+		<copy todir="build/stage/templates/fr" filtering="false">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/fr/**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/fr/(.*)$$" to="\1" />
+		</copy>
+
+		<!-- Hungarian -->
+		<echo message="Installing Hungarian Language Templates ..." />
+		<copy todir="build/stage/templates/hu" filtering="true">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/hu/**" />
+				<exclude name="**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/hu/(.*)$$" to="\1" />
+		</copy>
+		<copy todir="build/stage/templates/hu" filtering="false">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/hu/**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/hu/(.*)$$" to="\1" />
+		</copy>
+
+		<!-- Chinese (Taiwan) -->
+		<echo message="Installing Chinese Language Templates ..." />
+		<copy todir="build/stage/templates/zh" filtering="true">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/zh/**" />
+				<exclude name="**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/zh/(.*)$$" to="\1" />
+		</copy>
+		<copy todir="build/stage/templates/zh" filtering="false">
+			<fileset dir="src">
+				<exclude name="**/.*" />
+				<include name="**/data/xml/zh/**/images/**" />
+			</fileset>
+			<mapper type="regexp" from="^.*/zh/(.*)$$" to="\1" />
+		</copy>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Copies the class files into the webapp dir for Tomcat.              -->
+	<!-- =================================================================== -->
+	<target name="war" depends="compile, -stage-xml-and-templates" description="Build .war file in 'dist' subdirectory">
+		<mkdir dir="dist" />
+		<delete file="dist/${ant.project.name}.war" />
+		<!-- This delete behavior is a safe-guard.
+         This makes sure the developer never accidentally re-deploys an old
+         war after there is a build failure. -->
+
+		<ivy:cachefileset conf="bundle" setid="bundle.refid" />
+		<copy file="config/web.xml" todir="build/stage/">
+			<filterset>
+				<filter token="base-uri" value="/${ant.project.name}" />
+			</filterset>
+			<!-- TODO:  Eliminate.
+           This base-uri in our code base makes our webapp non-portable. -->
+		</copy>
+		<copy tofile="build/stage/mimetypes.txt" file="contrib/mime.types" />
+		<zip destfile="build/stage/data.zip" basedir="data" />
+
+		<!-- flatten the content of Ivy classpath -->
+		<copy todir="build/lib" flatten="true">
+			<fileset refid="bundle.refid" />
+		</copy>
+
+		<war warfile="dist/${ant.project.name}.war" webxml="build/stage/web.xml">
+			<classes dir="build/stage" includes="data.zip, mimetypes.txt" />
+			<classes dir="build/plugin-classes" />
+			<classes dir="build/authenticator-classes" />
+			<classes dir="build/classes" excludes="plugins/**, authenticators/**" />
+			<zipfileset dir="build/stage" prefix="lib" includes="xml/**, templates/**" />
+			<metainf file="${contextxml.path}" />
+			<lib dir="build/lib" />
+		</war>
+		<!-- Copy images -->
+		<echo message="War file built at 'dist/${ant.project.name}.war'" />
+	</target>
+
+	<target name="clean-webapp" description="Wipes out exploded webapp directory">
+		<fail unless="exploded.dir" message="Property 'exploded.dir' is required by target 'webapp'" />
+		<delete dir="${exploded.dir}" />
+	</target>
+
+	<target name="webapp" depends="war" description="Updates (or creates) exploded webapp">
+		<available property="exploded_dir_preexist" file="${exploded.dir}" />
+		<fail unless="exploded.dir" message="Property 'exploded.dir' is required by target 'webapp'" />
+		<unzip src="dist/${ant.project.name}.war" dest="${exploded.dir}" />
+		<!-- unzip creates all needed intermediate subdirectories" -->
+		<echo>
+Exploded web app generated at '${exploded.dir}'.</echo>
+		<antcall target="-warn-if-edir" />
+	</target>
+
+	<target name="-warn-if-edir" if="exploded_dir_preexist">
+		<echo>
+This target UPDATES (a.o.t. replaces), so, to remove artifacts from your web
+app, you must run 'ant clean-webapp webapp' instead of just 'ant webapp'.
+This behavior is designed to facilitate in-place app serving.</echo>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates the API documentation                                       -->
+	<!-- =================================================================== -->
+	<target name="javadoc" depends="-prepare-src" description="Generates the API documentation to 'build/apidocs'">
+		<mkdir dir="build/apidocs" />
+		<javadoc packagenames="net.wastl.*, org.webengruven.*" sourcepath="build/src:plugin-src:authenticator-src" destdir="build/apidocs" author="true" version="true" use="true" splitindex="true" noindex="false" windowtitle="${Name} API" doctitle="${Name}" bottom="Apache 2.0 License" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Clean targets                                                       -->
+	<!-- =================================================================== -->
+	<target name="clean" depends="-init" description="Purges derived artifacts">
+		<echo message="Deleting build ..." />
+		<delete dir="dist" />
+		<delete dir="build" />
+		<delete file="data/webmail.xml" />
+		<delete file="doc/jwebmail-guide.html" />
+	</target>
+
+	<!-- Windows users will have to install Cygwin, or run another XSLT
+       processor.
+       We can certainly run XSLT in a portable way with libraries from Ivy,
+       but who has the time to get that working?  -->
+	<target name="gen-guide" description="Generate the 'doc/jwebmail-guide.html' file">
+		<exec executable="xsltproc" failonerror="true">
+			<arg value="-o" />
+			<arg value="doc/jwebmail-guide.html" />
+			<arg file="doc-src/guide.xsl" />
+			<arg file="doc-src/guide.xml" />
+		</exec>
+	</target>
+
+	<target name="-ivy-setup">
+		<property name="ivy.local.default.root" value="${basedir}/lib" />
+		<available property="_ivy.present" classname="org.apache.ivy.ant.IvyTask" />
+		<fail unless="_ivy.present">
+Add Ivy jar file to Ant CLASSPATH.
+Copy-and-paste this for any Bourne shell (inc. Bash):
+
+    export ANT_ARGS; ANT_ARGS='-lib bootstrap-libs -noclasspath'
+
+OR copy-and-paste this for any CMD-like Windows shell:
+
+    SET ANT_ARGS=-lib bootstrap-libs -noclasspath</fail>
+
+		<available property="_ivysettings.present" file="ivysettings.xml" type="file" />
+		<antcall target="-ensure-ivysettings" />
+		<fail unless="repos.url" message="Property 'repos.url' is required by the '-ivysetup' target" />
+		<ivy:settings />
+	</target>
+
+	<target name="-ensure-ivysettings" unless="_ivysettings.present">
+		<copy file="ivysettings-sample.xml" tofile="ivysettings.xml" />
+		<echo>Just created a local 'ivysettings.xml' file for you.
+Customize this as you wish and/or set Ivy properties
+(or any other build properties) local properties in
+a 'local.properties' file.</echo>
+	</target>
+
+	<regexp id="antver.regexp.refid" pattern="(?: |^)(?:[2-9]\.)|(?:1\.[7-9])" />
+
+	<target name="-check-tool-versions">
+		<!-- No good way to check Ant version, since ant.version is not formatted
+         as a number of any type, and the regexp and antversion tasks aren't
+         available until 1.7... and the last doesn't even WORK with 1.7. -->
+		<condition property="_ant.ok">
+			<matches string="${ant.version}">
+				<regexp refid="antver.regexp.refid" />
+			</matches>
+		</condition>
+		<fail unless="_ant.ok" message="JWebMail requires Ant version 1.7 or later" />
+
+		<!-- This is supposed to work with 1.7, but even if it did, the test
+         would only work for negative cases.
+    <antversion property="_ant.ok" atleast="1.7"/>
+    -->
+
+		<condition property="_jvm.ok">
+			<matches string="${ant.java.version}">
+				<regexp refid="jvmver.regexp.refid" />
+			</matches>
+		</condition>
+		<fail unless="_jvm.ok" message="JWebMail requires JVM version 1.5 or later" />
+	</target>
+
+	<target name="all" depends="clean, gen-guide, javadoc, webapp" description="(Re)build everything from scratch" />
+
+	<target name="eclipse-setup" description="Tells you how to set up Eclipse IDE for JWebMail development">
+		<echo>
+With a JDT variant of Eclipse v. 3.4.1 or later, use
+pulldown menu Window / Preferences.  In the tree,
+navigate to Java / Build Path / Classpath Variables.
+Hit the 'New...' button.
+For 'Name' enter "EXTLIB_CACHE".
+For "Path", paste the following value exactly:
+
+    ${user.home}/lib-repos
+
+(If you have customized the config file
+'ivysettings.xml', set the value of EXTLIB_CACHE to
+match the value of the 'repositoryCacheDir' setting).
+
+See the JWebMail User's Guide for more details about
+IDE integration.</echo>
+	</target>
+</project>

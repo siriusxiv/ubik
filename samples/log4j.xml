@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!--
+     Sample log4j config file.
+
+     The log files are named with base name "global" because this
+     file will control back-end logging for all apps whose messages
+     make it to Log4j in the container space.
+
+     Classes referenced by this file (like
+     com.admc.log4j.ClockTimeHTMLLayout) will need to be located so as
+     to satisfy your servlet container's classloader design (and settings).
+     If you put both the log4j jar file and referenced classes into a
+     servlet classloader directory (as suggested in the User's Guide),
+     eveything should work great.  - blaine
+
+     Log4j files can use Java System Property references in attribute
+     values like ${this}.  Make sure that the referenced properties
+     are set.
+-->
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="console_ap" class="org.apache.log4j.ConsoleAppender">
+      <param name="Threshold" value="fatal"/>
+      <layout class='org.apache.log4j.PatternLayout'>
+        <param name='ConversionPattern' value='%d %-5p %c{3} - %m%n'/>
+      </layout>
+    </appender>
+
+    <appender name="debug_ap" class="org.apache.log4j.FileAppender">
+      <param name="Append" value="false"/>
+      <param name="File" value="${logdir.common}/global.log"/>
+      <!-- If multiple user will run this on one computer, add
+           ${user.name} to filename.  -->
+      <layout class='org.apache.log4j.PatternLayout'>
+        <param name='ConversionPattern' value='%d %-5p %c{3} - %m%n'/>
+      </layout>
+    </appender>
+
+    <appender name="html_ap" class="org.apache.log4j.FileAppender">
+      <param name="Append" value="false"/>
+      <param name="File" value="${logdir.common}/global.html"/>
+      <layout class="com.admc.log4j.ClockTimeHTMLLayout">
+        <param name="Title" value="Global Tomcat Log"/>
+      </layout>
+    </appender>
+
+    <appender name="thread_ap" class="org.apache.log4j.FileAppender">
+      <param name="Append" value="false"/>
+      <param name="Threshold" value="info"/> <!-- turn down to debug threads -->
+      <param name="File" value="${logdir.common}/thread.html"/>
+      <layout class="com.admc.log4j.ClockTimeHTMLLayout">
+        <param name="Title" value="Global Thread Log"/>
+      </layout>
+    </appender>
+
+    <appender name="error_ap" class="org.apache.log4j.FileAppender">
+      <param name="Append" value="false"/>
+      <param name="Threshold" value="error"/>
+      <param name="File" value="${logdir.common}/global-error.log"/>
+      <!-- If multiple user will run this on one computer, add
+           ${user.name} to filename.  -->
+      <layout class='org.apache.log4j.PatternLayout'>
+        <param name='ConversionPattern' value='%d %-5p %c{3} - %m%n'/>
+      </layout>
+    </appender>
+
+    <logger name='com.admc'>
+      <level value='debug'/>
+    </logger>
+    <logger name='net.wastl'>
+      <level value='debug'/>
+    </logger>
+    <logger name='org.bulbul'>
+      <level value='debug'/>
+    </logger>
+    <logger name='org.webengruven'>
+      <level value='debug'/>
+    </logger>
+
+    <logger name="THREAD" additivity="false">
+      <appender-ref ref="thread_ap"/>
+      <level value='debug'/>
+    </logger>
+
+    <root>
+        <priority value="warn"/>
+        <appender-ref ref="debug_ap"/>
+        <appender-ref ref="error_ap"/>
+        <appender-ref ref="console_ap"/>
+        <appender-ref ref="html_ap"/>
+    </root>
+</log4j:configuration>

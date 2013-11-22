@@ -1,0 +1,9 @@
+$Id: NOTICE.txt 140 2008-10-31 21:49:50Z unsaved $
+
+JWebMail is copyright with the Apache 2.0 license, except for the Bibop
+theme, which is Copyright by the GPL, as documented in the individual
+source files and the
+
+Third party products are bundled unmodified according to their own licenses.
+For exaample, the Oreilly classes are copyrighted by the supplied LICENSE_cos
+file, and NekoHTML is copyrighted by the supplied COPYING_nekohtml file.

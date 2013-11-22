@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE help SYSTEM "../../../xml/webmail_help.dtd">
+<!-- This file contains the JWebMail help for users, English language --><!--
+$Id: help.xml 126 2008-10-31 03:41:09Z unsaved $
+
+Copyright 2008 by the JWebMail Development Team and Sebastian Schaffert.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<help>
+  <helptopic id="mailbox" title="JWebMail Mailbox/Folder Overview">
+    <icon href="btn-mailbox.png"/>
+    <helpdata>
+      <p>
+        Obtienes una vista general de todos tus buzones y de las carpetas contenidas en cada uno de ellos.
+        Cada carpeta tiene una columna donde se muestra el n&#250;mero total de mensajes y el n&#250;mero de mensajes nuevos.
+        Tambi&#233;n puede haber carpetas que no contengan mensajes, sino s&#243;lo subcarpetas.
+        Puedes hacer click en cada carpeta para ver la lista de mensajes en ella.
+      </p>
+      <note>Si no ves las carpetas que esperabas encontrar, puede ser que est&#233;n ocultas. Ve a la configuraci&#243;n de carpetas
+        para hacerlas visibles</note>
+    </helpdata>
+    <ref ref-id="messagelist"/>
+    <ref ref-id="folder-setup-mailboxes"/>
+    <ref ref-id="folder-setup-folders"/>
+  </helptopic>
+  <helptopic id="messagelist" title="Messagelist for a Folder">
+    <helpdata>
+      <p>
+        En la lista de mensajes, obtendr&#225;s una lista general de los mensaljes en tu carpeta. Ver&#225;s el tema,
+        el remitente, el tama&#241;o del mensaje y algunas banderas que est&#225;n puestas en &#233;l (&quot;new(nuevo)&quot;, &quot;seen(visto)&quot;,
+        &quot;answered(respondido)&quot;, &quot;mime&quot;).<br/>
+        You can display a message by clicking on its subject.<br/>
+        You have the option to select one more messages and perform some kind of action on it like setting
+        some of the above flags or moving/copying to other folders.
+      </p>
+      <note>Tendr&#225;s que habilitar &quot;colocar banderas a los mensajes&quot; em el men&#250; de configuraci&#243;n del usuario para cambiar las banderas de los mensajes</note>
+    </helpdata>
+    <ref ref-id="user-setup"/>
+    <ref ref-id="showmessage"/>
+  </helptopic>
+  <helptopic id="showmessage" title="Displaying a Message">
+    <helpdata>
+      <p>
+        La pantalla del formulario de mensajes consiste de 3 partes: una cabecera, el cuerpo y un pie de p&#225;gina.<br/>
+        <p>
+          En la <em>cabecera</em> you get some information provided by the message header: the sender, the
+          recepient(s), the subject, and the date.
+        </p>
+        <p>
+          En el <em>cuerpo</em> the message text is displayed. If there are attachments to the message, you
+          will be able to view them either inline (e.g. images or text) or download them from the server.
+          The attachment information is displayed after the message text.
+        </p>
+        <p>
+          En el pie de p&#225;gina tienes de vuelta la opci&#243;n de edectuar ciertas acciones en este mensaje (mover/copiar a otras
+          carpetas, colocar banderas a los mensajes).
+        </p>
+      </p>
+    </helpdata>
+  </helptopic>
+  <helptopic id="compose" title="Composing a Message">
+    <icon href="btn-compose.png"/>
+    <helpdata>
+      <p>
+        En el formulario de redaccion puedes redactar un nuevo mensaje. En la cabecera, tienes que colocar el destinatario
+        y el tema, por lo menos. En el area grande de abajo, puedes escribir el mensaje.
+      </p>
+      <p>
+        Puedes adjuntar archivos presionando  <em>adjuntar archivos</em> button. Your message will be saved while
+        editing attachments.
+      </p>
+    </helpdata>
+    <ref ref-id="compose-attach"/>
+  </helptopic>
+  <helptopic id="compose-attach" title="Attaching Files">
+    <helpdata>
+      <p>
+        Mientras redactas un mensaje, puedes adjuntar archivos de tu sistema de archivos. Estos ser&#225;n enviados
+        al servidor JWebMail y agregados a tu mensaje (eso puede tardar un tiempo,dependiendo de
+        tu conexi&#243;n a internet).
+      </p>
+      <p>
+        La  <em>pantalla de adjuntar</em> te permite explorar tu disco duro para adjuntar un archivo si presionas en el bot&#243;n
+        <em>examinar</em>. Luego de haber seleccionado el archivo puedes ingresar una descripci&#243;n para el mismo y
+        finalmente hacer click en <em>adjuntar nuevo archivo</em> para agregarlo al mensaje. Hay un cierto l&#237;mite para
+        el tama&#241;o de los archivos. Esto puede ser configurado por el administrador del sistema.
+      </p>
+      <p>
+        Los archivos antes agregados se mostrar&#225;n en la secci&#243;n izquierda de la pantalla. para borrar un agregado,
+        selecci&#243;nalo en la lista y presiona el <em>Borrar archivo(s) seleccionados(s)</em> button.
+      </p>
+    </helpdata>
+    <ref ref-id="compose"/>
+  </helptopic>
+  <helptopic id="folder-setup" title="Folder Setup">
+    <icon href="btn-folders.png"/>
+    <helpdata>
+      <p>
+        En la  <em>Configuraci&#243;n de carpetas</em> you have to select whether you would like to change your mailbox settings
+        or configure folders within existing mailboxes.
+      </p>
+      <p><em>Configurando casillas de correo</em>: JWebMail allows you to access several completely independent mailboxes
+        via IMAP or POP3. For each mailbox you will have to provide the mailhost, the protocol and the
+        login information.
+      </p>
+      <p><em>Configurando carpetas</em>: Within mailboxes, there might be several folders (organized in a tree
+        structure). This works with IMAP, but not with POP3 mailboxes. Here you can add or remove folders
+        in the folder tree.
+      </p>
+    </helpdata>
+    <ref ref-id="folder-setup-folders"/>
+    <ref ref-id="folder-setup-mailboxes"/>
+  </helptopic>
+  <helptopic id="folder-setup-folders" title="Setting up Folders">
+    <helpdata>
+      <p>
+        Como se mencion&#243; antes, una casilla de correo (IMAP) puede tener varias carpetas. La  <em>pantalla de configuraci&#243;n de carpetas</em>
+        allows you to add or remove folders from each of your mailboxes. Folders are organized in a tree
+        structure for each of your mailboxes and displayed on this screen. For each folder you have the
+        option to remove it or, if it is a folder that can contain other folders, to append a subfolder to it.
+      </p>
+      <warning>
+        Las carpetas ser&#225;n  <strong>f&#237;sicamente borradas de tu casilla de correos</strong> (together with all mail and
+        subfolders in them), <strong>no s&#243;lo de JWebMail</strong>! This is a <strong>peligroso</strong>
+        option and you cannot undo this step!
+      </warning>
+    </helpdata>
+  </helptopic>
+  <helptopic id="folder-setup-mailboxes" title="Setting up Mailboxes">
+    <helpdata>
+      <p>
+        JWebMail te permite acceder a varias casillas de correo POP3/IMAP independientes dentro de una interface. para configurar
+        puedes usar la <em>configuraci&#243;n de la casilla de correo</em>.
+      </p>
+      <p>
+        En la primera parte de la pantalla tienes una lista de las casillas de correo configuradas actualmente. Puedes usar
+        la <em>Borrar</em> link to remove a mailbox from JWebMail.
+      </p>
+      <note>
+        En contraste con la configuraci&#243;n de carpetas, una casilla de correo s&#243;lo se borrara del JWebMail si haces click en
+        <em>Borrar</em> here. You will still be able to access it from other email clients.
+      </note>
+      <p>
+        En la segunda parte de la pantalla, puedes adjuntar una nueva casilla de correo proveyendo la informaci&#243;n necesaria
+        (nombre del servidor, protocolo, usuario y contrase&#241;a para la casilla de correo - pregunta a tu administradosr si no los sabes
+        que hacer).
+      </p>
+    </helpdata>
+  </helptopic>
+  <helptopic id="setup" title="User Setup">
+    <icon href="btn-setup.png"/>
+    <helpdata>
+      <p>
+        En la  <em>Configuraci&#243;n de usuario</em> you can change your general settings like name, signature or language.
+      </p>
+      <p>
+        <ul>
+          <li><em>Nombre Completo</em>: The name that will appear in outgoing messages and in JWebMail greetings.</li>
+          <li><em>Idioma</em>: The language JWebMail will use for you.</li>
+          <li><em>Contrase&#241;a</em> and <em>Verificar</em>: If your setup allows you to change your password, you can
+            do it here (ask your administrator). Please don&apos;t forget to enter the same password in both
+            fields.</li>
+          <li><em>Mensajes por P&#225;gina</em>: Change how many messages will be displayed in the message list
+            (default: 20)</li>
+          <li><em>Mostrar detalles superfluos</em>: Display some &quot;graphical enhancements&quot; that are otherwise pretty
+            useless, like smiley substitution, link highlighting, ...</li>
+<!--      <li><em>Filter JavaScript</em>: Try to recognize JavaScript in emails and filter it out so you
+            don't have security problems (this should be enabled).</li> -->
+          <li><em>Autoexpunge* carpetas</em>: Controls whether messages that carry the &quot;deleted&quot;-flag should
+            be deleted automatically or manually.</li>
+          <li><em>Mostrar im&#225;genes agregadas</em>: Show images that are attached to a message inline. Otherwise
+            they will be displayed like any other attachment.</li>
+          <li><em>Colocar banderas de mensajes</em>: Enable write mode on folders. If this is not set, you may not change
+            anything on messages (flag, copy, move).</li>
+          <li><em>Cortar* l&#237;neas</em> and <em>max long. de l&#237;nea</em>: If and where to break lines in the compose and
+            show message screens.</li>
+          <li><em>Guardar enviados</em> and <em>en la capeta</em>: If and where to save sent messages</li>
+          <li><em>Direcci&#243;n de correo electr&#243;nico</em>: The email address that is shown in outgoing messages</li>
+          <li><em>Firma</em>: The signature that should be appended on the bottom of a composed message</li>
+        </ul>
+      </p>
+    </helpdata>
+  </helptopic>
+  <helptopic id="logout" title="Logout">
+    <icon href="btn-logout.png"/>
+    <helpdata>
+      <p>
+        Abandonar esta sesi&#243;n y dejar que el servidor guarde tu configuraci&#243;n. Se te presentar&#225;
+        la pantalla de ingreso luego de unos pocos segundos. si te olvidas de salir del sistema, tu
+        ser&#225; cerrada despu&#233;s de un tiempo de espera predeterminado.
+      </p>
+    </helpdata>
+  </helptopic>
+</help>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/j2ee/dtds/web-app_2_3.dtd">
+
+<!--
+$Id: web.xml 133 2008-10-31 17:52:43Z unsaved $
+
+Copyright 2008 by the JWebMail Development Team and Sebastian Schaffert.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!--
+  This file provides a Servlet API 2.3 compliant configuration for the
+  WebMail Servlet. Please modify according to your needs.
+-->
+
+<web-app>
+  <display-name>JWebMail - WWW access to your mail</display-name>
+
+  <context-param>
+    <param-name>default.contextpath</param-name>
+    <param-value>/jwebmail</param-value>
+    <!-- IMPORTANT:  If your runtime context-path differs from the value
+         above, you must set JNDI env param 'app.contextpath' to your
+         real context path for this deployment!  Set to empty str for
+         ROOT webapp.  -->
+  </context-param>
+  <context-param>
+    <param-name>required.metaprop.keys</param-name>
+    <param-value>webmail.data.path</param-value>
+  </context-param>
+
+  <filter>
+    <filter-name>contextPathValidator</filter-name>
+    <filter-class>net.wastl.webmail.config.ContextPathValidator</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>contextPathValidator</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <listener>
+    <listener-class>net.wastl.webmail.config.ExtConfigListener</listener-class>
+  </listener>
+
+  <servlet>
+    <!-- The servlet's name. Don't change unless you know what you are doing -->
+    <servlet-name>
+      WebMail
+    </servlet-name>
+    <servlet-class>
+      net.wastl.webmail.server.WebMailServlet
+    </servlet-class>
+
+    <!-- WebMail's Plugins.
+         The plugins that should be used by WebMail, full classnames separated by
+         ":". All of them MUST implement the Plugin-Interface.
+    -->
+    <init-param>
+      <param-name>webmail.plugins</param-name>
+      <param-value>
+        net.wastl.webmail.plugins.About,
+        net.wastl.webmail.plugins.AdminPlugin,
+        org.webengruven.webmail.plugins.ChallengeHandler,
+        net.wastl.webmail.plugins.Composer,
+        net.wastl.webmail.plugins.ErrorHandler,
+        net.wastl.webmail.plugins.FileAttacher,
+        net.wastl.webmail.plugins.FolderList,
+        net.wastl.webmail.plugins.FolderSetup,
+        net.wastl.webmail.plugins.NavBar,
+        net.wastl.webmail.plugins.ImageHandler,
+        net.wastl.webmail.plugins.LogoutSession,
+        net.wastl.webmail.plugins.MailboxList,
+        net.wastl.webmail.plugins.PassThroughPlugin,
+        net.wastl.webmail.plugins.SendMessage,
+        net.wastl.webmail.plugins.ShowMessage,
+        net.wastl.webmail.plugins.ShowMIME,
+        net.wastl.webmail.plugins.UserSetup,
+        net.wastl.webmail.plugins.WebMailHelp,
+        net.wastl.webmail.plugins.WebMailTitle
+      </param-value>
+    </init-param>
+
+    <!-- WebMail's Authenticator Plugins
+         WebMail Authenticator Plugins to use. Same as above, but all MUST implement
+         the Authenticator-Interface.
+    -->
+    <init-param>
+      <param-name>webmail.authenticators</param-name>
+      <param-value>
+        net.wastl.webmail.authenticators.IMAPAuthenticator,
+        net.wastl.webmail.authenticators.IMAPSAuthenticator,
+        net.wastl.webmail.authenticators.POPAuthenticator,
+        net.wastl.webmail.authenticators.POPSAuthenticator,
+        org.webengruven.webmail.authenticators.OTPAuthenticator,
+        net.wastl.webmail.authenticators.SimpleAuthenticator,
+        net.wastl.webmail.authenticators.UnixAuthenticator
+      </param-value>
+    </init-param>
+
+
+    <!-- WebMail default language; if ommited, Locale.getDefault() will be
+         used. -->
+    <init-param>
+      <param-name>webmail.default.locale.language</param-name>
+      <param-value>en</param-value>
+    </init-param>
+
+    <!-- WebMail default country; if ommited, Locale.getDefault() will be
+         used. -->
+    <init-param>
+      <param-name>webmail.default.locale.country</param-name>
+      <param-value>US</param-value>
+    </init-param>
+    <!-- Modified by exce, end -->
+
+    <!-- WebMail default theme to use; if not specified, "bibop" will be used -->
+    <init-param>
+      <param-name>webmail.default.theme</param-name>
+      <param-value>bibop</param-value>
+    </init-param>
+
+
+    <!-- Storage mechanism to be used by WebMail. Don't change unless you know
+         what you are doing (i.e. if you have a different Storage
+         implementation -->
+    <init-param>
+      <param-name>webmail.storage</param-name>
+      <param-value>net.wastl.webmail.storage.simple.SimpleStorage</param-value>
+    </init-param>
+
+    <!-- The log facility to use. Currently, JWebMail supports log-to-file and the
+         servlet container's logging method. -->
+    <init-param>
+      <param-name>webmail.log.facility</param-name>
+      <param-value>net.wastl.webmail.logger.ServletLogger</param-value>
+    </init-param>
+
+    <!-- The basepath for the WebMail Servlet. Needed to construct references to
+         program parts -->
+    <init-param>
+      <param-name>webmail.basepath</param-name>
+      <param-value>@base-uri@/WebMail</param-value>
+    </init-param>
+
+    <!-- This parameter is useful if you want to put the images in a different
+         directory so they can be handled by the webserver instead of passing
+         through the (slower) WebMail
+         UPDATE(0.7.7) This URL is now the same as the base webapp URL
+         The path to the individual images will be composed with
+         webmail.imagebase + "/" + language + "/" + theme
+    -->
+    <init-param>
+      <param-name>webmail.imagebase</param-name>
+      <param-value>@base-uri@/lib/templates</param-value>
+    </init-param>
+
+    <!-- WebMail should be loaded on startup as it needs quite some time for
+         initialization. The order doesn't matter, however.
+         Also, please ensure that reloading of the servlet classes is disabled
+         for WebMail -->
+    <load-on-startup>10</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>WebMail</servlet-name>
+    <url-pattern>/WebMail/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>WebMail</servlet-name>
+    <url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+
+  <welcome-file-list>
+    <welcome-file>WebMail</welcome-file>
+    <!-- This usage REQUIRES Servlet spec 2.4! -->
+  </welcome-file-list>
+</web-app>

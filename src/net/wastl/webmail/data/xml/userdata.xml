@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE USERDATA SYSTEM "userdata.dtd">
+
+<USERDATA>
+  <LOGIN></LOGIN>
+  <PASSWORD></PASSWORD>
+  <PASSDATA></PASSDATA>
+  <USER_DOMAIN></USER_DOMAIN>
+  <FULL_NAME></FULL_NAME>
+  <EMAIL>
+    <ADDY default="yes">
+    </ADDY>
+  </EMAIL>
+  <SIGNATURE></SIGNATURE>
+  <LOCALE></LOCALE>
+  <THEME></THEME>
+  <BOOLVAR name="show fancy" value="yes"/>
+  <BOOLVAR name="show images" value="yes"/>
+  <BOOLVAR name="save sent messages" value="no"/>
+  <BOOLVAR name="set message flags" value="yes"/>
+  <INTVAR name="first login"/>
+  <INTVAR name="last login"/>
+  <INTVAR name="login count"/>
+  <INTVAR name="max show messages"/>
+</USERDATA>

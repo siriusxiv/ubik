@@ -1,0 +1,111 @@
+$Id: todo.txt 140 2008-10-31 21:49:50Z unsaved $
+
+Ordered short-term TODO list
+============================
+
+Roll an RC.  1.0.1rc1.  (Consider waiting on following super-item).
+
+Add a new properties setting like webmail.demo or webmail.noxmit, to prevent
+sending messages from the JWebMail server.  And a expiration for user accounts
+Will need to keep a emailaddr/host list, because users could just sign up with
+different JWebMail user name.
+
+Host a demo site at jwebmail.admc.com.
+
+-------------------------------------------
+TAKE A DEEP BREATH
+-------------------------------------------
+
+More branding updates.
+    Review image for old version number and "WebMail" text.  I know of:
+        src/net/wastl/webmail/data/xml/??/bibop/images/webmailtitle.gif
+          (all of these are the same image)
+        src/net/wastl/webmail/data/xml/??/*/images/login_title.png
+          (all of these are the same image)
+        src/net/wastl/webmail/data/xml/??/bibop/images/java_powered.png
+          (all of these are the same)
+          (these last seem to be a mistake.  Image has nothing to do with
+          "java powered", like the corresopnding classic theme image does).
+
+Stop loading resources directly from the application through the FS.
+Load delivered resources through classpath.
+
+    Get rid of the many dependencies upon ServletContext.getRealPath(), so we
+    can distribute a portable .war file that will run on any popular app server.
+
+    Get rid of the Ant filtering and use the app.name/context.path from
+    the listener.
+
+    Verify that after this work, can deploy JWebMail with root context path.
+
+    Document that user must assign the app.name/context.path to match
+    the war file or web app directory name.
+
+Folders in source folder are hidden for some reason, after copying to
+another folder.  E.g. is says "Showing messages 1 to 2", but only 1
+message is shown.
+
+Code up a stopper for the ConnectionTimer thread which continues running
+after app shutdown.
+
+Have Domains protocol settings (non-auth) constrain user MAILHOST settings
+at MAILHOST usage time, not just at creation.
+At the very least, allow the Admin Plugin to view and change the user's
+data (it's stored in the user's XML file, but not presented in the
+user-admin section of the Admin gui).
+
+Use container-managed mail providers retrieved through JNDI.
+
+IMPORTANT:  DO NOT FORGET
+If do not hear back from Kevin Excellent Lee, then revert the org.bulbul
+classes back to GPL.  (Already have perm from Kowatch for webengruven).
+
+Fix level-ambiguity in XML processing code.
+FIRST verify my assertion that tree.getElementsBy*() searches for all
+ancestors, not just direct children.
+Do code search for use of getElementsBy...() and change to the less dangerous
+and more efficient getChild*() methods.
+
+Test the Knife mbox provider.  The setup for it was wrong, so it's quite
+possible that it hasn't been working for 8 years now.  Since support and
+update are unavailable, if it doesn't work, just drop it until have time
+to test a modern (open source) mbox provider product.
+
+Test POPS protocol.
+
+When create Folders, they should automatically be subscribed to.  Maybe not?
+
+Either do not display the change link on (!HOLD_MESSAGES) Folders on the
+Subscription-management screen, or at least tell the user when their
+Subscription action has no effect.
+
+Widget fixes
+    Remove password field widgets of User Setup screen if the user's
+    Authenticator does not allow changing passwords.
+
+    Pulldown list on Create Folder screen should either not offer folder
+    types not supported by the server, or detect failures to create
+    unsupported folder types (or create a type that was not selected).
+
+    Fix goofy HTML password form behavior and have it not show encrypted
+    passwords.
+    Turns out to be more difficult than editing XSL or JSP, because
+    the widgets on this page are generated dynamically from the list of
+    settings.
+
+Consider adding proxy support.
+
+======================================================
+
+Trying to emulate the Bibop text images with Gimp.
+Reason is the change the text from "WebMail" to "JWebMail".
+My text always comes out "skippy".  I even made at 2x size then
+reduced at the end.  ALWAYS SKIPPY.
+
+For emulating Bibop images, try DejaVu Sans Semi-Condensed font.
+Documenting how creating image in Gimp:
+    #2b4165 darker blue
+    #8995aa lighter blue-gray
+    font above, size 30 px
+    Gave a drop shadow with X offset, Y offset, blur radius 2, black
+     opacity 80, no allow resizing

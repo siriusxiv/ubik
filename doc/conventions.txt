@@ -1,0 +1,117 @@
+$Id: conventions.txt 133 2008-10-31 17:52:43Z unsaved $
+
+Your goal should be code that looks like this
+    http://java.sun.com/docs/codeconv/html/CodeConventions.doc10.html#182
+The rest of file explains slight additions and modifications to Sun's code
+conventions:
+    http://java.sun.com/docs/codeconv/html/CodeConventions.doc.html
+
+Do not commit text files with tab characters.  Your editor should have a
+setting to automatically convert tabs to spaces.  If not, then use
+"expand" (available for all UNIXes + Cygwin) or any other home-made or
+off-the-shelf tab-expander.
+
+Don't use liberal import statements.  Using wild-card imports has indeed
+made much extra work for me when I refactored this project.  Most times
+I have to guess what package an unknown XML or utility class comes from,
+because it would take too much time to search all the libraries.  It has
+also caused otherwise unnecessary name collisions when upgrading or
+switching third party libs, and upgrading the Java JVM.  For the same
+reasons, if you copy and paste a .java file to use as a starting point
+for a new class, at some point review the import statements and remove
+the unnecessary ones (all IDEs can do this for you).
+
+Nobody has ever benefitted by separating groups of import statements by
+blank lines.  If there are 3 java.util imports followed by 2 java.io
+imports followed by 8 net.wast.webapp imports, it couldn't be easier
+to find the group you are looking for.
+Just group imports sequentially (if at all), without the blank lines.
+
+Be conservative with white space.  E.g., don't ever put white space where
+it is totally useless, like blank spaces at ends of lines; or blank
+lines at the very beginning of a file, the very end of a file, or
+right after "{" or right before "}".  The Eclipse code template system has
+a bug where it inserts blank lines right after { and right before }.  Remove
+those blank lines after running the formatter.
+NOTE:  Don't think that I'm discouraging standard use of whitespace where
+it is required to discern the tokens.  This happens a lot in this code-base,
+but it is not my doing:
+BAD:  int tree_depth=getFolderTree(subfolders[i],xml_folder,subscribed_only);
+GOOD: int tree_depth = getFolderTree(subfolders[i], xml_folder, subscribedOnly);
+
+Unless there is a good design reason (and sometimes there are), use camelBack
+variable and member naming.  This is a JAVA product, so try to code like a
+Java developer:  "subscribedOnly", not "subscribed_only".
+
+Be conservative with comments.  Do not write your development history
+in the source code.  That is what we use Subversion for.
+
+Don't let your IDE clutter our source code with garbage.  If your IDE
+writes template stuff which is not exactly right and which you do not
+manually correct, then change your IDE setup to not write those templates.
+
+Don't mis-use RCS keywords.  Whether using IDE templating or not, don't
+use RCS keywords in JavaDoc elements @author, @since, @version.  For
+the first two, Subversion (or CVS for that matter) will keep updating
+these values, but their only purpose is to record the static values at
+edit time.  For the latst (@version), what the reader will want to
+know is the "release version", not the change-control revision.
+
+When making a new file, copy the Copyright (and file Id$) boilerplate from
+an existing file of the same type, and update the Copyright date if necessary.
+
+Use block indents of 2 spaces for all *.xml files (incl. *.xsl and *.dtd),
+and for HTML code in *.html, *.jsp, or fragment files (because of the copious
+nesting of HTML).
+
+Use block indents of 4 for all other computer languages (Javascript, Perl,
+PHP, Java, CSS).
+
+Miminize nesting.  Unnecessary nesting makes code more complex and more
+difficult to understand for no reason (not to mention highly nested code
+doesn't fit in the width of a normal editor).  Detect exceptional cases early
+then handle and throw/return/continue/break and be-done-with-it, instead
+of making a large if/then or if/then/else structure.
+
+Do not System.exit() except in main() methods that will never be executed
+by our running app.  Do not write to System.out or System.err.  Do not
+use Thread.printStackTrace(*), which amounts to the same thing.  We have
+a logging facility that makes it easy to write messages and stack traces.
+NOTE:  log.*(Throwable) just logs the Throwable.toString(), but
+log.*(String, Throwable) logs the stack trace.
+
+Line wrapping convention is a practical simplification to Sun's
+recommendations.  Sun says to prefer to
+  (a) align with start of peer element on parent line
+and if that uses too much space, then
+  (b) indent over 8 spaces from parent line
+In 9 out of 10 cases, the first case does indeed lead to "code that's squished
+up to the right margin", so let's be constent and just always indent 8 spaces!
+(Actually both (a) and (b) of Sun's rules lead to counter-productive squished
+up code, but I defer to industry convention and stick with the 8 rule).
+If you use vim editor, it automatically wraps this way for you.
+Also, as Sun says, prefer to set the break point earlier (if it doesn't lead
+to additional wrapping).
+The only exception to this is the ternary (?:) operator.  If it all fits on
+one line, then any developer can easily discern the parts (so don't wrap it,
+as Sun suggests), but otherwise follow Sun's rules and try to break before
+the ? and : operators.
+Be aware that the Eclipse formatter is set up to work exactly as I specify
+(except for ternaries) by default, but it does not work, except for comments!
+(Compare the Code Style Formatter settings samples with what it actually
+does when you Format your code).  Once again, this totally defeats the purpose
+of having a code "formatter".  If using a formatter which can't wrap lines
+according to our conventions, disable the wrapping feature of the formatte.
+(In Eclipse, this is accomplished by setting the max line size to like 1000).
+Any decent editor can automatically wrap your lines at column 80 for you.  So,
+in the worse case, when typing new code into your editor, you just need to hit
+your space bar twice after your editor auto-wraps the first time for each code
+statement.
+EXCEPTION:  Sun's rule for ternary expression wrapping works great, except
+(a) if the entire side* fits on one line, then don't wrap!, and (b) if Sun's
+rules result in more wrapping, then fall back to normal 8-space indenting
+(preferring to break before the ? and : operators).
+(By "side", I mean the LHS or RHS, like in
+            boolean myBool =
+                someOtherVariable == null ? "default value" : extra.getSome();
+the RHS consists of a ternary which doesn't need to be split at all.

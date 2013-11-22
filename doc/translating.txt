@@ -1,0 +1,63 @@
+$Id: translating.txt 140 2008-10-31 21:49:50Z unsaved $
+
+Translating WebMail to new languages
+====================================
+
+WebMail comes with much localization support. Users may change easily between languages
+that are available.
+
+WebMail will automatically detect all installed languages.
+
+There are two "ways" to translate WebMail. One for the source distribution and one for
+the binary distribution.
+
+1. The "make" way
+-----------------
+Here I will explain how to translate WebMail to a new language if you are using the
+WebMail source and will compile it anyway
+
+Prerequisite:
+recode-3.6
+
+Steps:
+1. Change directory to src/net/wastl/webmail
+1. Copy data/xml/en (or de) to data/xml/<your_language>.
+2. Diretories under the new direcotry(ie, data/xml/<your_language>) are
+   available UI themes for webmail users to choose. Translate all the XSL
+   files in your new directory. You may just pick a theme to translate.
+3. Copy data/xml/resources_en.xml to data/xml/resources_<your_language>.xml
+   and translate it. Since it's Java ResourceBundle conformed resource file,
+   you may name it as data/xml/resources_<your_language>_<your_country>.xml
+   if needed.
+4. Change directory to src/, and edit the makefile
+5. Find "LANGUAGES=" then add your language to the "LANGUAGES" variable.
+6. Find "if [ "$$lang" = "zh" ];", copy the if block to add a new "else if"
+   block for you language.
+   Then change the block as "if [ "$$lang" = "<your_language"];", and
+   $(RECODE) <your_language_encoding>..UTF-8...
+7. Find "$(INSTALL) -m 0644  $(PKGDIR)/data/xml/resource.dtd", below that
+   line, copy the string "test -z ... .xml;" to add a new statement. Change
+   it as "test -z... $(RECODE) <your_language_encoding>..UTF-8...".
+8. Issue "make" to rebuild WebMail.
+
+
+2. The "binary distribution" way
+--------------------------------
+That's what you can do if you only have the binary distribution of WebMail or don't
+want to rebuild WebMail with make.
+
+1. Create a directory where you will work on (e.g. /usr/local/src/webmail )
+2. Change to that directory and unzip webmail/lib/templates/html-templates_en.zip
+   there.
+3. You now have a subdirectory called html-templates. Translate all html files therein
+4. Generate a zipfile of the translated directory using
+   "zip -q html-templates_yourlang.zip html-templates/ html-templates/images"
+5. Copy the new ZIP-file back to the WebMail templates directory
+   (webmail/lib/templates)
+6. Copy the file WebMailStringResources_en.properties in the templates-directory
+   to WebMailStringResources_yourlang.properties and translate the Strings there
+
+
+Regardless which way you take, please inform me if you have a new translation for
+WebMail so that I may include it in the distribution or offer it for download on the
+webpage.

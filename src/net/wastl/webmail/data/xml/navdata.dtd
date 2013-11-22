@@ -1,0 +1,9 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT NAVDATA (NAVBUTTON*)>
+<!ELEMENT NAVBUTTON EMPTY>
+<!ATTLIST NAVBUTTON
+        img             CDATA   #REQUIRED
+        href            CDATA   #REQUIRED
+        target          CDATA   #IMPLIED
+        description     CDATA   #IMPLIED>

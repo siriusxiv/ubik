@@ -1,0 +1,138 @@
+<?xml encoding="UTF-8"?>
+
+<!-- A DTD for WebMail's user model -->
+
+<!--
+$Id: usermodel.dtd 19 2008-10-20 22:49:25Z unsaved $
+
+Copyright 2008 by the JWebMail Development Team and Sebastian Schaffert.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!-- Include DTD for WebMail's system configuration -->
+<!ENTITY % SYSDATA SYSTEM "sysdata.dtd">
+<!-- Same for the user data DTD -->
+<!ENTITY % USERDATA SYSTEM "userdata.dtd">
+<!-- and some information on how environment variables should be stored -->
+<!ENTITY % STATEDATA SYSTEM "statedata.dtd">
+<!-- finally some description about the current state of the user's navigation -->
+<!-- <!ENTITY % NAVDATA SYSTEM "navdata.dtd"> -->
+
+
+<!-- The WebMail usermodel consists of
+   - the navigation data, which stores the current state of the WebMail main screen
+   - the system data, the subtree which contains WebMail's system configuration, which the admin
+     may opt to display to the user
+   - the userdata, representing "static" user information like name, login etc
+   - the state, represented with some environment-like variables
+   - optional messagelists for the different folders; These consist of messages (either header
+     or header and body) and will be assembled if a user requests a message list for the first time
+-->
+
+<!ELEMENT USERMODEL (NAVDATA?,SYSDATA,USERDATA,STATEDATA?,CURRENT*,WORK?,MAILHOST_MODEL*)>
+
+<!-- CURRENT saves information about the mailhost, folder, message that is currently used by that user -->
+<!ELEMENT CURRENT EMPTY>
+<!ATTLIST CURRENT
+        type            (folder|message)                #REQUIRED
+        id              CDATA                           #REQUIRED
+        list_part       CDATA                           #IMPLIED
+        first_msg       CDATA                           #IMPLIED
+        last_msg        CDATA                           #IMPLIED>
+
+<!-- WORK saves messages that are currently edited by the user and have to be saved
+        temporarily -->
+<!ELEMENT WORK (MESSAGE*)>
+
+<!-- each mailhost has its own foldertree -->
+<!ELEMENT MAILHOST_MODEL (FOLDER)*>
+<!ATTLIST MAILHOST_MODEL
+        name            CDATA   #REQUIRED
+        error           CDATA   #IMPLIED
+        url             CDATA   #IMPLIED>
+
+<!-- A folder possibly has a messagelist or subfolders or both -->
+<!ELEMENT FOLDER (FOLDER|MESSAGELIST)*>
+<!-- Indicate whether this folder can hold subfolders or messages -->
+<!ATTLIST FOLDER
+        id              CDATA   #REQUIRED
+        name            CDATA   #REQUIRED
+        holds_folders   CDATA   #REQUIRED
+        holds_messages  CDATA   #REQUIRED
+        error           CDATA   #IMPLIED>
+
+<!-- A messagelist consists of messages -->
+<!ELEMENT MESSAGELIST (MESSAGE*)>
+<!ATTLIST MESSAGELIST
+        total           CDATA   #REQUIRED
+        new             CDATA   #REQUIRED>
+
+<!-- A message has a header and a body -->
+<!ELEMENT MESSAGE (HEADER,PART?)>
+<!-- A message belongs to a certain folder, has a unique message id and a number in
+    that folder. Message size will be set if possible and also some of the message flags -->
+<!ATTLIST MESSAGE
+        msgid           CDATA           #REQUIRED
+        msgnr           CDATA           #REQUIRED
+        size            CDATA           #IMPLIED
+        recent          (true|false)    #IMPLIED
+        seen            (true|false)    #IMPLIED
+        answered        (true|false)    #IMPLIED
+        deleted         (true|false)    #IMPLIED
+        draft           (true|false)    #IMPLIED
+        flagged         (true|false)    #IMPLIED
+        user            (true|false)    #IMPLIED
+        attachment      (true|false)    #IMPLIED>
+
+<!-- A message header has several fields -->
+<!ELEMENT HEADER (FROM, TO+, CC*, BCC*, REPLY-TO?, SUBJECT, DATE, HEADERVAR)>
+<!ELEMENT TO (#PCDATA)>
+<!ELEMENT FROM (#PCDATA)>
+<!ELEMENT CC (#PCDATA)>
+<!ELEMENT BCC (#PCDATA)>
+<!ELEMENT SUBJECT (#PCDATA)>
+<!ELEMENT REPLY-TO (#PCDATA)>
+
+<!ELEMENT HEADERVAR (#PCDATA)>
+<!ATTLIST HEADERVAR
+        name    CDATA   #REQUIRED>
+
+<!-- A message body consists of parts which can contain text or MIME data
+     The JavaScript section is used to filter JavaScript contents. It is no part since
+     WebMail does the filtering, not the message
+     The quotelevel attribute for CONTENT will be used to indicate that this text should
+     possibly displayed in another format because it is quoted. -->
+<!ELEMENT PART (PART|JAVASCRIPT|CONTENT)*>
+<!-- The part type is required so the XSL stylesheets can determine how the part should
+     be displayed (usually either inlined, as an image or as an external link
+     encoding, content-type and description are just used for further description of the
+     content and filename is used for images and external links.
+-->
+<!ATTLIST PART
+        type            (image|binary|text|html|multi) #REQUIRED
+        encoding        CDATA                   #IMPLIED
+        content-type    CDATA                   #IMPLIED
+        filename        CDATA                   #IMPLIED
+        description     CDATA                   #IMPLIED
+        size            CDATA                   #IMPLIED>
+
+<!ELEMENT JAVASCRIPT (#PCDATA)>
+
+<!ELEMENT CONTENT (#PCDATA)>
+<!ATTLIST CONTENT
+        quotelevel              CDATA   #IMPLIED>
+
+%SYSDATA;
+%USERDATA;
+%STATEDATA;

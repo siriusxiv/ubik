@@ -1,0 +1,63 @@
+$Id: plugins.txt 140 2008-10-31 21:49:50Z unsaved $
+
+WebMail Plugin support
+======================
+
+Since version v0.6.0, WebMail supports so-called plugins that are loaded at
+WebMail boot time and are all singletons that provide some functionality.
+They can all be found in a special directory and all implement the interface
+webmail.server.Plugin.
+
+Initialization of the Plugins
+-----------------------------
+- The PluginHandler class searches for *.class files in the Plugin directory and
+  constructs the corresponding "Class" object (with class.forName() and the CLASSPATH
+  set to the plugin path).
+- If a class is an instance of webmail.server.plugin, an object is created with
+  Class.newInstance().
+- The object is then appended to a queue
+- A PluginDependencyTree is created to create the dependency structure of the
+  plugins.
+- While the queue is not empty, Webmail will try to add the next element of the Queue
+  to the tree. If it fails (no element in the tree provides the required functionality),
+  the element is added to the end of the queue again.
+- Then the root node register method is called which in turn does a depth search
+  to all leaves and calls the register methods of them
+
+Plugin registration
+-------------------
+Each plugin is registered calling the "public void register(WebMailServer parent)"
+method. Thus, each plugin has access to the necessary instances of WebMail classes.
+On registration, the plugin should perform some action, perhaps add itself to the
+URLHandlers or some other sort of thing
+
+Dependency resolution
+---------------------
+All WebMail plugins have two methods:
+- public String provides() returns the name of the functionality this plugin provides
+  e.g. composer for the "Composer" plugin or "content bar" for the HTMLContentBar
+- public String requires() returns the name of the functionality that is required
+  for this plugin (currently there can only be one requirement, but that will perhaps
+  change if necessary). For example, WebMailHelp depends on some sort of "content bar".
+
+Dependencies are resolved using a simple tree structure that has the dependency "" in
+its root and therefore all Plugins with a returnvalue of requires() of "" as its
+children. All other plugins are tried to add to this structure, each as a direct child
+of its requirement.
+If all plugins are added, the method register is called on the root node, thus
+performing a depth first search on all its nodes and registering plugins in a
+(one of many) valid order.
+
+Special plugins
+---------------
+There are two kinds of "special" plugins: URLHandler and ContentProvider
+- URLHandler
+  URLHandler can register with the WebMailServer's ToplevelURLHandler and will
+  then be called whenever the registered URL or anything that starts with it and
+  cannot be handled by another handler. They must implement the handleURL method
+  that has the HTTP-header, the Session and the remaining suburl as parameters.
+  All URLHandlers are stored in a hierarchical URLHandler tree to speed up calls
+- ContentProvider
+  ContentProviders can register with their own icon and URL in the left-hand
+  content bar. Otherwise they are like URLHandlers. They provide a number to
+  determine the order where they appear on the content bar.

@@ -1,0 +1,17 @@
+$Id: README.developer 140 2008-10-31 21:49:50Z unsaved $
+
+WebMail Developer Documentation
+===============================
+
+If you are editing code for eventual entry into the JWebMail code base,
+please read and follow the conventions described in the file "conventions.txt".
+
+The documentation in this directory is mainly useful for developers that are interested
+in making changes in WebMail.
+Mainly you can find a short documentation about how things actually work in WebMail
+here.
+Most documents require that you are familiar with Java and programming concepts like
+OO-software engineering, regular expressions, data structures and so on, as I don't go
+into detail with that (Anyone should know tree structures e.g.).
+
+Sebastian Schaffert

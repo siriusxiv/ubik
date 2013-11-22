@@ -1,0 +1,82 @@
+$Id: bugs.txt 140 2008-10-31 21:49:50Z unsaved $
+
+This is a list of known bugs in WebMail. Some of them are bugs that I cannot
+fix, because they are not directly in the WebMail code but in some third party
+library or program:
+==============================================================================
+
+Admin's user config screen shows no users.  Maybe this is only supposed
+to show one type of users?  I'd think they should be editable if a
+file for the user shows up in the data store, but no.
+
+Whereas a single JWebMail user can manage multiple target email accounts,
+it fails terribly to manage two target email accounts if they are served
+from the same target email server.  The problem is not recognized by
+JWebMail and the user is presented with misleading results and errors.
+
+Mail hosts are saved, per-user, when they access a mail host (either first
+time or every time).  At least when the Domains feature is used, there is
+no way to update this.  E.g., when allowing only one folder access protocol
+use Admin Plugin to change this protocol:  There is no way for existing
+JWebMail users to use the new protocol.  (N.b. this is for folder
+access, not authenticating, which correctly follows the Admin auth setting).
+WORK-AROUND:
+    1. Stop the webapp (no need to uninstall)
+    2: Remove the user's XML data file at <DATADIR>/<DOMAIN.NAME>/<USERNAME>.xml
+    1. Start the webapp
+Unfortunately, just removing the <MAILHOST> element from the XML file doesn't
+work.  Removing the whole file will probably lose all the users' preferences.
+
+After removing a "Mailbox" (target email account) from a JWebMail account,
+the old tree of folders from that account keeps showing up in folder listings.
+I have verified that the MAILHOST_MODEL has been removed from the
+XMLUserModel, and that these nodes are not being updated by future
+WebMailSession.refreshFolderInformation(boolean, boolean)s.  Could the
+style sheet or Servlet post-processing be caching it somehow?
+
+Graceless handling of session timeouts.  Get exception stack traces in
+browser if a session times out... at least for an Admin session.
+I believe there is also a hardcoded reference to the old context-path
+of "/webmail" somewhere, because I am sometimes redirected to
+http://hostname:PORT/webmail/... after a timeout.
+
+App has compiled-in context path.  The implications of this are:
+Needs to be recompiled just to run as the root (/) app in an app server.
+Can't have more than one deployment of JWebMail in a container.
+(I have already done the main hunk of work to remedy this, stopping
+the app from writing under the deployed context root, and having a way
+to determine (and verify) the context path at runtime.  Just need to
+convert Ant filtering with app name, and uses of ServletContext.getRealPath()
+(and possibly other filesystem-dependent servlet calls).
+
+Domain enforcement rules are rudimentary.  Really not up to restricting
+a set of users to a set of hosts and protocols.
+
+Title:
+  WU-IMAP server doesn't show recent messages in the message list
+WebMail part:
+  Message List, Folder overview
+Description:
+  You get a certain count of "recent" (or "new") messages in the folder
+  overview, if you click on the message list for the folder these new
+  messages are not shown.
+Explanation:
+  -
+Solution:
+  The problem doesn't exist if you use the Cyrus IMAP server
+
+
+Title:
+  Cannot delete messages on a POP3-Server
+WebMail part:
+  Message List, Message View
+Description:
+  It is not possible to delete messages if you use a POP3 Server
+Explanation:
+  The limitation is not from WebMail, but a problem of the POP3-Provider
+  used by the JavaMail API. POP3 was not thought for remote message management
+  and thus the message deletion support does not fit into JavaMails ideas on
+  how to handle folders.
+Solution:
+  Either use IMAP (preferred) or try different POP3-Providers for JavaMail.
+  For the latter, simply replace the file pop3.jar by the new provider.

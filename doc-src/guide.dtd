@@ -1,0 +1,53 @@
+<!-- DTD for JWebMail Users's Guide -->
+
+<!--
+$Id: guide.dtd 140 2008-10-31 21:49:50Z unsaved $
+
+Copyright 2008 by the JWebMail Development Team and Sebastian Schaffert.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!ELEMENT GUIDE (TITLE,REVISION,AUTHOR,SECTION+)>
+<!ELEMENT TITLE (#PCDATA)>
+<!ELEMENT REVISION (#PCDATA)>
+<!ELEMENT AUTHOR (#PCDATA)>
+<!ELEMENT SECTION (SUBSECTION|P|CONTENTS)*>
+<!ELEMENT CONTENTS (#PCDATA)>
+<!ELEMENT SUBSECTION (SUBSUBSECTION|P)*>
+<!ELEMENT SUBSUBSECTION (P)*>
+<!ELEMENT P (#PCDATA|LIST|NLIST|NOTE|TABLE|STRONG|CODE|EM|A|BR)*>
+<!ELEMENT LIST (ITEM)*>
+<!ELEMENT NLIST (ITEM)*>
+<!ELEMENT ITEM (#PCDATA|TABLE|P|STRONG|CODE|EM|A|BR)*>
+<!ELEMENT NOTE (#PCDATA|STRONG|CODE|EM|A|BR)*>
+<!ELEMENT STRONG (#PCDATA|A|EM)*>
+<!ELEMENT EM (#PCDATA|A)*>
+<!ELEMENT CODE (#PCDATA|STRONG|EM|A|BR)*>
+<!ELEMENT BR (#PCDATA)>
+<!ELEMENT A (#PCDATA)>
+<!ELEMENT TABLE (TR)*>
+<!ELEMENT TR (TD)*>
+<!ELEMENT TD (#PCDATA|CODE|EM|STRONG|A)*>
+
+<!-- Sections, Subsections and Subsubsections require a name (the title of the section)
+     and a unique ID within the document for referencing -->
+<!ATTLIST SECTION       name CDATA #REQUIRED
+                        id   CDATA #REQUIRED>
+<!ATTLIST SUBSECTION    name CDATA #REQUIRED
+                        id   CDATA #REQUIRED>
+<!ATTLIST SUBSUBSECTION name CDATA #REQUIRED
+                        id   CDATA #REQUIRED>
+
+<!-- Links are very simple here, they just require a reference -->
+<!ATTLIST A             href CDATA #REQUIRED>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE USERMODEL SYSTEM "usermodel.dtd">
+
+<USERMODEL>
+  <SYSDATA>
+  </SYSDATA>
+  <USERDATA>
+    <LOGIN></LOGIN>
+    <PASSWORD></PASSWORD>
+    <USER_DOMAIN></USER_DOMAIN>
+    <FULL_NAME></FULL_NAME>
+    <EMAIL>
+    </EMAIL>
+    <SIGNATURE></SIGNATURE>
+    <LOCALE></LOCALE>
+  </USERDATA>
+</USERMODEL>
