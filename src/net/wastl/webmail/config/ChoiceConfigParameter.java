@@ -56,8 +56,9 @@ public class ChoiceConfigParameter extends ConfigParameter {
     public boolean isPossibleValue(Object value) {
         Enumeration<Object> e=possible_values.keys();
         boolean flag=false;
+        Object o;
         while(e.hasMoreElements()) {
-            Object o=e.nextElement();
+            o=e.nextElement();
             if(value.equals(o)) {
                 flag=true;
                 break;
