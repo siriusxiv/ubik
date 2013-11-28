@@ -64,23 +64,19 @@ public class About implements Plugin, URLHandler {
 
 
     public HTMLDocument handleURL(String suburl, HTTPSession session, HTTPRequestHeader header) throws DocumentNotFoundException {
-        String content="<BODY BGCOLOR=WHITE><CENTER><H1>About WebMail</H1></CENTER><BR>";
-        content+="<H3>Copyright</H3><BR>JWebMail is (c)2008 by the JWebMail Development Team and Sebastian Schaffert,<BR/>"
-            +"and is distributed under the terms of the <A HREF=\"http://www.apache.org/licenses/LICENSE-2.0\">Apache 2.0 License</A> "
-            +".<BR><P><HR><P>"
-            +"<H3>Registered Plugins</H3><BR><UL>";
+        //String content="<BODY BGCOLOR=WHITE><CENTER><H1>About WebMail</H1></CENTER><BR>";
+        StringBuffer contentBuffer = new StringBuffer("<BODY BGCOLOR=WHITE><CENTER><H1>About WebMail</H1></CENTER><BR>");
+        contentBuffer=contentBuffer.append("<H3>Copyright</H3><BR>JWebMail is (c)2008 by the JWebMail Development Team and Sebastian Schaffert,<BR/>").append("and is distributed under the terms of the <A HREF=\"http://www.apache.org/licenses/LICENSE-2.0\">Apache 2.0 License</A> ").append(".<BR><P><HR><P>").append("<H3>Registered Plugins</H3><BR><UL>");
         Enumeration<Plugin> e=parent.getPluginHandler().getPlugins();
+	Plugin p;
         while(e.hasMoreElements()) {
-            Plugin p=(Plugin)e.nextElement();
-            content+="<LI><B>"+p.getName()+"</B> (v"+p.getVersion()+"): "+p.getDescription()+"</LI>";
+            p=(Plugin)e.nextElement();
+            contentBuffer=contentBuffer.append("<LI><B>").append(p.getName()).append("</B> (v").append(p.getVersion()).append("): ").append(p.getDescription()).append( "</LI>");         
         }
         //System.gc();
-        content+="</UL><P><HR><P><H3>System Information</H3><BR><UL><LI><B>Operating System:</B> "+System.getProperty("os.name")
-            +"/"+System.getProperty("os.arch")+" "+System.getProperty("os.version")+"</LI><LI><B>Java Virtual Machine:</B> "
-            +System.getProperty("java.vm.name")+" version "+System.getProperty("java.version")+" from "
-            +System.getProperty("java.vendor")+"</LI><LI><B>Free memory for this JVM:</B> "
-            +Runtime.getRuntime().freeMemory()+" bytes</LI></UL></BODY>";
-        return new HTMLDocument("About WebMail",content);
+        contentBuffer=contentBuffer.append("</UL><P><HR><P><H3>System Information</H3><BR><UL><LI><B>Operating System:</B> ").append(System.getProperty("os.name")).append("/").append(System.getProperty("os.arch")).append(" ").append(System.getProperty("os.version")).append("</LI><LI><B>Java Virtual Machine:</B> ").append(System.getProperty("java.vm.name")).append(" version ").append(System.getProperty("java.version")).append(" from ").append(System.getProperty("java.vendor")).append("</LI><LI><B>Free memory for this JVM:</B> ").append(Runtime.getRuntime().freeMemory()).append(" bytes</LI></UL></BODY>");
+      
+        return new HTMLDocument("About WebMail",contentBuffer.toString());
     }
 
     public String provides() {
