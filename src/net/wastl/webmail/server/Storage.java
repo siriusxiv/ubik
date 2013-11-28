@@ -160,7 +160,7 @@ public abstract class Storage {
         File f=new File(language_path);
         if(!f.exists()) {
             language_path=(parent.getProperty("webmail.template.path")+
-                           System.getProperty("file.separator")+parent.getDefaultLocale().getLanguage());
+                           System.getProperty("file.separator")+WebMailServer.getDefaultLocale().getLanguage());
             f=new File(language_path);
             if(!f.exists()) {
                 log.error("Storage::getBasePath: Default Language templates not found \n(tried path: "+language_path+")");
@@ -244,16 +244,16 @@ public abstract class Storage {
     /**
      * Return userlist for a given domain.
      */
-    public abstract Enumeration getUsers(String domain);
+    public abstract Enumeration<?> getUsers(String domain);
 
     /**
      * @deprecated Use getUsers(String domain) instead
      */
     @Deprecated
-    public Enumeration getUsers() {
-        final Enumeration domains=getVirtualDomains();
-        return new Enumeration() {
-                Enumeration enumVar=null;
+    public Enumeration<?> getUsers() {
+        final Enumeration<?> domains=getVirtualDomains();
+        return new Enumeration<Object>() {
+                Enumeration<?> enumVar=null;
                 public boolean hasMoreElements() {
                     return (domains.hasMoreElements() || (enumVar != null && enumVar.hasMoreElements()));
                 }
@@ -338,7 +338,7 @@ public abstract class Storage {
     @Deprecated
     public void deleteUserData(String user) {
         StringTokenizer tok=new StringTokenizer(user,"@");
-        String login=tok.nextToken();
+        //*String login=tok.nextToken();
         String domain="nodomain";
         if(tok.hasMoreTokens()) {
             domain=tok.nextToken();
@@ -387,7 +387,7 @@ public abstract class Storage {
     /**
      * Return a list of virtual domains
      */
-    public Enumeration getVirtualDomains() {
+    public Enumeration<?> getVirtualDomains() {
         return sysdata.getVirtualDomains();
     }
 

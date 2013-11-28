@@ -68,7 +68,7 @@ public interface UserData {
      *
      * @returns list of mailbox names for this user
      */
-    public Enumeration mailHosts();
+    public Enumeration<?> mailHosts();
 
     /**
      * Return the value that the user configured as maximum number of

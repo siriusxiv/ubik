@@ -85,7 +85,7 @@ public abstract class FileStorage extends Storage implements ConfigurationListen
 
     protected static DateFormat df=null;
 
-    private boolean init_complete=false;
+    //*private boolean init_complete=false;
 
     protected int file_cache_size=40;
 
@@ -108,7 +108,7 @@ public abstract class FileStorage extends Storage implements ConfigurationListen
         cs.configRegisterYesNoKey("SHOW ADVERTISEMENTS","Whether or not to include the WebMail advertisement "+
                                   "messages in default user signatures and HTTP response headers");
         cs.setDefaultValue("SHOW ADVERTISEMENTS","NO");
-        cs.configRegisterStringKey("ADVERTISEMENT MESSAGE","JWebMail "+parent.getVersion()+" WWW to Mail Gateway", "Advertisement to attach to user signatures");
+        cs.configRegisterStringKey("ADVERTISEMENT MESSAGE","JWebMail "+WebMailServer.getVersion()+" WWW to Mail Gateway", "Advertisement to attach to user signatures");
 
         resources = new Hashtable<String, ResourceBundle>();
 
@@ -123,7 +123,7 @@ public abstract class FileStorage extends Storage implements ConfigurationListen
 
         initLanguages();
 
-        init_complete=true;
+        //*init_complete=true;
     }
 
     /**
@@ -317,7 +317,7 @@ public abstract class FileStorage extends Storage implements ConfigurationListen
      */
     public String getStringResource(String key, Locale locale) {
         if(resources.get(locale.getLanguage()) != null) {
-                String s = resources.get(locale.getLanguage()).getString(key);
+            //*String s = resources.get(locale.getLanguage()).getString(key);
             return resources.get(locale.getLanguage()).getString(key);
         } else {
             try {

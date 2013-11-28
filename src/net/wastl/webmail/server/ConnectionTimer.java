@@ -59,7 +59,7 @@ public class ConnectionTimer extends Thread {
     }
 
     public void removeAll() {
-        Enumeration e;
+        Enumeration<TimeableConnection> e;
         synchronized(connections) {
             e=connections.elements();
         }
@@ -71,7 +71,7 @@ public class ConnectionTimer extends Thread {
 
     public void run() {
         /** See TODO impl. note at top of this file. */
-        Enumeration e;
+        Enumeration<TimeableConnection> e;
         threadLog.info("Starting " + getName());
         try { while(true) {
             synchronized(connections) {
@@ -83,7 +83,7 @@ public class ConnectionTimer extends Thread {
                     t.timeoutOccured();
                 }
             }
-            try { this.sleep(sleep_interval); } catch(InterruptedException ex) {
+            try { Thread.sleep(sleep_interval); } catch(InterruptedException ex) {
                 log.error(ex);
             }
         } } finally { threadLog.info("Exiting " + getName()); }

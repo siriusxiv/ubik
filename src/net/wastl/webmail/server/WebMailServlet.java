@@ -90,7 +90,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
         log.debug("RT configs retrieved for application '" + depName + "'");
         srvlt_config = config;
         this.config = new Properties();
-        final Enumeration enumVar = config.getInitParameterNames();
+        final Enumeration<?> enumVar = config.getInitParameterNames();
         while (enumVar.hasMoreElements()) {
             final String s = (String) enumVar.nextElement();
             this.config.put(s, config.getInitParameter(s));
@@ -139,7 +139,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
         }
 
         // Override settings with webmail.* meta.properties
-        final Enumeration rte = rtProps.propertyNames();
+        final Enumeration<?> rte = rtProps.propertyNames();
         int overrides = 0;
         String k;
         while (rte.hasMoreElements()) {
@@ -207,7 +207,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
             throw new ServletException(ioe.getMessage());
         }
 
-        final Enumeration en = req.getHeaderNames();
+        final Enumeration<?> en = req.getHeaderNames();
         while (en.hasMoreElements()) {
             final String s = (String) en.nextElement();
             http_header.setHeader(s, req.getHeader(s));
@@ -251,7 +251,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
              * First get all the parameters and set their values into
              * http_header
              */
-            Enumeration enum2 = req.getParameterNames();
+            Enumeration<?> enum2 = req.getParameterNames();
             while (enum2.hasMoreElements()) {
                 final String s = (String) enum2.nextElement();
                 http_header.setContent(s, req.getParameter(s));
@@ -375,7 +375,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
                     res.setStatus(content.getReturnCode());
 
                     if (content.hasHTTPHeader()) {
-                        final Enumeration enumVar = content.getHTTPHeaderKeys();
+                        final Enumeration<?> enumVar = content.getHTTPHeaderKeys();
                         while (enumVar.hasMoreElements()) {
                             final String s = (String) enumVar.nextElement();
                             res.setHeader(s, content.getHTTPHeader(s));
@@ -551,8 +551,8 @@ public class WebMailServlet extends WebMailServer implements Servlet {
     }
 
     @Override
-    public Enumeration getServers() {
-        return new Enumeration() {
+    public Enumeration<?> getServers() {
+        return new Enumeration<Object>() {
             public boolean hasMoreElements() {
                 return false;
             }

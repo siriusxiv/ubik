@@ -120,12 +120,12 @@ public class WebMailSession implements HTTPSession {
 
     private boolean sent;
 
-    private String remote_agent;
-    private String remote_accepts;
+    //*private String remote_agent;
+    //*private String remote_accepts;
 
     private int attachments_size=0;
 
-    private String last_login;
+    //*private String last_login;
 
     /** Save the login password. It will be used for the second try password if
      * opening a folder fails.
@@ -145,7 +145,7 @@ public class WebMailSession implements HTTPSession {
     public WebMailSession(WebMailServer parent,Object parm,HTTPRequestHeader h)
          throws UserDataException, InvalidPasswordException, WebMailException {
         try {
-            Class srvltreq=Class.forName("javax.servlet.http.HttpServletRequest");
+            Class<?> srvltreq=Class.forName("javax.servlet.http.HttpServletRequest");
             if(srvltreq.isInstance(parm)) {
                 javax.servlet.http.HttpServletRequest req=(javax.servlet.http.HttpServletRequest)parm;
                 this.sess=req.getSession(false);
@@ -180,19 +180,19 @@ public class WebMailSession implements HTTPSession {
         String domain;
         setLastAccess();
         this.parent=parent;
-        remote_agent=h.getHeader("User-Agent").replace('\n',' ');
-        remote_accepts=h.getHeader("Accept").replace('\n',' ');
+        //*remote_agent=h.getHeader("User-Agent").replace('\n',' ');
+        //*remote_accepts=h.getHeader("Accept").replace('\n',' ');
         log.info("WebMail: New Session ("+session_code+")");
-        if(parent.getStorage().getVirtuals()==true && h.getContent("vdom") != null) {
+        if(WebMailServer.getStorage().getVirtuals()==true && h.getContent("vdom") != null) {
             domain=h.getContent("vdom");
         } else {
             domain="localnet";
         }
         user=WebMailServer.getStorage().getUserData(h.getContent("login"),domain,h.getContent("password"),true);
-        last_login=user.getLastLogin();
+        //*last_login=user.getLastLogin();
         user.login();
         login_password=h.getContent("password");
-        model=parent.getStorage().createXMLUserModel(user);
+        model=WebMailServer.getStorage().createXMLUserModel(user);
         connections = new Hashtable<String, Folder>();
         stores = new Hashtable<String, Store>();
         folders = new Hashtable<String, Folder>();
@@ -238,7 +238,7 @@ public class WebMailSession implements HTTPSession {
             return Helper.calcSessionCode(a,h);
         } else {
             try {
-                Class srvltreq=Class.forName("javax.servlet.http.HttpSession");
+                Class<?> srvltreq=Class.forName("javax.servlet.http.HttpSession");
                 if(srvltreq.isInstance(sess)) {
                     return ((javax.servlet.http.HttpSession)sess).getId();
                 } else {
@@ -252,7 +252,7 @@ public class WebMailSession implements HTTPSession {
 
     /**
      * Login to this session.
-     * Establishes connections to a user´s Mailhosts
+     * Establishes connections to a userï¿½s Mailhosts
      *
      * @param h RequestHeader with content from Login-POST operation.
      * @deprecated Use login() instead, no need for parameters and exception handling
@@ -278,7 +278,7 @@ public class WebMailSession implements HTTPSession {
      * Return a locale-specific string resource
      */
     public String getStringResource(String key) {
-        return parent.getStorage().getStringResource(key,user.getPreferredLocale());
+        return WebMailServer.getStorage().getStringResource(key,user.getPreferredLocale());
     }
 
     /**
@@ -359,7 +359,7 @@ public class WebMailSession implements HTTPSession {
             folder.fetch(msgs,fp);
             long fetch_stop=System.currentTimeMillis();
 
-            Map header=new Hashtable(15);
+            //*Map<?, ?> header=new Hashtable<Object, Object>(15);
 
             Flags.Flag[] sf;
             String from,to,cc,bcc,replyto,subject;
@@ -418,7 +418,7 @@ public class WebMailSession implements HTTPSession {
 
                                 /* Flags */
                 sf = msgs[i].getFlags().getSystemFlags();
-                String basepath=parent.getBasePath();
+                //*String basepath=parent.getBasePath();
 
                 for(int j=0;j<sf.length;j++) {
                     if(sf[j]==Flags.Flag.RECENT) xml_message.setAttribute("recent","true");
@@ -567,7 +567,7 @@ public class WebMailSession implements HTTPSession {
                 messageid=user.getLogin()+"."+msgnum+".jwebmail@"+user.getDomain();
             }
 
-            Element xml_current=model.setCurrentMessage(messageid);
+            //*Element xml_current=model.setCurrentMessage(messageid);
             XMLMessage xml_message=model.getMessage(xml_folder,m.getMessageNumber()+"",
                                                     messageid);
 
@@ -670,7 +670,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                                       getStringResource("reply message postfix"));
 
                 } else if(work != null && (mode & GETMESSAGE_MODE_FORWARD) == GETMESSAGE_MODE_FORWARD) {
-                    String from=work.getHeader("FROM");
+                    //*String from=work.getHeader("FROM");
                     work.setHeader("FROM",user.getDefaultEmail());
                     work.setHeader("TO","");
                     work.setHeader("CC","");
@@ -804,8 +804,9 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                 log.debug("Content-Type: "+p.getContentType());
 
                 String token="";
-                int quote_level=0, old_quotelevel=0;
-                boolean javascript_mode=false;
+                //*int quote_level=0;
+                int old_quotelevel=0;
+                //*boolean javascript_mode=false;
                 /* Read in the message part line by line */
                 while((token=in.readLine()) != null) {
                     /* First decode all language and MIME dependant stuff */
@@ -850,7 +851,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                     }
 
                     if(user.wantsBreakLines()) {
-                        Enumeration enumVar=Helper.breakLine(token,user.getMaxLineLength(),current_quotelevel);
+                        Enumeration<?> enumVar=Helper.breakLine(token,user.getMaxLineLength(),current_quotelevel);
 
                         while(enumVar.hasMoreElements()) {
                             String s=(String)enumVar.nextElement();
@@ -935,7 +936,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                     if (found && (alt == 1)) {
                         Node textPartNode = parent_part.getPartElement().getLastChild();
                         NamedNodeMap attributes = textPartNode.getAttributes();
-                        boolean hit = false;
+                        //*boolean hit = false;
 
                         for (int i = 0; i < attributes.getLength(); ++i) {
                             Node attr = attributes.item(i);
@@ -1149,7 +1150,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
 
         int max_size=0;
         try {
-            max_size=Integer.parseInt( parent.getStorage().getConfig("MAX ATTACH SIZE"));
+            max_size=Integer.parseInt( WebMailServer.getStorage().getConfig("MAX ATTACH SIZE"));
         } catch(NumberFormatException e) {
             log.warn("Invalid setting for parameter \"MAX ATTACH SIZE\". Must be a number!");
         }
@@ -1235,7 +1236,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                 StringTokenizer tok=new StringTokenizer(bodyString,"\n");
                 while(tok.hasMoreTokens()) {
                     String line=tok.nextToken();
-                    Enumeration enumVar=Helper.breakLine(line,user.getMaxLineLength(),
+                    Enumeration<?> enumVar=Helper.breakLine(line,user.getMaxLineLength(),
                                                       Helper.getQuoteLevel(line));
                     while(enumVar.hasMoreElements()) {
                         content.append((String)enumVar.nextElement()).append('\n');
@@ -1508,7 +1509,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
         if(folders==null) folders=new Hashtable<String, Folder>();
         Folder rootFolder = null;
         String cur_mh_id="";
-        Enumeration mailhosts=user.mailHosts();
+        Enumeration<?> mailhosts=user.mailHosts();
         int max_depth=0;
         int folderType;
 
@@ -1714,7 +1715,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
 
     protected Store connectStore(String host,String protocol,String login, String password) throws MessagingException {
         /* Check whether the domain of this user allows to connect to the host */
-        WebMailVirtualDomain vdom=parent.getStorage().getVirtualDomain(user.getDomain());
+        WebMailVirtualDomain vdom=WebMailServer.getStorage().getVirtualDomain(user.getDomain());
         if(!vdom.isAllowedHost(host)) {
             throw new MessagingException("You are not allowed to connect to this host");
         }
@@ -1735,7 +1736,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
             } catch(AuthenticationFailedException ex) {
                 /* If login fails, try the login_password */
                 if(!login_password.equals(password) &&
-                   parent.getStorage().getConfig("FOLDER TRY LOGIN PASSWORD").toUpperCase().equals("YES")) {
+                   WebMailServer.getStorage().getConfig("FOLDER TRY LOGIN PASSWORD").toUpperCase().equals("YES")) {
                     st.connect(host,login,login_password);
                     log.info("Mail: Connection to "+st.toString()+", second attempt with login password succeeded.");
                 } else {
@@ -1806,7 +1807,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
             // Make sure the session is invalidated
             if(sess != null) {
                 try {
-                    Class srvltreq=Class.forName("javax.servlet.http.HttpSession");
+                    Class<?> srvltreq=Class.forName("javax.servlet.http.HttpSession");
                     if(srvltreq.isInstance(sess)) {
                         ((javax.servlet.http.HttpSession)sess).invalidate();
                     }
@@ -1871,10 +1872,10 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
     public long getTimeout() {
         long i=600000;
         try {
-            i=Long.parseLong(parent.getStorage().getConfig("session timeout"));
+            i=Long.parseLong(WebMailServer.getStorage().getConfig("session timeout"));
         } catch(NumberFormatException ex) {
             log.error("Stored 'session timeout' value ("
-                    + parent.getStorage().getConfig("session tmeout")
+                    + WebMailServer.getStorage().getConfig("session tmeout")
                     + "' malformatted", ex);
         }
         return i;
@@ -1885,14 +1886,14 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
     }
 
     public void saveData() {
-        parent.getStorage().saveUserData(user.getUserName(),user.getDomain());
+        WebMailServer.getStorage().saveUserData(user.getUserName(),user.getDomain());
     }
 
 
     protected static int[] getSelectedMessages(HTTPRequestHeader head, int max) {
         // log.debug("select messages...");
 
-        Enumeration e=head.getContent().keys();
+        Enumeration<?> e=head.getContent().keys();
         int _msgs[]=new int[max];
         int j=0;
 
@@ -2083,7 +2084,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
      * but in a plugin or something; this is very hacky).
      */
     public void changeSetup(HTTPRequestHeader head) throws WebMailException {
-        Enumeration contentkeys=head.getContentKeys();
+        Enumeration<?> contentkeys=head.getContentKeys();
         user.resetBoolVars();
         while(contentkeys.hasMoreElements()) {
             String key=((String)contentkeys.nextElement()).toLowerCase();
@@ -2131,7 +2132,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
             }
 
             if(!head.getContent("PASSWORD").equals("")) {
-                net.wastl.webmail.server.Authenticator auth=parent.getStorage().getAuthenticator();
+                net.wastl.webmail.server.Authenticator auth=WebMailServer.getStorage().getAuthenticator();
                 if(auth.canChangePassword()) {
                     auth.changePassword(user,head.getContent("PASSWORD"),head.getContent("VERIFY"));
                 } else {
@@ -2175,7 +2176,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
         disconnectAll();
         String host_url=protocol+"://"+host;
         user.addMailHost(name, host_url, login, password, null);
-        Enumeration enumVar=user.mailHosts();
+        Enumeration<?> enumVar=user.mailHosts();
         while(enumVar.hasMoreElements()) {
             String id=(String)enumVar.nextElement();
             if(user.getMailHost(id).getName().equals(name)) {
@@ -2258,7 +2259,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                           "/"+user.getPreferredLocale().getLanguage()+
                           "/"+user.getTheme());
 
-        model.setStateVar("webmail version",parent.getVersion());
+        model.setStateVar("webmail version",WebMailServer.getVersion());
         model.setStateVar("operating system",System.getProperty("os.name")+" "+
                           System.getProperty("os.version")+"/"+System.getProperty("os.arch"));
         model.setStateVar("java virtual machine",System.getProperty("java.vendor")+" "+
@@ -2268,18 +2269,18 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
         model.setStateVar("first login",user.getFirstLogin());
         model.setStateVar("session id",session_code);
         model.setStateVar("date",formatDate(System.currentTimeMillis()));
-        model.setStateVar("max attach size",parent.getStorage().getConfig("MAX ATTACH SIZE"));
+        model.setStateVar("max attach size",WebMailServer.getStorage().getConfig("MAX ATTACH SIZE"));
         model.setStateVar("current attach size",""+attachments_size);
 
         // Add all languages to the state
         model.removeAllStateVars("language");
-        String lang=parent.getConfig("languages");
+        String lang=WebMailServer.getConfig("languages");
         StringTokenizer tok=new StringTokenizer(lang," ");
         while(tok.hasMoreTokens()) {
             String t=tok.nextToken();
             model.addStateVar("language",t);
             model.removeAllStateVars("themes_"+t);
-            StringTokenizer tok2=new StringTokenizer(parent.getConfig("THEMES_"+t.toUpperCase())," ");
+            StringTokenizer tok2=new StringTokenizer(WebMailServer.getConfig("THEMES_"+t.toUpperCase())," ");
             while(tok2.hasMoreElements()) {
                 model.addStateVar("themes_"+t,(String)tok2.nextToken());
             }

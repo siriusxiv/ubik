@@ -69,7 +69,7 @@ public class ExpandableProperties extends Properties {
         Properties additions = new Properties();
         Set<String> zaps = new HashSet<String>(); // keys to remove
 
-        Enumeration e = propertyNames();
+        Enumeration<?> e = propertyNames();
         String pk, pv;
         String newKey, newVal;
         Matcher m;

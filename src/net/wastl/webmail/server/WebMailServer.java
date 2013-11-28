@@ -150,11 +150,11 @@ public abstract class WebMailServer  {
         throws UnavailableException {
         /* Storage API */
         try {
-            Class storage_api=Class.forName(config.getProperty("webmail.storage"));
+            Class<?> storage_api=Class.forName(config.getProperty("webmail.storage"));
 
-            Class[] tmp=new Class[1];
+            Class<?>[] tmp=new Class<?>[1];
             tmp[0]=Class.forName("net.wastl.webmail.server.WebMailServer");
-            Constructor cons=storage_api.getConstructor(tmp);
+            Constructor<?> cons=storage_api.getConstructor(tmp);
 
             Object[] sargs=new Object[1];
             sargs[0]=this;
@@ -227,7 +227,7 @@ public abstract class WebMailServer  {
 
     public abstract Object getServer(String ID);
 
-    public abstract Enumeration getServers();
+    public abstract Enumeration<?> getServers();
 
     public String getBasePath() {
         return "";
@@ -244,7 +244,7 @@ public abstract class WebMailServer  {
     public String getBaseURI(HTTPRequestHeader header) {
         String host=header.getHeader("Host");
         StringTokenizer tok=new StringTokenizer(host,":");
-        String hostname=tok.nextToken();
+        //*String hostname=tok.nextToken();
         int port=80;
         if(tok.hasMoreElements()) {
             try {
@@ -346,7 +346,7 @@ public abstract class WebMailServer  {
 
     public void restart() throws UnavailableException {
         log.info("Initiating shutdown for child processes:");
-        Enumeration e=sessions.keys();
+        Enumeration<String> e=sessions.keys();
         log.info("Removing active WebMail sessions ... ");
         while(e.hasMoreElements()) {
             HTTPSession w = sessions.get(e.nextElement());
@@ -372,7 +372,7 @@ public abstract class WebMailServer  {
         /* This method gets invoked upon webap "stop" and "undeploy",
          * only after the WebMail servlet runs. */
         log.info("Initiating shutdown for child processes:");
-        Enumeration e=sessions.keys();
+        Enumeration<String> e=sessions.keys();
         log.info("Removing active WebMail sessions ... ");
         while(e.hasMoreElements()) {
             HTTPSession w = sessions.get(e.nextElement());
@@ -425,7 +425,7 @@ public abstract class WebMailServer  {
     }
 
 
-    public Enumeration getSessions() {
+    public Enumeration<String> getSessions() {
         return sessions.keys();
     }
 }

@@ -29,7 +29,7 @@ public class IntegerConfigParameter extends ConfigParameter {
 
     public boolean isPossibleValue(Object value) {
         try {
-            int i=Integer.parseInt((String)value);
+            Integer.parseInt((String)value);
             return true;
         } catch(NumberFormatException e) {
             return false;

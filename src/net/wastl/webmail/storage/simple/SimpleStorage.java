@@ -62,9 +62,9 @@ public class SimpleStorage extends FileStorage {
 
     public static final String user_domain_separator="|";
 
-    protected Hashtable resources;
+    protected Hashtable<?, ?> resources;
 
-    protected Hashtable vdoms;
+    protected Hashtable<?, ?> vdoms;
 
     protected ExpireableCache user_cache;
 
@@ -150,7 +150,7 @@ public class SimpleStorage extends FileStorage {
     }
 
 
-    public Enumeration getUsers(String domain) {
+    public Enumeration<?> getUsers(String domain) {
         String path=parent.getProperty("webmail.data.path")+System.getProperty("file.separator")+
             domain+System.getProperty("file.separator");
 
@@ -165,7 +165,7 @@ public class SimpleStorage extends FileStorage {
                         }
                     }
                 } );
-            return new Enumeration() {
+            return new Enumeration<Object>() {
                     int i=0;
                     public boolean hasMoreElements() {
                         return i<files.length;
@@ -177,7 +177,7 @@ public class SimpleStorage extends FileStorage {
                 };
         } else {
             log.warn("SimpleStorage: Could not list files in directory "+path);
-            return new Enumeration() {
+            return new Enumeration<Object>() {
                     public boolean hasMoreElements() { return false; }
                     public Object nextElement() { return null; }
                 };
@@ -220,7 +220,7 @@ public class SimpleStorage extends FileStorage {
                   data.setSignature(user+"@"+domain);
                 }
             }
-            data.setTheme(parent.getDefaultTheme());
+            data.setTheme(WebMailServer.getDefaultTheme());
             WebMailVirtualDomain vdom=getVirtualDomain(domain);
             data.addMailHost("Default",getConfig("DEFAULT PROTOCOL")+"://"+
                              vdom.getDefaultServer(),user,password,

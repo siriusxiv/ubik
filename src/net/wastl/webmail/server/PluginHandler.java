@@ -59,14 +59,13 @@ public class PluginHandler  {
      /**
      * Initialize and register WebMail Plugins.
      */
-    @SuppressWarnings("unchecked")
     public void registerPlugins() throws WebMailException {
         String[] pluginStrings = plugin_list.trim().split("\\s*,\\s*", -1);
         log.info("Initializing " + pluginStrings.length
                 + " WebMail Plugins ...");
         //      System.setProperty("java.class.path",System.getProperty("java.class.path")+System.getProperty("path.separator")+pluginpath);
 
-        Class plugin_class=null;
+        Class<?> plugin_class=null;
         try {
             plugin_class=Class.forName("net.wastl.webmail.server.Plugin");
         } catch(ClassNotFoundException ex) {
@@ -79,7 +78,7 @@ public class PluginHandler  {
         net.wastl.webmail.misc.Queue q=new net.wastl.webmail.misc.Queue();
 
         for (String pluginString : pluginStrings) try {
-            Class c = Class.forName(pluginString);
+            Class<?> c = Class.forName(pluginString);
             if (!plugin_class.isAssignableFrom(c)) {
                 log.warn("Requested plugin '" + pluginString
                         + "' not a plugin_class.getName().  Skipping.");
@@ -103,7 +102,7 @@ public class PluginHandler  {
         log.info(Integer.toString(plugins.size()) + " plugins initialized");
     };
 
-    public Enumeration getPlugins() {
+    public Enumeration<Plugin> getPlugins() {
         return plugins.elements();
     }
 

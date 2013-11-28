@@ -98,7 +98,7 @@ public abstract class ConfigParameter {
     /**
      * Get a list of all configuration listeners.
      */
-    public Enumeration getConfigurationListeners() {
+    public Enumeration<ConfigurationListener> getConfigurationListeners() {
         return listeners.elements();
     }
 

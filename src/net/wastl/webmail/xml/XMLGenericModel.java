@@ -102,9 +102,9 @@ public class XMLGenericModel extends XMLData {
     public void init() {
         setStateVar("base uri",parent.getBasePath());
         setStateVar("img base uri",parent.getImageBasePath()+
-                    "/"+parent.getDefaultLocale().getLanguage()+
-                    "/"+parent.getDefaultTheme());
-        setStateVar("webmail version",parent.getVersion());
+                    "/"+WebMailServer.getDefaultLocale().getLanguage()+
+                    "/"+WebMailServer.getDefaultTheme());
+        setStateVar("webmail version",WebMailServer.getVersion());
         setStateVar("operating system",System.getProperty("os.name")+" "+
                     System.getProperty("os.version")+"/"+System.getProperty("os.arch"));
         setStateVar("java virtual machine",System.getProperty("java.vendor")+" "+
@@ -245,7 +245,7 @@ public class XMLGenericModel extends XMLData {
                     v.addElement((Element) nl.item(i));
                 }
             }
-            Enumeration enumVar=v.elements();
+            Enumeration<Element> enumVar=v.elements();
             while(enumVar.hasMoreElements()) {
                 Node n=(Node)enumVar.nextElement();
                 statedata.removeChild(n);

@@ -219,7 +219,7 @@ public class ConfigScheme {
         log.debug("NOTIFY: "+key);
         ConfigParameter parm=getConfigParameter(key);
         if(parm!=null) {
-            Enumeration enumVar=parm.getConfigurationListeners();
+            Enumeration<?> enumVar=parm.getConfigurationListeners();
 
             while(enumVar.hasMoreElements()) {
                 ConfigurationListener l=(ConfigurationListener)enumVar.nextElement();

@@ -183,7 +183,7 @@ public class XMLSystemData extends ConfigStore {
 
         ConfigParameter param=scheme.getConfigParameter(key);
         if(param instanceof ChoiceConfigParameter) {
-            Enumeration enumVar=((ChoiceConfigParameter)param).choices();
+            Enumeration<?> enumVar=((ChoiceConfigParameter)param).choices();
             while(enumVar.hasMoreElements()) {
                 Element choice=root.createElement("CHOICE");
                 choice.appendChild(root.createTextNode((String)enumVar.nextElement()));
@@ -206,7 +206,7 @@ public class XMLSystemData extends ConfigStore {
         config.setAttribute("type",type);
         ConfigParameter param=scheme.getConfigParameter(key);
         if(param instanceof ChoiceConfigParameter) {
-            Enumeration enumVar=((ChoiceConfigParameter)param).choices();
+            Enumeration<?> enumVar=((ChoiceConfigParameter)param).choices();
             while(enumVar.hasMoreElements()) {
                 Element choice=root.createElement("CHOICE");
                 choice.appendChild(root.createTextNode((String)enumVar.nextElement()));
@@ -237,9 +237,9 @@ public class XMLSystemData extends ConfigStore {
             }
     }
 
-    public Enumeration getVirtualDomains() {
+    public Enumeration<?> getVirtualDomains() {
         final NodeList nl=sysdata.getElementsByTagName("DOMAIN");
-        return new Enumeration() {
+        return new Enumeration<Object>() {
                 int i=0;
 
                 public boolean hasMoreElements() {
@@ -355,11 +355,11 @@ public class XMLSystemData extends ConfigStore {
                     }
 
                     /* Override the IMAP base directory for this domain,
-                     * for imap and imaps protocols */
+                     * for imap and imaps protocols 
                     public String getImapBaseDir() {
                         String value=XMLCommon.getTagValue(domain,"IMAP_BASEDIR");
                         return value==null?"unknown":value;
-                    }
+                    }*/
 
                     public void setDefaultServer(String name) {
                         XMLCommon.setTagValue(domain,"DEFAULT_HOST",name);

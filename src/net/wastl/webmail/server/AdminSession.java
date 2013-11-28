@@ -61,8 +61,8 @@ public class AdminSession implements HTTPSession {
     protected WebMailServer parent;
 
     protected InetAddress remote;
-    private String remote_agent;
-    private String remote_accepts;
+    //*private String remote_agent;
+    //*private String remote_accepts;
 
     protected XMLAdminModel model;
 
@@ -77,7 +77,7 @@ public class AdminSession implements HTTPSession {
 
     public AdminSession(WebMailServer parent, Object parm, HTTPRequestHeader h) throws InvalidPasswordException, WebMailException {
         try {
-            Class srvltreq=Class.forName("javax.servlet.http.HttpServletRequest");
+            Class<?> srvltreq=Class.forName("javax.servlet.http.HttpServletRequest");
             if(srvltreq.isInstance(parm)) {
                 running_as_servlet=true;
                 javax.servlet.http.HttpServletRequest req=(javax.servlet.http.HttpServletRequest)parm;
@@ -108,10 +108,10 @@ public class AdminSession implements HTTPSession {
         throws InvalidPasswordException, WebMailException {
         this.parent=parent;
         last_access=System.currentTimeMillis();
-        remote_agent=h.getHeader("User-Agent").replace('\n',' ');
-        remote_accepts=h.getHeader("Accept").replace('\n',' ');
+        //*remote_agent=h.getHeader("User-Agent").replace('\n',' ');
+        //*remote_accepts=h.getHeader("Accept").replace('\n',' ');
         //env=new Hashtable();
-        model=parent.getStorage().createXMLAdminModel();
+        model=WebMailServer.getStorage().createXMLAdminModel();
         login(h);
         log.info("WebMail: New Session ("+session_code+")");
 
@@ -120,7 +120,7 @@ public class AdminSession implements HTTPSession {
     }
 
     public void login(HTTPRequestHeader h) throws InvalidPasswordException {
-        String passwd=parent.getStorage().getConfig("ADMIN PASSWORD");
+        String passwd=WebMailServer.getStorage().getConfig("ADMIN PASSWORD");
         if(!Helper.crypt(passwd,h.getContent("password")).equals(passwd)) {
             throw new InvalidPasswordException();
         }
@@ -176,7 +176,7 @@ public class AdminSession implements HTTPSession {
       try {
             selected_user=user;
             System.err.println("Selecting user "+user);
-            XMLUserData ud=parent.getStorage().getUserData(user,selected_domain,"");
+            XMLUserData ud=WebMailServer.getStorage().getUserData(user,selected_domain,"");
             System.err.println("Done.");
             model.importUserData(ud.getUserData());
       }
@@ -190,7 +190,7 @@ public class AdminSession implements HTTPSession {
     }
 
     public void deleteUser(String user) {
-        parent.getStorage().deleteUserData(user,selected_domain);
+        WebMailServer.getStorage().deleteUserData(user,selected_domain);
         // Refresh information
         selectDomain(selected_domain);
     }
@@ -202,8 +202,8 @@ public class AdminSession implements HTTPSession {
         XMLUserData ud;
         AuthDisplayMngr adm;
 
-        ud=parent.getStorage().getUserData(selected_user, selected_domain, "");
-        adm=parent.getStorage().getAuthenticator().getAuthDisplayMngr();
+        ud=WebMailServer.getStorage().getUserData(selected_user, selected_domain, "");
+        adm=WebMailServer.getStorage().getAuthenticator().getAuthDisplayMngr();
 
         adm.setPassChangeVars(ud, model);
         model.setStateVar("pass change tmpl", adm.getPassChangeTmpl());
@@ -221,9 +221,9 @@ public class AdminSession implements HTTPSession {
      * @param h Header parsed from AdministratorPlugin
      */
     public void changeUser(HTTPRequestHeader head) throws WebMailException {
-        XMLUserData user=parent.getStorage().getUserData(selected_user,selected_domain,"",false);
+        XMLUserData user=WebMailServer.getStorage().getUserData(selected_user,selected_domain,"",false);
 
-        Enumeration contentkeys=head.getContentKeys();
+        Enumeration<?> contentkeys=head.getContentKeys();
         user.resetBoolVars();
         while(contentkeys.hasMoreElements()) {
             String key=((String)contentkeys.nextElement()).toLowerCase();
@@ -245,7 +245,7 @@ public class AdminSession implements HTTPSession {
         user.addEmail(head.getContent("user email"));
         user.setDefaultEmail(head.getContent("user email"));
         if(!head.getContent("user password").equals("")) {
-            net.wastl.webmail.server.Authenticator auth=parent.getStorage().getAuthenticator();
+            net.wastl.webmail.server.Authenticator auth=WebMailServer.getStorage().getAuthenticator();
             if(auth.canChangePassword()) {
             try {
                         auth.changePassword(user,head.getContent("user password"),head.getContent("user password"));
@@ -255,15 +255,15 @@ public class AdminSession implements HTTPSession {
                             /**
                 throw new InvalidDataException(parent.getStorage().getStringResource("EX NO CHANGE PASSWORD", Locale.getDefault()));
                                 **/
-                                throw new InvalidDataException(parent.getStorage().getStringResource("EX NO CHANGE PASSWORD", parent.getDefaultLocale()));
+                                throw new InvalidDataException(WebMailServer.getStorage().getStringResource("EX NO CHANGE PASSWORD", WebMailServer.getDefaultLocale()));
             }
             } else {
-                throw new InvalidDataException(parent.getStorage().getStringResource("EX NO CHANGE PASSWORD",Locale.getDefault()));
+                throw new InvalidDataException(WebMailServer.getStorage().getStringResource("EX NO CHANGE PASSWORD",Locale.getDefault()));
             }
         }
         user.setPreferredLocale(head.getContent("user language"));
 
-        parent.getStorage().saveUserData(selected_user,selected_domain);
+        WebMailServer.getStorage().saveUserData(selected_user,selected_domain);
 
         selectUser(selected_user);
         selectDomain(selected_domain);
@@ -274,7 +274,7 @@ public class AdminSession implements HTTPSession {
 
         selected_domain=domain;
 
-        Enumeration enumVar=parent.getStorage().getUsers(domain);
+        Enumeration<?> enumVar=WebMailServer.getStorage().getUsers(domain);
         model.removeAllStateVars("user");
         while(enumVar.hasMoreElements()) {
             model.addStateVar("user",(String)enumVar.nextElement());
@@ -295,7 +295,7 @@ public class AdminSession implements HTTPSession {
         model.update();
 
         // Here we must initialize which choices are available for ChoiceConfigParameters!
-        XMLSystemData sysdata=parent.getStorage().getSystemData();
+        XMLSystemData sysdata=WebMailServer.getStorage().getSystemData();
         sysdata.initChoices();
 
         if(running_as_servlet) {
@@ -304,14 +304,14 @@ public class AdminSession implements HTTPSession {
             model.setStateVar("http server status",((StatusServer)parent.getServer("HTTP")).getStatus());
             model.setStateVar("ssl server status",((StatusServer)parent.getServer("SSL")).getStatus());
         }
-        model.setStateVar("storage status",parent.getStorage().toString());
+        model.setStateVar("storage status",WebMailServer.getStorage().toString());
 
         /*
           Generate a list of active sessions with some additional information
           (idle time, session code, active mail connections, ...)
         */
         XMLCommon.genericRemoveAll(model.getStateData(),"SESSION");
-        Enumeration e=parent.getSessions();
+        Enumeration<?> e=parent.getSessions();
         if(e != null && e.hasMoreElements()) {
             while(e.hasMoreElements()) {
                 String name=(String)e.nextElement();
@@ -349,7 +349,7 @@ public class AdminSession implements HTTPSession {
 
         // Add all languages to the state
         model.removeAllStateVars("language");
-        String lang=parent.getConfig("languages");
+        String lang=WebMailServer.getConfig("languages");
         StringTokenizer tok=new StringTokenizer(lang," ");
         while(tok.hasMoreTokens()) {
             String t=tok.nextToken();

@@ -53,7 +53,7 @@ public class HTMLDocument {
         httpheaders.put(key,value);
     }
 
-    public Enumeration getHTTPHeaderKeys() {
+    public Enumeration<String> getHTTPHeaderKeys() {
         return httpheaders.keys();
     }
 

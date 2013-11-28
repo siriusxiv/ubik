@@ -64,7 +64,7 @@ public class AuthenticatorHandler  {
 
         authenticators = new Hashtable<String, Authenticator>();
         for (String authString : authenticatorStrings) try {
-            Class c=Class.forName(authString);
+            Class<?> c=Class.forName(authString);
             Authenticator a=(Authenticator) c.newInstance();
             a.register(parent.getConfigScheme());
             authenticators.put(a.getKey(),a);

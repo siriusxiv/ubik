@@ -38,7 +38,7 @@ public class Fancyfier  {
     public Fancyfier() {
     }
     private static Pattern[] regs=null;
-    private static Pattern uri=null;
+    //*private static Pattern uri=null;
 
     private static String[] repls={
         "<IMG SRC=\"/images/emoticon11.gif\">",

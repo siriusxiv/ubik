@@ -77,14 +77,14 @@ public class ToplevelURLHandler implements URLHandler {
     public HTMLDocument handleException(Exception ex, HTTPSession session, HTTPRequestHeader header) throws ServletException {
         try {
             session.setException(ex);
-            String theme=parent.getDefaultTheme();
+            String theme=WebMailServer.getDefaultTheme();
             Locale locale=Locale.getDefault();
             if(session instanceof WebMailSession) {
                 WebMailSession sess=(WebMailSession)session;
                 theme=sess.getUser().getTheme();
                 locale=sess.getUser().getPreferredLocale();
             }
-            return new XHTMLDocument(session.getModel(),parent.getStorage().getStylesheet("error.xsl",locale,theme));
+            return new XHTMLDocument(session.getModel(),WebMailServer.getStorage().getStylesheet("error.xsl",locale,theme));
         } catch(Exception myex) {
             log.error("Error while handling exception:", myex);
             log.error("The handled exception was:", ex);
@@ -97,9 +97,9 @@ public class ToplevelURLHandler implements URLHandler {
 
         if(url.equals("/")) {
             //content=new HTMLLoginScreen(parent,parent.getStorage(),false);
-            XMLGenericModel model=parent.getStorage().createXMLGenericModel();
+            XMLGenericModel model=WebMailServer.getStorage().createXMLGenericModel();
 
-            AuthDisplayMngr adm = parent.getStorage().getAuthenticator().getAuthDisplayMngr();
+            AuthDisplayMngr adm = WebMailServer.getStorage().getAuthenticator().getAuthDisplayMngr();
 
             if(header.isContentSet("login")) {
                 model.setStateVar("invalid password","yes");
@@ -117,12 +117,12 @@ public class ToplevelURLHandler implements URLHandler {
                                                                           Locale.getDefault(),"default"));
                 */
             content = new XHTMLDocument(model.getRoot(),
-                                        parent.getStorage().getStylesheet(adm.getLoginScreenFile(),
-                                                                                parent.getDefaultLocale(),parent.getProperty("webmail.default.theme")));
+                                        WebMailServer.getStorage().getStylesheet(adm.getLoginScreenFile(),
+                                                                                WebMailServer.getDefaultLocale(),parent.getProperty("webmail.default.theme")));
         } else if(url.equals("/login")) {
             WebMailSession sess=(WebMailSession)session;
             UserData user=sess.getUser();
-            content=new XHTMLDocument(session.getModel(),parent.getStorage().getStylesheet("login.xsl",user.getPreferredLocale(),user.getTheme()));
+            content=new XHTMLDocument(session.getModel(),WebMailServer.getStorage().getStylesheet("login.xsl",user.getPreferredLocale(),user.getTheme()));
         } else {
             /* Let the plugins handle it */
 

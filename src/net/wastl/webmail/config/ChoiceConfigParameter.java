@@ -45,7 +45,7 @@ public class ChoiceConfigParameter extends ConfigParameter {
         possible_values.remove(choice);
     }
 
-    public Enumeration choices() {
+    public Enumeration<Object> choices() {
         return possible_values.keys();
     }
 
@@ -54,7 +54,7 @@ public class ChoiceConfigParameter extends ConfigParameter {
     }
 
     public boolean isPossibleValue(Object value) {
-        Enumeration e=possible_values.keys();
+        Enumeration<Object> e=possible_values.keys();
         boolean flag=false;
         while(e.hasMoreElements()) {
             Object o=e.nextElement();

@@ -791,10 +791,10 @@ public class Helper  {
         return linesize+1;
     }
 
-    public static Enumeration breakLine(String line, int linesize, int quotelevel) {
+    public static Enumeration<?> breakLine(String line, int linesize, int quotelevel) {
         if(line.length() <= linesize) {
             final String s=line;
-            return new Enumeration() {
+            return new Enumeration<Object>() {
                     int count=0;
                     public boolean hasMoreElements() {
                         return count == 0;
@@ -812,8 +812,8 @@ public class Helper  {
             String rest="";
             for(int i=0;i<quotelevel;i++) rest+=">";
             rest+=line.substring(breakpos);
-            final Enumeration enumVar=breakLine(rest,linesize,quotelevel);
-            return new Enumeration() {
+            final Enumeration<?> enumVar=breakLine(rest,linesize,quotelevel);
+            return new Enumeration<Object>() {
                     int count=0;
                     public boolean hasMoreElements() {
                         return count < 1 || enumVar.hasMoreElements();

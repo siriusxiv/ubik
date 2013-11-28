@@ -90,7 +90,7 @@ public class HTTPRequestHeader  {
         return headers.get(t.toUpperCase());
     }
 
-    public Hashtable getContent() {
+    public Hashtable<String, Object> getContent() {
         return content;
     }
 
@@ -128,18 +128,18 @@ public class HTTPRequestHeader  {
         content.put(key.toUpperCase(),value);
     }
 
-    public Enumeration getHeaderKeys() {
+    public Enumeration<String> getHeaderKeys() {
         return headers.keys();
     }
 
-    public Enumeration getContentKeys() {
+    public Enumeration<String> getContentKeys() {
         return content.keys();
     }
 
     public String toString() {
         String s="Method: "+headers.get("METHOD")+", Path="+headers.get("PATH")+", HTTP-version: "+headers.get("VERSION")+"\n";
         s+="HTTP Headers:\n";
-        Enumeration e=headers.keys();
+        Enumeration<String> e=headers.keys();
         while(e.hasMoreElements()) {
             String h=(String)e.nextElement();
             s+="Header name: "+h+", value: "+headers.get(h)+"\n";

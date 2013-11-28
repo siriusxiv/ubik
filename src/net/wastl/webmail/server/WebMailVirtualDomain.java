@@ -72,7 +72,7 @@ public interface WebMailVirtualDomain  {
      */
     public void setAllowedHosts(String hosts);
 
-    public Enumeration getAllowedHosts();
+    public Enumeration<?> getAllowedHosts();
 
     /**
      * Enable/Disable restriction on the hosts that a user may connect to.
