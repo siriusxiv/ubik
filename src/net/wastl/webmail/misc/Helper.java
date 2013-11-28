@@ -591,8 +591,10 @@ public class Helper  {
      */
    public static final String crypt(String salt, String original)
    {
-      while(salt.length() < 2)
-         salt += "A";
+      StringBuffer saltBuffer = new StringBuffer(salt);
+       while(saltBuffer.length() < 2){
+         saltBuffer=saltBuffer.append("A");}
+      salt=saltBuffer.toString();
 
       StringBuilder buffer = new StringBuilder("             ");
 
@@ -649,18 +651,19 @@ public class Helper  {
    }
 
     public static String joinAddress(Address[] a) {
-        String s="";
+        StringBuffer s = new StringBuffer("");
+        
         if(a != null) {
             for(int i=0;i<a.length;i++) {
-                s+=a[i].toString()+", ";
+                s.append(a[i].toString()).append(", ");
             }
             if(s.length()>=2) {
-                s=s.substring(0,s.length()-2);
+                s = new StringBuffer( (s.substring(0,s.length()-2)) );
             }
         } else {
-            s="";
+            s=new StringBuffer("");
         }
-        return s;
+        return s.toString();
     }
 
     /**

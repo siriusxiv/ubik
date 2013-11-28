@@ -96,9 +96,9 @@ public class StringHeap  {
      * Note that the cur_pos is actually one larger than the position in the array!
      */
     protected void decrease(int cur_pos) {
+            int lesser_son;
         while((cur_pos*2 <= num_entries && keys[cur_pos-1].compareTo(keys[cur_pos*2-1]) > 0) ||
               (cur_pos*2+1 <=num_entries && keys[cur_pos-1].compareTo(keys[cur_pos*2]) > 0)) {
-            int lesser_son;
             if(cur_pos*2+1 <= num_entries) {
                 lesser_son=keys[cur_pos*2-1].compareTo(keys[cur_pos*2])<0?cur_pos*2:cur_pos*2+1;
             } else {
