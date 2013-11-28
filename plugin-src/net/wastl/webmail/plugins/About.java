@@ -69,7 +69,7 @@ public class About implements Plugin, URLHandler {
             +"and is distributed under the terms of the <A HREF=\"http://www.apache.org/licenses/LICENSE-2.0\">Apache 2.0 License</A> "
             +".<BR><P><HR><P>"
             +"<H3>Registered Plugins</H3><BR><UL>";
-        Enumeration e=parent.getPluginHandler().getPlugins();
+        Enumeration<Plugin> e=parent.getPluginHandler().getPlugins();
         while(e.hasMoreElements()) {
             Plugin p=(Plugin)e.nextElement();
             content+="<LI><B>"+p.getName()+"</B> (v"+p.getVersion()+"): "+p.getDescription()+"</LI>";

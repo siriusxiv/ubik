@@ -51,7 +51,7 @@ public class ErrorHandler implements Plugin, URLHandler {
     public void register(WebMailServer parent) {
         parent.getURLHandler().registerHandler(URL,this);
         this.parent=parent;
-        store=parent.getStorage();
+        store=WebMailServer.getStorage();
     }
 
     public String getName() {

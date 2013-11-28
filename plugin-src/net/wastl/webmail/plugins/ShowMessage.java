@@ -56,7 +56,7 @@ public class ShowMessage implements Plugin, URLHandler {
 
     public void register(WebMailServer parent) {
         parent.getURLHandler().registerHandler(URL,this);
-        this.store=parent.getStorage();
+        this.store=WebMailServer.getStorage();
     }
 
     public String getName() {

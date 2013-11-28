@@ -50,12 +50,12 @@ public class AdminPlugin implements Plugin, URLHandler {
     public static final String VERSION="1.3";
     public static final String URL="/admin";
 
-    protected Vector sessions;
+    protected Vector<?> sessions;
 
     WebMailServer parent;
 
     public AdminPlugin() {
-        sessions=new Vector();
+        sessions=new Vector<Object>();
     }
 
     public void register(WebMailServer parent) {
@@ -101,31 +101,31 @@ public class AdminPlugin implements Plugin, URLHandler {
         } else if(suburl.startsWith("/login")) {
             log.info("Admin login ... ");
             content=new XHTMLDocument(session.getModel(),
-                                      parent.getStorage().getStylesheet("admin-frame.xsl",
-                                                                        parent.getDefaultLocale(),
+                                      WebMailServer.getStorage().getStylesheet("admin-frame.xsl",
+                                                                        WebMailServer.getDefaultLocale(),
                                                                         parent.getProperty("webmail.default.theme")));
 
         } else if(suburl.startsWith("/system")) {
             if(suburl.startsWith("/system/set")) {
-                XMLSystemData sysdata=parent.getStorage().getSystemData();
+                XMLSystemData sysdata=WebMailServer.getStorage().getSystemData();
                 for (String ckey : sysdata.getConfigKeys()) {
                     if(header.isContentSet(ckey)) {
 //                      log.debug(ckey+" = "+header.getContent(ckey));
                         sysdata.setConfig(ckey,header.getContent(ckey));
                     }
                 }
-                parent.getStorage().save();
+                WebMailServer.getStorage().save();
                 session.setEnv();
             }
             content=new XHTMLDocument(session.getModel(),
-                                      parent.getStorage().getStylesheet("admin-system.xsl",
-                                                                        parent.getDefaultLocale(),
+                                      WebMailServer.getStorage().getStylesheet("admin-system.xsl",
+                                                                        WebMailServer.getDefaultLocale(),
                                                                         parent.getProperty("webmail.default.theme")));
 
         } else if(suburl.startsWith("/navigation")) {
             content=new XHTMLDocument(session.getModel(),
-                                      parent.getStorage().getStylesheet("admin-navigation.xsl",
-                                                                        parent.getDefaultLocale(),
+                                      WebMailServer.getStorage().getStylesheet("admin-navigation.xsl",
+                                                                        WebMailServer.getDefaultLocale(),
                                                                         parent.getProperty("webmail.default.theme")));
         } else if(suburl.startsWith("/control")) {
             if(suburl.startsWith("/control/kill")) {
@@ -154,26 +154,26 @@ public class AdminPlugin implements Plugin, URLHandler {
             }
 
             content=new XHTMLDocument(session.getModel(),
-                                      parent.getStorage().getStylesheet("admin-status.xsl",
-                                                                        parent.getDefaultLocale(),
+                                      WebMailServer.getStorage().getStylesheet("admin-status.xsl",
+                                                                        WebMailServer.getDefaultLocale(),
                                                                         parent.getProperty("webmail.default.theme")));
 
         } else if(suburl.startsWith("/domain")) {
             if(suburl.startsWith("/domain/set")) {
                 try {
-                    Enumeration enumVar=parent.getStorage().getVirtualDomains();
+                    Enumeration<?> enumVar=WebMailServer.getStorage().getVirtualDomains();
                     while(enumVar.hasMoreElements()) {
                             if(header.getContent("VIRTUALS")!=null) {
                                     if(header.getContent("STATE").equals("disable")) {
-                                            parent.getStorage().setVirtuals(false);
+                                            WebMailServer.getStorage().setVirtuals(false);
                                         } else {
-                                                parent.getStorage().setVirtuals(true);
+                                                WebMailServer.getStorage().setVirtuals(true);
                                         }
                                     break;
                         }
                         String s1=(String)enumVar.nextElement();
                         if(header.getContent("CHANGE "+s1) != null && !header.getContent("CHANGE "+s1).equals("")) {
-                            WebMailVirtualDomain vd=parent.getStorage().getVirtualDomain(s1);
+                            WebMailVirtualDomain vd=WebMailServer.getStorage().getVirtualDomain(s1);
                             if(!vd.getDomainName().equals(header.getContent(s1+" DOMAIN"))) {
                                 vd.setDomainName(header.getContent(s1+" DOMAIN"));
                             }
@@ -181,31 +181,31 @@ public class AdminPlugin implements Plugin, URLHandler {
                             vd.setAuthenticationHost(header.getContent(s1+" AUTH HOST"));
                             vd.setHostsRestricted(header.getContent(s1+" HOST RESTRICTION")!=null);
                             vd.setAllowedHosts(header.getContent(s1+" ALLOWED HOSTS"));
-                            parent.getStorage().setVirtualDomain(s1,vd);
+                            WebMailServer.getStorage().setVirtualDomain(s1,vd);
                         } else if(header.getContent("DELETE "+s1) != null && !header.getContent("DELETE "+s1).equals("")) {
-                            parent.getStorage().deleteVirtualDomain(s1);
+                            WebMailServer.getStorage().deleteVirtualDomain(s1);
                         }
                     }
                     if(header.getContent("ADD NEW") != null && !header.getContent("ADD NEW").equals("")) {
-                        WebMailVirtualDomain vd=parent.getStorage().createVirtualDomain(header.getContent("NEW DOMAIN"));
+                        WebMailVirtualDomain vd=WebMailServer.getStorage().createVirtualDomain(header.getContent("NEW DOMAIN"));
                         vd.setDomainName(header.getContent("NEW DOMAIN"));
                         vd.setDefaultServer(header.getContent("NEW DEFAULT HOST"));
                         vd.setAuthenticationHost(header.getContent("NEW AUTH HOST"));
                         vd.setHostsRestricted(header.getContent("NEW HOST RESTRICTION")!=null);
                         vd.setAllowedHosts(header.getContent("NEW ALLOWED HOSTS"));
-                        parent.getStorage().setVirtualDomain(header.getContent("NEW DOMAIN"),vd);
+                        WebMailServer.getStorage().setVirtualDomain(header.getContent("NEW DOMAIN"),vd);
                     }
                 } catch(Exception ex) {
                     log.error("Failed to serve /domain/set URL.  "
                         + "Shouldn't we NOT save?  Continuing anyways.", ex);
                 }
-                parent.getStorage().save();
+                WebMailServer.getStorage().save();
                 session.setEnv();
             }
 
             content=new XHTMLDocument(session.getModel(),
-                                      parent.getStorage().getStylesheet("admin-domains.xsl",
-                                                                        parent.getDefaultLocale(),
+                                      WebMailServer.getStorage().getStylesheet("admin-domains.xsl",
+                                                                        WebMailServer.getDefaultLocale(),
                                                                         parent.getProperty("webmail.default.theme")));
 
         } else if(suburl.startsWith("/user")) {
@@ -228,8 +228,8 @@ public class AdminPlugin implements Plugin, URLHandler {
                 }
 
                 content=new XHTMLDocument(session.getModel(),
-                                        parent.getStorage().getStylesheet("admin-edituser.xsl",
-                                                                        parent.getDefaultLocale(),
+                                        WebMailServer.getStorage().getStylesheet("admin-edituser.xsl",
+                                                                        WebMailServer.getDefaultLocale(),
                                                                         parent.getProperty("webmail.default.theme")));
 
             } else {
@@ -237,8 +237,8 @@ public class AdminPlugin implements Plugin, URLHandler {
                     ((AdminSession)session).deleteUser(header.getContent("user"));
                 }
                 content=new XHTMLDocument(session.getModel(),
-                                        parent.getStorage().getStylesheet("admin-users.xsl",
-                                                                        parent.getDefaultLocale(),
+                                        WebMailServer.getStorage().getStylesheet("admin-users.xsl",
+                                                                        WebMailServer.getDefaultLocale(),
                                                                         parent.getProperty("webmail.default.theme")));
             }
         } else {
@@ -246,11 +246,11 @@ public class AdminPlugin implements Plugin, URLHandler {
                 session.logout();
             }
             //content=new HTMLDocument("WebMail Administrator Login",parent.getStorage(),"adminlogin",parent.getBasePath());
-            XMLGenericModel model = parent.getStorage().createXMLGenericModel();
+            XMLGenericModel model = WebMailServer.getStorage().createXMLGenericModel();
             if(header.isContentSet("login")) {
                 model.setStateVar("invalid password","yes");
             }
-            content=new XHTMLDocument(model.getRoot(),parent.getStorage().getStylesheet("admin-login.xsl",parent.getDefaultLocale(),parent.getProperty("webmail.default.theme")));
+            content=new XHTMLDocument(model.getRoot(),WebMailServer.getStorage().getStylesheet("admin-login.xsl",WebMailServer.getDefaultLocale(),parent.getProperty("webmail.default.theme")));
         }
         return content;
     }
@@ -272,11 +272,11 @@ public class AdminPlugin implements Plugin, URLHandler {
 
         ShutdownThread(int time, boolean restart, WebMailServer parent) {
             log.fatal("Aborting ShutdownThread instantiation.  Obsolete.");
-            if (true) throw new RuntimeException("ShutdownThread obsoleted");
-            this.parent=parent;
+            /*if (true) */throw new RuntimeException("ShutdownThread obsoleted");
+            /*this.parent=parent;
             this.time=time;
             this.reboot=restart;
-            this.start();
+            this.start();*/
         }
 
         public void run() {

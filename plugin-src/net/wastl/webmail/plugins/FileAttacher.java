@@ -57,7 +57,7 @@ public class FileAttacher implements URLHandler, Plugin {
 
     public void register(WebMailServer parent) {
         parent.getURLHandler().registerHandler(URL,this);
-        this.store=parent.getStorage();
+        this.store=WebMailServer.getStorage();
         parent.getConfigScheme().configRegisterStringKey("MAX ATTACH SIZE","1000000","Maximum size of attachments in bytes");
     }
 

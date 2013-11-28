@@ -95,7 +95,7 @@ public class SendMessage implements Plugin, URLHandler, ConfigurationListener {
         parent.getConfigScheme().configRegisterYesNoKey(this,"ADVERTISEMENT ATTACH", "Attach advertisement from ADVERTISEMENT SIGNATURE PATH to each outgoing message");
         parent.getConfigScheme().setDefaultValue("ADVERTISEMENT ATTACH","NO");
         parent.getConfigScheme().configRegisterStringKey(this,"ADVERTISEMENT SIGNATURE PATH","advertisement.sig","Path to advertisement to attach to all outgoing messages (either absolute or relative to data directory)");
-        this.store=parent.getStorage();
+        this.store=WebMailServer.getStorage();
         this.parent=parent;
 
         init();
@@ -286,7 +286,7 @@ public class SendMessage implements Plugin, URLHandler, ConfigurationListener {
                 String contnt=head.getContent("BODY");
 
                 //String charset=MimeUtility.mimeCharset(MimeUtility.getDefaultJavaCharset());
-                String charset="utf-8";
+                //*String charset="utf-8";
 
                 MimeMultipart cont=new MimeMultipart();
                 MimeBodyPart txt=new MimeBodyPart();
@@ -391,7 +391,7 @@ public class SendMessage implements Plugin, URLHandler, ConfigurationListener {
 
                 msg.saveChanges();
 
-                boolean savesuccess=true;
+                //*boolean savesuccess=true;
 
                 msg.setHeader("Message-ID",session.getUserModel().getWorkMessage().getAttribute("msgid"));
                 if(session.getUser().wantsSaveSent()) {
@@ -402,14 +402,14 @@ public class SendMessage implements Plugin, URLHandler, ConfigurationListener {
                         m[0]=msg;
                         folder.appendMessages(m);
                     } catch(MessagingException e) {
-                        savesuccess=false;
+                        //*savesuccess=false;
                     } catch(NullPointerException e) {
                         // Invalid folder:
-                        savesuccess=false;
+                        //*savesuccess=false;
                     }
                 }
 
-                boolean sendsuccess=false;
+                //*boolean sendsuccess=false;
 
                 try {
                     Transport.send(msg);
@@ -424,7 +424,7 @@ public class SendMessage implements Plugin, URLHandler, ConfigurationListener {
                     for(int c3=0;c3<bcc.length;c3++) {
                         sent[c1+c2+c3]=bcc[c3];
                     }
-                    sendsuccess=true;
+                    //*sendsuccess=true;
                     throw new SendFailedException("success",new Exception("success"),sent,null,null);
                 } catch(SendFailedException e) {
                     session.handleTransportException(e);

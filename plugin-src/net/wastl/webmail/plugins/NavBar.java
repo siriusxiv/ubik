@@ -52,7 +52,7 @@ public class NavBar implements Plugin, URLHandler {
 
 
     public void register(WebMailServer parent) {
-        this.store=parent.getStorage();
+        this.store=WebMailServer.getStorage();
         parent.getURLHandler().registerHandler(URL,this);
     }
 

@@ -45,11 +45,11 @@ public class ChallengeHandler implements Plugin, URLHandler {
     public final String VERSION="2.0";
     public final String URL="/challenge";
 
-    private Storage store;
+    //*private Storage store;
 
         public void register(WebMailServer parent) {
         parent.getURLHandler().registerHandler(URL, this);
-        storage = parent.getStorage();
+        storage = WebMailServer.getStorage();
         }
 
         public String getVersion() {

@@ -55,7 +55,7 @@ public class LogoutSession implements Plugin, URLHandler {
     public static final String URL="/logout";
 
     Storage store;
-    private static WebMailServer parent;
+    //*private static WebMailServer parent;
 
     public LogoutSession() {
     }
@@ -63,8 +63,8 @@ public class LogoutSession implements Plugin, URLHandler {
     public void register(WebMailServer parent) {
         parent.getURLHandler().registerHandler(URL,this);
         //parent.getContentBar().registerContentItem(this);
-        store=parent.getStorage();
-        this.parent=parent;
+        store=WebMailServer.getStorage();
+        //*LogoutSession.parent=parent;
     }
 
     public String getName() {
@@ -94,7 +94,7 @@ public class LogoutSession implements Plugin, URLHandler {
                 } catch(SAXException saxe) {
                 } catch(IOException ioe) {
                 }
-                HTMLDocument content=new XHTMLDocument(emptyUser,store.getStylesheet("logout.xsl",parent.getDefaultLocale(),parent.getDefaultTheme()));
+                HTMLDocument content=new XHTMLDocument(emptyUser,store.getStylesheet("logout.xsl",WebMailServer.getDefaultLocale(),WebMailServer.getDefaultTheme()));
                 return content;
         }
         UserData user=((WebMailSession)session).getUser();

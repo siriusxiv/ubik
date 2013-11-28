@@ -59,7 +59,7 @@ public class Composer implements Plugin, URLHandler {
 
     public void register(WebMailServer parent) {
         parent.getURLHandler().registerHandler(URL,this);
-        store=parent.getStorage();
+        store=WebMailServer.getStorage();
     }
 
     public String getName() {
@@ -81,7 +81,7 @@ public class Composer implements Plugin, URLHandler {
 
 
     public HTMLDocument handleURL(String suburl, HTTPSession sess, HTTPRequestHeader header) throws WebMailException {
-        HTMLDocument content;
+        //*HTMLDocument content;
 
         WebMailSession session=(WebMailSession)sess;
         UserData user=session.getUser();

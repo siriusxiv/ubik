@@ -64,7 +64,7 @@ public class WebMailHelp implements Plugin, URLHandler {
     public void register(WebMailServer parent) {
         parent.getURLHandler().registerHandler(URL,this);
         cache=new ExpireableCache(20,(float).9);
-        store=parent.getStorage();
+        store=WebMailServer.getStorage();
     }
 
     public String getName() {

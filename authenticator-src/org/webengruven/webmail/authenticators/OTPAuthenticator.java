@@ -189,7 +189,7 @@ public class OTPAuthenticator extends OTPAuthenticatorIface {
      throws InvalidPasswordException
     {
         String          login = ud.getLogin();
-        OTPCacheNode    n = cache.get(login);
+        //*OTPCacheNode    n = cache.get(login);
         OTPState        st;
         OTPServer       server;
         String          pData;

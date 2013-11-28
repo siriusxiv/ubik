@@ -53,7 +53,7 @@ public class MailboxList implements Plugin, URLHandler {
     public void register(WebMailServer parent) {
         parent.getURLHandler().registerHandler(URL,this);
         //parent.getContentBar().registerContentItem(this);
-        store=parent.getStorage();
+        store=WebMailServer.getStorage();
     }
 
     public String getName() {
