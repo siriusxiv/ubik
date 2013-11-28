@@ -20,7 +20,6 @@
 package net.wastl.webmail.plugins;
 
 import net.wastl.webmail.exceptions.DocumentNotFoundException;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.exceptions.WebMailException;
 import net.wastl.webmail.server.HTTPSession;
 import net.wastl.webmail.server.Plugin;
@@ -90,12 +89,8 @@ public class UserSetup implements Plugin, URLHandler {
 
         if(suburl.startsWith("/submit")) {
             session.refreshFolderInformation(true, true);
-            try {
-                session.changeSetup(header);
-                content=new XHTMLDocument(session.getModel(),store.getStylesheet("setup.xsl",user.getPreferredLocale(),user.getTheme()));
-            } catch(InvalidPasswordException e) {
-                throw new DocumentNotFoundException("The two passwords did not match");
-            }
+            session.changeSetup(header);
+            content=new XHTMLDocument(session.getModel(),store.getStylesheet("setup.xsl",user.getPreferredLocale(),user.getTheme()));
         } else {
             content=new XHTMLDocument(session.getModel(),store.getStylesheet("setup.xsl",user.getPreferredLocale(),user.getTheme()));
         }

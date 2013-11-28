@@ -33,7 +33,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.wastl.webmail.exceptions.CreateUserDataException;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.exceptions.UserDataException;
 import net.wastl.webmail.misc.ExpireableCache;
 import net.wastl.webmail.server.WebMailServer;
@@ -238,7 +237,7 @@ public class SimpleStorage extends FileStorage {
      * @see net.wastl.webmail.server.Storage.getUserData()
      */
     public XMLUserData getUserData(String user, String domain, String password, boolean authenticate)
-         throws UserDataException, InvalidPasswordException
+         throws UserDataException
     {
         if(authenticate) {
             auth.authenticatePreUserData(user,domain,password);

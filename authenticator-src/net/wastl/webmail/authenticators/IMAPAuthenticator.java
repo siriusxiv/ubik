@@ -25,8 +25,8 @@ import javax.mail.Session;
 import javax.mail.Store;
 
 import net.wastl.webmail.config.ConfigScheme;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.server.Storage;
+//*import net.wastl.webmail.server.UserData;
 import net.wastl.webmail.server.WebMailVirtualDomain;
 
 import org.apache.commons.logging.Log;
@@ -71,22 +71,23 @@ public class IMAPAuthenticator extends net.wastl.webmail.server.Authenticator {
         store.configAddChoice("AUTH",key,"Authenticate against an IMAP server on the net. Does not allow password change.");
     }
 
-    public void authenticatePreUserData(String user,String domain,String passwd)
-     throws InvalidPasswordException {
-        super.authenticatePreUserData(user,domain,passwd);
-
+    /**
+     * I tried to remove as much exceptions as I could.
+     */
+    @Override
+    public boolean authenticatePreUserData(String user,String domain,String passwd){
         WebMailVirtualDomain vd=storage.getVirtualDomain(domain);
         String authhost=vd.getAuthenticationHost();
-
         try {
             st.connect(authhost,user,passwd);
             st.close();
             log.info("IMAPAuthentication: user "+user+
                         " authenticated successfully (imap host: "+authhost+").");
+            return true;
         } catch(MessagingException e) {
             log.warn("IMAPAuthentication: user "+user+
                         " authentication failed (imap host: "+authhost+").");
-            throw new InvalidPasswordException("IMAP authentication failed!");
+           return false;
         }
     }
 

@@ -36,8 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.wastl.webmail.exceptions.DocumentNotFoundException;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
+//*import net.wastl.webmail.exceptions.DocumentNotFoundException;
 import net.wastl.webmail.exceptions.UserDataException;
 import net.wastl.webmail.exceptions.WebMailException;
 import net.wastl.webmail.misc.ByteStore;
@@ -228,7 +227,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
         }
 
         HTMLDocument content = null;
-        final int err_code = 400;
+        //*final int err_code = 400;
         HTTPSession sess = null;
 
         /*
@@ -340,7 +339,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
                         content = getURLHandler().
                                 handleURL(url, sess, http_header);
                     }
-                } catch (final InvalidPasswordException e) {
+                } /*catch (final InvalidPasswordException e) {
                     log.error("Connection to " + addr.toString()
                             + ": Authentication failed!");
                     if (url.startsWith("/admin/login")) {
@@ -353,7 +352,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
                         // content=new
                         // HTMLErrorMessage(getStorage(),e.getMessage());
                         throw new ServletException("Invalid URL called!");
-                } catch (final Exception ex) {
+                }*/ catch (final Exception ex) {
                     content = getURLHandler().
                             handleException(ex, sess, http_header);
                     log.debug("Some strange error while handling request", ex);
@@ -430,7 +429,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
                         out.close();
                     }
                 }
-            } catch (final DocumentNotFoundException e) {
+            } /*catch (final DocumentNotFoundException e) {
                 log.info("Connection to " + addr.toString()
                         + ": Could not handle request (" + err_code
                         + ") (Reason: " + e.getMessage() + ")");
@@ -444,7 +443,8 @@ public class WebMailServlet extends WebMailServer implements Servlet {
                 // out.write("</HTML>\r\n".getBytes());
                 // out.flush();
                 // out.close();
-            }
+            }*/
+            finally{}
         } catch (final Exception e) {
             log.info("Connection to " + addr.toString()
                     + " closed unexpectedly", e);
@@ -474,8 +474,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
     }
 
     public WebMailSession newSession(HttpServletRequest req,
-            HTTPRequestHeader h) throws UserDataException,
-           InvalidPasswordException, WebMailException {
+            HTTPRequestHeader h) throws UserDataException, WebMailException {
         final HttpSession sess = req.getSession(true);
 
         if (sess.getAttribute("webmail.session") == null) {
@@ -507,7 +506,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
 
     public AdminSession newAdminSession(
             HttpServletRequest req, HTTPRequestHeader h)
-            throws InvalidPasswordException, WebMailException {
+            throws WebMailException {
         final HttpSession sess = req.getSession(true);
 
         if (sess.getAttribute("webmail.session") == null) {
@@ -534,19 +533,16 @@ public class WebMailServlet extends WebMailServer implements Servlet {
     }
 
     /** Overwrite the old session handling methods */
-    public WebMailSession newSession(InetAddress a, HTTPRequestHeader h)
-            throws InvalidPasswordException {
+    public WebMailSession newSession(InetAddress a, HTTPRequestHeader h){
         throw new RuntimeException("newSession invalid call");
     }
 
-    public AdminSession newAdminSession(InetAddress a, HTTPRequestHeader h)
-            throws InvalidPasswordException {
+    public AdminSession newAdminSession(InetAddress a, HTTPRequestHeader h){
         throw new RuntimeException("newAdminSession invalid call");
     }
 
     public HTTPSession getSession(
-            String sessionid, InetAddress a, HTTPRequestHeader h)
-            throws InvalidPasswordException {
+            String sessionid, InetAddress a, HTTPRequestHeader h){
         throw new RuntimeException("getSession invalid call");
     }
 

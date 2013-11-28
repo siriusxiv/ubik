@@ -60,7 +60,6 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
 import net.wastl.webmail.exceptions.InvalidDataException;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.exceptions.NoSuchFolderException;
 import net.wastl.webmail.exceptions.UserDataException;
 import net.wastl.webmail.exceptions.WebMailException;
@@ -143,7 +142,7 @@ public class WebMailSession implements HTTPSession {
     protected boolean is_logged_out=false;
 
     public WebMailSession(WebMailServer parent,Object parm,HTTPRequestHeader h)
-         throws UserDataException, InvalidPasswordException, WebMailException {
+         throws UserDataException, WebMailException {
         try {
             Class<?> srvltreq=Class.forName("javax.servlet.http.HttpServletRequest");
             if(srvltreq.isInstance(parm)) {
@@ -176,7 +175,7 @@ public class WebMailSession implements HTTPSession {
      * This method does the actual initialisation
      */
     protected void doInit(WebMailServer parent, HTTPRequestHeader h)
-         throws UserDataException, InvalidPasswordException, WebMailException {
+         throws UserDataException, WebMailException {
         String domain;
         setLastAccess();
         this.parent=parent;
@@ -255,12 +254,14 @@ public class WebMailSession implements HTTPSession {
      * Establishes connections to a user�s Mailhosts
      *
      * @param h RequestHeader with content from Login-POST operation.
+     * @return 
      * @deprecated Use login() instead, no need for parameters and exception handling
      */
     @Deprecated
-    public void login(HTTPRequestHeader h) throws InvalidPasswordException {
+    public boolean login(HTTPRequestHeader h){
         //user.login(h.getContent("password"));
         login();
+        return true;
     }
 
     /**
@@ -268,10 +269,11 @@ public class WebMailSession implements HTTPSession {
      *
      * Updates access time, sets initial environment and connects all configured mailboxes.
      */
-    public void login() {
+    public boolean login() {
         setLastAccess();
         setEnv();
         refreshFolderInformation(false, false);
+        return true;
     }
 
     /**

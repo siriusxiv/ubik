@@ -24,7 +24,6 @@ import java.util.Hashtable;
 import java.util.Random;
 
 import net.wastl.webmail.config.ConfigScheme;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.exceptions.WebMailException;
 import net.wastl.webmail.server.Storage;
 import net.wastl.webmail.server.UserData;
@@ -185,9 +184,7 @@ public class OTPAuthenticator extends OTPAuthenticatorIface {
     }
 
     /** Authenticate the user. */
-    public void authenticatePostUserData(UserData ud,String dom,String pass)
-     throws InvalidPasswordException
-    {
+    public boolean authenticatePostUserData(UserData ud,String dom,String pass){
         String          login = ud.getLogin();
         //*OTPCacheNode    n = cache.get(login);
         OTPState        st;
@@ -199,25 +196,32 @@ public class OTPAuthenticator extends OTPAuthenticatorIface {
             if (st == null) {
                 pData = ud.getPasswordData();
                 if (pData == null || pData.length() == 0) {
-                    throw new InvalidPasswordException("no password data");
+                    removeFromCache(login, CACHE_ACTIVE_ST);
+                    return false;
                 }
                 st = new OTPState(pData);
             }
 
             server = new OTPServer(st);
 
-            if (! server.checkOTP(pass))
-                throw new InvalidPasswordException("bad password");
+            if (! server.checkOTP(pass)){
+                removeFromCache(login, CACHE_ACTIVE_ST);
+            	return false;
+            }
 
             /* Update the password data so next time we need a new pass */
             st = server.getState();
             ud.setPasswordData(st.getInfoString());
+            removeFromCache(login, CACHE_ACTIVE_ST);
+            return true;
         }
         catch (OTPFormatException e) {
-            throw new InvalidPasswordException("bad OTP format");
+            removeFromCache(login, CACHE_ACTIVE_ST);
+            return false;
         }
         catch (NoSuchAlgorithmException e) {
-            throw new InvalidPasswordException("bad hash");
+            removeFromCache(login, CACHE_ACTIVE_ST);
+            return false;
         }
         /*
         catch (Exception e) {
@@ -226,12 +230,10 @@ public class OTPAuthenticator extends OTPAuthenticatorIface {
         */
 
         // Done with n.active_st
-        removeFromCache(login, CACHE_ACTIVE_ST);
     }
 
     /** Change the OTP Stream */
-    public void changePassword(UserData ud, String newpass, String vrfy)
-     throws InvalidPasswordException
+    public boolean changePassword(UserData ud, String newpass, String vrfy)
     {
         String          login = ud.getLogin();
         OTPState        st = null;
@@ -239,13 +241,25 @@ public class OTPAuthenticator extends OTPAuthenticatorIface {
         String          pData = null;;
 
         st = getFromCache(login, CACHE_NEW_ST);
-        if (st == null)
-            throw new InvalidPasswordException(
-                "Don't know what challenge the new password is for.");
+        if (st == null)	{
 
-        if (! newpass.equalsIgnoreCase(vrfy))
-            throw new InvalidPasswordException(
-                "the password and verify don't match");
+            // We do this, so that the Hex rep. is stored.
+            ud.setPasswordData(server.getState().getInfoString());
+            // remove this from the cache. (kill both so that the active state
+            // is not stale
+            removeFromCache(login, CACHE_NEW_ST | CACHE_ACTIVE_ST);
+        	return false;
+        }
+
+        if (! newpass.equalsIgnoreCase(vrfy))	{
+
+            // We do this, so that the Hex rep. is stored.
+            ud.setPasswordData(server.getState().getInfoString());
+            // remove this from the cache. (kill both so that the active state
+            // is not stale
+            removeFromCache(login, CACHE_NEW_ST | CACHE_ACTIVE_ST);
+            return false;
+        }
 
         st.otp = newpass;
 
@@ -257,28 +271,43 @@ public class OTPAuthenticator extends OTPAuthenticatorIface {
                 // Get the old OTP first, so that we can compare.
                 server = new OTPServer(new OTPState(pData) );
 
-                if (! server.reinitOTP(st, true))
-                    throw new InvalidPasswordException(
-                        "The new OTP stream is the same as the old one.");
+                if (! server.reinitOTP(st, true))	{
+                    // We do this, so that the Hex rep. is stored.
+                    ud.setPasswordData(server.getState().getInfoString());
+                    // remove this from the cache. (kill both so that the active state
+                    // is not stale
+                    removeFromCache(login, CACHE_NEW_ST | CACHE_ACTIVE_ST);
+                    return false;
+                }
             }
             else {
                 // We need to verify the format of the OTP
                 server = new OTPServer(st);
             }
+            // We do this, so that the Hex rep. is stored.
+            ud.setPasswordData(server.getState().getInfoString());
+            // remove this from the cache. (kill both so that the active state
+            // is not stale
+            removeFromCache(login, CACHE_NEW_ST | CACHE_ACTIVE_ST);
+            return true;
         }
         catch (OTPFormatException e) {
-            throw new InvalidPasswordException("bad format in OTP");
+            // We do this, so that the Hex rep. is stored.
+            ud.setPasswordData(server.getState().getInfoString());
+            // remove this from the cache. (kill both so that the active state
+            // is not stale
+            removeFromCache(login, CACHE_NEW_ST | CACHE_ACTIVE_ST);
+            return false;
         }
         catch (NoSuchAlgorithmException e) {
-            throw new InvalidPasswordException("Bad hash name");
+            // We do this, so that the Hex rep. is stored.
+            ud.setPasswordData(server.getState().getInfoString());
+            // remove this from the cache. (kill both so that the active state
+            // is not stale
+            removeFromCache(login, CACHE_NEW_ST | CACHE_ACTIVE_ST);
+            return false;
         }
 
-        // We do this, so that the Hex rep. is stored.
-        ud.setPasswordData(server.getState().getInfoString());
-
-        // remove this from the cache. (kill both so that the active state
-        // is not stale
-        removeFromCache(login, CACHE_NEW_ST | CACHE_ACTIVE_ST);
     }
 
 

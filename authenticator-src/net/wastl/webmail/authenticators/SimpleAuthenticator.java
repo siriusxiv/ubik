@@ -20,7 +20,6 @@
 package net.wastl.webmail.authenticators;
 
 import net.wastl.webmail.config.ConfigScheme;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.server.Authenticator;
 import net.wastl.webmail.server.Storage;
 import net.wastl.webmail.server.UserData;
@@ -55,13 +54,11 @@ public class SimpleAuthenticator extends Authenticator {
         store.configAddChoice("AUTH",key,"Very simple style authentication. First login sets password. Password may be changed.");
     }
 
-    public void authenticatePostUserData(UserData udata, String domain,String password) throws InvalidPasswordException {
-        if(!udata.checkPassword(password) || password.equals("")) {
-            throw new InvalidPasswordException();
-        }
+    public boolean authenticatePostUserData(UserData udata, String domain,String password){
+        return !(!udata.checkPassword(password) || password.equals(""));
     }
 
-    public void changePassword(UserData udata, String passwd, String verify) throws InvalidPasswordException {
-        udata.setPassword(passwd,verify);
+    public boolean changePassword(UserData udata, String passwd, String verify) {
+        return udata.setPassword(passwd,verify);
     }
 }

@@ -23,7 +23,6 @@ import java.util.Enumeration;
 import java.util.Locale;
 
 import net.wastl.webmail.authenticators.SimpleAuthenticator;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.exceptions.WebMailException;
 
 /**
@@ -224,7 +223,7 @@ public interface UserData {
      * @param newpasswd new password
      * @param verify new password again to verify that it was not misspelled
      */
-    public void setPassword(String newpasswd, String verify) throws InvalidPasswordException;
+    public boolean setPassword(String newpasswd, String verify);
 
     /**
      * Set the password data for a user.  This can contain any string which

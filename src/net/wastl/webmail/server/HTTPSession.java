@@ -23,7 +23,6 @@ package net.wastl.webmail.server;
 import java.net.InetAddress;
 import java.util.Locale;
 
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.server.http.HTTPRequestHeader;
 
 import org.w3c.dom.Document;
@@ -36,9 +35,9 @@ import org.w3c.dom.Document;
  * @author Sebastian Schaffert
  */
 public interface HTTPSession extends TimeableConnection {
-    public void login(HTTPRequestHeader h) throws InvalidPasswordException;
+    public boolean login(HTTPRequestHeader h);
 
-    public void login();
+    public boolean login();
 
     public void logout();
 

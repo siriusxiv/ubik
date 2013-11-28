@@ -25,7 +25,6 @@ import javax.mail.Session;
 import javax.mail.Store;
 
 import net.wastl.webmail.config.ConfigScheme;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.server.Storage;
 import net.wastl.webmail.server.WebMailVirtualDomain;
 
@@ -71,8 +70,7 @@ public class POPAuthenticator extends net.wastl.webmail.server.Authenticator {
         store.configAddChoice("AUTH",key,"Authenticate against an POP3 server on the net. Does not allow password change.");
     }
 
-    public void authenticatePreUserData(String user,String domain,String passwd)
-     throws InvalidPasswordException {
+    public boolean authenticatePreUserData(String user,String domain,String passwd){
         super.authenticatePreUserData(user,domain,passwd);
 
         WebMailVirtualDomain vd=storage.getVirtualDomain(domain);
@@ -83,10 +81,11 @@ public class POPAuthenticator extends net.wastl.webmail.server.Authenticator {
             st.close();
             log.info("POPAuthentication: user "+user+
                         " authenticated successfully (pop host: "+authhost+").");
+            return true;
         } catch(MessagingException e) {
             log.warn("POPAuthentication: user "+user+
                         " authentication failed (pop host: "+authhost+").");
-            throw new InvalidPasswordException("POP authentication failed!");
+            return false;
         }
     }
 

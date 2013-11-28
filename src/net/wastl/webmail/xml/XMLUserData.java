@@ -29,7 +29,6 @@ import java.util.TimeZone;
 
 import javax.xml.transform.TransformerException;
 
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.exceptions.WebMailException;
 import net.wastl.webmail.misc.Helper;
 import net.wastl.webmail.server.MailHostData;
@@ -76,7 +75,7 @@ public class XMLUserData extends XMLData implements UserData {
         }
         try {
             setPassword(password,password);
-        } catch(InvalidPasswordException ex) {}
+        }finally{}
 
         setPreferredLocale(WebMailServer.getDefaultLocale().toString());
         setTheme(WebMailServer.getDefaultTheme());
@@ -488,7 +487,7 @@ public class XMLUserData extends XMLData implements UserData {
         return password.equals(Helper.crypt(password,s));
     }
 
-    public void setPassword(String newpasswd, String verify) throws InvalidPasswordException {
+    public boolean setPassword(String newpasswd, String verify){
         if(newpasswd.equals(verify)) {
             Random r=new Random();
             // Generate the crypted password; avoid problems with XML parsing
@@ -501,8 +500,9 @@ public class XMLUserData extends XMLData implements UserData {
                 crypted=Helper.crypt(seed,newpasswd);
             }
             setValueXPath("/USERDATA/PASSWORD/text()",crypted);
+            return true;
         } else {
-            throw new InvalidPasswordException("The passwords did not match!");
+        	return false;
         }
     }
 

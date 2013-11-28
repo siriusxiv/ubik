@@ -33,7 +33,6 @@ import javax.xml.transform.Templates;
 import net.wastl.webmail.config.ConfigScheme;
 import net.wastl.webmail.exceptions.BinaryNotFoundException;
 import net.wastl.webmail.exceptions.CreateUserDataException;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.exceptions.UserDataException;
 import net.wastl.webmail.exceptions.WebMailException;
 import net.wastl.webmail.xml.XMLAdminModel;
@@ -278,7 +277,7 @@ public abstract class Storage {
      * XXX should passwd be a parameter?
      */
     public XMLUserData getUserData(String user, String domain,String passwd)
-         throws UserDataException, InvalidPasswordException {
+         throws UserDataException{
             return getUserData(user,domain,passwd,false);
     }
 
@@ -290,7 +289,7 @@ public abstract class Storage {
      */
     public abstract XMLUserData getUserData(String user, String domain,
      String password, boolean authenticate)
-     throws UserDataException, InvalidPasswordException;
+     throws UserDataException;
 
     /**
      * Create a userdata for the specified user

@@ -31,7 +31,6 @@ import javax.mail.Provider;
 import javax.servlet.http.HttpSession;
 
 import net.wastl.webmail.exceptions.InvalidDataException;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.exceptions.UserDataException;
 import net.wastl.webmail.exceptions.WebMailException;
 import net.wastl.webmail.misc.Helper;
@@ -75,14 +74,15 @@ public class AdminSession implements HTTPSession {
 
     protected boolean is_logged_out=false;
 
-    public AdminSession(WebMailServer parent, Object parm, HTTPRequestHeader h) throws InvalidPasswordException, WebMailException {
+    public AdminSession(WebMailServer parent, Object parm, HTTPRequestHeader h) throws WebMailException {
+    	if(login(h)){
         try {
             Class<?> srvltreq=Class.forName("javax.servlet.http.HttpServletRequest");
             if(srvltreq.isInstance(parm)) {
-                running_as_servlet=true;
+                this.running_as_servlet=true;
                 javax.servlet.http.HttpServletRequest req=(javax.servlet.http.HttpServletRequest)parm;
                 this.sess=req.getSession(false);
-                session_code=((javax.servlet.http.HttpSession)sess).getId();
+                this.session_code=((javax.servlet.http.HttpSession)sess).getId();
                 try {
                     remote=InetAddress.getByName(req.getRemoteHost());
                 } catch(UnknownHostException e) {
@@ -101,36 +101,39 @@ public class AdminSession implements HTTPSession {
             this.remote=(InetAddress)parm;
             session_code=Helper.calcSessionCode(remote,h);
         }
-        doInit(parent,h);
+    	}
+        doInit(parent);
     }
 
-    protected void doInit(WebMailServer parent, HTTPRequestHeader h)
-        throws InvalidPasswordException, WebMailException {
+    protected void doInit(WebMailServer parent) throws WebMailException {
         this.parent=parent;
-        last_access=System.currentTimeMillis();
+        this.last_access=System.currentTimeMillis();
         //*remote_agent=h.getHeader("User-Agent").replace('\n',' ');
         //*remote_accepts=h.getHeader("Accept").replace('\n',' ');
         //env=new Hashtable();
-        model=WebMailServer.getStorage().createXMLAdminModel();
-        login(h);
+        this.model=WebMailServer.getStorage().createXMLAdminModel();
         log.info("WebMail: New Session ("+session_code+")");
 
 
         setEnv();
     }
 
-    public void login(HTTPRequestHeader h) throws InvalidPasswordException {
+    public boolean login(HTTPRequestHeader h) {
         String passwd=WebMailServer.getStorage().getConfig("ADMIN PASSWORD");
         if(!Helper.crypt(passwd,h.getContent("password")).equals(passwd)) {
-            throw new InvalidPasswordException();
+        	login();
+            log.info("Ok");
+            return true;
+        }else{
+        	return false;
         }
-        login();
-        log.info("Ok");
+        
     }
 
-    public void login() {
+    public boolean login() {
         setLastAccess();
         setEnv();
+        return true;
     }
 
     public void logout() {
@@ -180,7 +183,6 @@ public class AdminSession implements HTTPSession {
             System.err.println("Done.");
             model.importUserData(ud.getUserData());
       }
-      catch (InvalidPasswordException e) { }
       catch (UserDataException e) { }
     }
 
@@ -247,16 +249,7 @@ public class AdminSession implements HTTPSession {
         if(!head.getContent("user password").equals("")) {
             net.wastl.webmail.server.Authenticator auth=WebMailServer.getStorage().getAuthenticator();
             if(auth.canChangePassword()) {
-            try {
-                        auth.changePassword(user,head.getContent("user password"),head.getContent("user password"));
-            }
-            catch (InvalidPasswordException e) {
-                /* XXX Not sure this is the right exception */
-                            /**
-                throw new InvalidDataException(parent.getStorage().getStringResource("EX NO CHANGE PASSWORD", Locale.getDefault()));
-                                **/
-                                throw new InvalidDataException(WebMailServer.getStorage().getStringResource("EX NO CHANGE PASSWORD", WebMailServer.getDefaultLocale()));
-            }
+            	auth.changePassword(user,head.getContent("user password"),head.getContent("user password"));
             } else {
                 throw new InvalidDataException(WebMailServer.getStorage().getStringResource("EX NO CHANGE PASSWORD",Locale.getDefault()));
             }

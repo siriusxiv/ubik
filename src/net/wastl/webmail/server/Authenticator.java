@@ -20,7 +20,6 @@
 package net.wastl.webmail.server;
 
 import net.wastl.webmail.config.ConfigScheme;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 
 import org.webengruven.webmail.auth.AuthDisplayMngr;
 
@@ -72,17 +71,16 @@ public abstract class Authenticator  {
      * Subclasses should override this.
      * It simply does nothing in this implementation.
      *
+     * EDIT MALIK: Removes Exceptions
+     *
      * @param login Login-name for the user
      * @param domain Domain name the user used to log on
      * @param passwd Password to verify
      */
-    public void authenticatePreUserData(String login, String domain,
-     String passwd) throws InvalidPasswordException
-    {
-            if(login.equals("") || passwd.equals("")) {
-                throw new InvalidPasswordException();
-            }
-    }
+    public boolean authenticatePreUserData(String login, String domain,
+     String passwd){
+    	return false;
+    };
 
 
     /**
@@ -98,9 +96,9 @@ public abstract class Authenticator  {
      * @param domain Domain name the user used to log on
      * @param passwd Password to verify
      */
-    public void authenticatePostUserData(UserData udata,String domain,
-     String password) throws InvalidPasswordException
-    { }
+    public boolean authenticatePostUserData(UserData udata,String domain,
+     String password)
+    { return false;}
 
     /**
      * Tell WebMail whether this authentication method allows users to
@@ -111,6 +109,14 @@ public abstract class Authenticator  {
         return true;
     }
 
-    public void changePassword(UserData udata,String newpassword,String verify)      throws InvalidPasswordException
-    { }
+    /**
+     * Edit Malik :
+     * Expetions -> boolean
+     * @param udata
+     * @param newpassword
+     * @param verify
+     * @return
+     */
+    public boolean changePassword(UserData udata,String newpassword,String verify)
+    { return false;}
 }

@@ -27,7 +27,6 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 import net.wastl.webmail.config.ConfigScheme;
-import net.wastl.webmail.exceptions.InvalidPasswordException;
 import net.wastl.webmail.misc.Helper;
 import net.wastl.webmail.server.Authenticator;
 import net.wastl.webmail.server.Storage;
@@ -66,8 +65,8 @@ public class UnixAuthenticator extends Authenticator {
         store.configAddChoice("AUTH",key,"Authenticate against the local Unix server's passwd/shadow files. Password change not possible.");
     }
 
-    public void authenticatePreUserData(String user, String domain,
-     String given_passwd) throws InvalidPasswordException
+    public boolean authenticatePreUserData(String user, String domain,
+     String given_passwd)
     {
         super.authenticatePreUserData(user,domain,given_passwd);
         String login=user;
@@ -87,7 +86,7 @@ public class UnixAuthenticator extends Authenticator {
                 line=in.readLine();
             }
 
-            if(line == null) throw new InvalidPasswordException("Invalid user: "+login);
+            if(line == null) return false;
 
 
             StringTokenizer tok=new StringTokenizer(line,":");
@@ -97,13 +96,14 @@ public class UnixAuthenticator extends Authenticator {
             if(!password.equals(Helper.crypt(password,given_passwd))) {
                 log.warn("UnixAuthentication: user "+login+
                                                " authentication failed.");
-                throw new InvalidPasswordException("Unix authentication failed");
+                return false;
             }
             log.info("UnixAuthentication: user "+login+
                                            " authenticated successfully.");
+            return true;
         } catch(IOException ex) {
             log.error("Cannot use UnixAuthentication and shadow passwords if WebMail is not executed as user 'root'!");
-            throw new InvalidPasswordException("User login denied due to configuration error (contact system administrator)");
+            return false;
         }
     }
 
