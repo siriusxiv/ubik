@@ -92,7 +92,8 @@ public class Fancyfier  {
                 "\\}:->"
                     };
             regs=new Pattern[temp.length];
-            for(int i=0;i<temp.length;i++) {
+            int i;
+            for(i=0;i<temp.length;i++) {
                 regs[i]=Pattern.compile(temp[i]);
             }
             // Link highlighting
@@ -108,7 +109,8 @@ public class Fancyfier  {
             init();
         }
         String retval=s;
-        for(int i=0;i<regs.length;i++) {
+        int i;
+        for(i=0;i<regs.length;i++) {
             Matcher m = regs[i].matcher(retval);
             retval = m.replaceAll(repls[i]);
             //retval=regs[i].substituteAll(retval,repls[i]);

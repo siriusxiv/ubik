@@ -33,11 +33,8 @@ public class HTMLHeader  {
     }
 
     public String toString() {
-        String s="<!-- HTML-Header created by webmail.ui.html package -->\n";
-        s += "<HTML>\n";
-        s += "  <HEAD>\n";
-        s += "    <TITLE>"+title+"</TITLE>\n";
-        s += "  </HEAD>\n";
-        return s;
+        StringBuffer s= new StringBuffer("<!-- HTML-Header created by webmail.ui.html package -->\n");
+        s = s.append("<HTML>\n").append("  <HEAD>\n").append("    <TITLE>"+title+"</TITLE>\n").append("  </HEAD>\n") ;
+        return s.toString();
     }
 }
