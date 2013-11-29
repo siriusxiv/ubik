@@ -137,21 +137,20 @@ public class HTTPRequestHeader  {
     }
 
     public String toString() {
-        String s="Method: "+headers.get("METHOD")+", Path="+headers.get("PATH")+", HTTP-version: "+headers.get("VERSION")+"\n";
-        s+="HTTP Headers:\n";
+
+        StringBuffer sBuffer = new StringBuffer();
+        sBuffer = sBuffer.append("Method: ").append(headers.get("METHOD")).append(", Path=").append(headers.get("PATH")).append(", HTTP-version: ").append(headers.get("VERSION")).append("\n").append("HTTP Headers:\n");
         Enumeration<String> e=headers.keys();
         while(e.hasMoreElements()) {
-            String h=(String)e.nextElement();
-            s+="Header name: "+h+", value: "+headers.get(h)+"\n";
+            sBuffer = sBuffer.append("Header name: ").append((String)e.nextElement()).append(", value: ").append(headers.get((String)e.nextElement())).append("\n");
         }
         if(content != null) {
-            s+="Form Content:\n";
+            sBuffer = sBuffer.append("Form Content:\n");
             e=content.keys();
             while(e.hasMoreElements()) {
-                String h=(String)e.nextElement();
-                s+="Header name: "+h+", value: "+content.get(h)+"\n";
+                sBuffer = sBuffer.append("Header name: ").append((String)e.nextElement()).append(", value: ").append(content.get((String)e.nextElement())).append("\n");
             }
         }
-        return s;
+        return sBuffer.toString();
     }
 }

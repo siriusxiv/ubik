@@ -238,7 +238,8 @@ public class XMLGenericModel extends XMLData {
                I will store all nodes that should be deleted in a Vector and delete them afterwards */
             int length=nl.getLength();
             Vector<Element> v = new Vector<Element>(nl.getLength());
-            for(int i=0;i<length;i++) {
+            int i;
+            for(i=0;i<length;i++) {
                 if(((Element)nl.item(i)).getAttribute("name").equals(name)) {
                     v.addElement((Element) nl.item(i));
                 }

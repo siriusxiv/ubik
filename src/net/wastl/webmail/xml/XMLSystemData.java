@@ -89,7 +89,8 @@ public class XMLSystemData extends ConfigStore {
 
     protected String getConfigRaw(String key) {
         NodeList nl=sysdata.getElementsByTagName("KEY");
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             Element e=(Element)nl.item(i);
             if(XMLCommon.getElementTextValue(e).equals(key)) {
                 Element p=(Element)e.getParentNode();
@@ -147,7 +148,8 @@ public class XMLSystemData extends ConfigStore {
 
     protected void deleteConfigGroup(String groupname) {
         NodeList nl=sysdata.getElementsByTagName("GROUP");
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             if(((Element)nl.item(i)).getAttribute("name").equals(groupname)) {
                 sysdata.removeChild(nl.item(i));
             }
@@ -158,7 +160,8 @@ public class XMLSystemData extends ConfigStore {
         NodeList nl=sysdata.getElementsByTagName("KEY");
 
         Element config=null;
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             Element keyelem=(Element)nl.item(i);
             Element parent=(Element)keyelem.getParentNode();
             if(XMLCommon.getElementTextValue(keyelem).equals(key) &&

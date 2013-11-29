@@ -69,7 +69,8 @@ public class XMLResourceBundle extends ResourceBundle {
         log.debug("XMLResourceBundle ("+resourcefile
                 +"): Default language '"+default_lang+"'.");
         nl=root.getElementsByTagName("LOCALE");
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             Element e=(Element)nl.item(i);
             if(e.getAttribute("lang").equals(lang)) {
                 elem_locale=e;
@@ -82,7 +83,8 @@ public class XMLResourceBundle extends ResourceBundle {
 
     protected String getResult(Element element, String key) {
         NodeList nl=element.getElementsByTagName("RESOURCE");
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             Element e=(Element)nl.item(i);
             if(e.getAttribute("name").equals(key)) {
                 String s="";
@@ -118,7 +120,8 @@ public class XMLResourceBundle extends ResourceBundle {
 
     protected void getKeys(Element element, Hashtable<String, String> hash) {
         NodeList nl=element.getElementsByTagName("RESOURCE");
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             hash.put(((Element)nl.item(i)).getAttribute("name"),"");
         }
     }

@@ -89,7 +89,8 @@ public class HTTPResponseHeader  {
     public String toString() {
         StringBuilder sb = new StringBuilder(response_line + "\r\n");
         for (Map.Entry<String, String> e : headers.entrySet())
-            sb.append(e.getKey() + ": " + e.getValue() + "\r\n");
-        return sb.toString() + "\r\n";
+            //sb.append(e.getKey() + ": " + e.getValue() + "\r\n");
+            sb.append(e.getKey()).append(": ").append(e.getValue()).append("\r\n").append("\r\n");
+        return sb.toString();
     }
 }

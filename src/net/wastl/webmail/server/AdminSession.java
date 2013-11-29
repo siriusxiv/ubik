@@ -227,8 +227,9 @@ public class AdminSession implements HTTPSession {
 
         Enumeration<?> contentkeys=head.getContentKeys();
         user.resetBoolVars();
+        String key;
         while(contentkeys.hasMoreElements()) {
-            String key=((String)contentkeys.nextElement()).toLowerCase();
+            key=((String)contentkeys.nextElement()).toLowerCase();
             if(key.startsWith("intvar")) {
                 try {
                     long value=Long.parseLong(head.getContent(key));
@@ -306,8 +307,9 @@ public class AdminSession implements HTTPSession {
         XMLCommon.genericRemoveAll(model.getStateData(),"SESSION");
         Enumeration<?> e=parent.getSessions();
         if(e != null && e.hasMoreElements()) {
+            String name;
             while(e.hasMoreElements()) {
-                String name=(String)e.nextElement();
+                name=(String)e.nextElement();
                 HTTPSession h=parent.getSession(name);
                 if(h instanceof WebMailSession) {
                     WebMailSession w=(WebMailSession)h;
@@ -344,8 +346,9 @@ public class AdminSession implements HTTPSession {
         model.removeAllStateVars("language");
         String lang=WebMailServer.getConfig("languages");
         StringTokenizer tok=new StringTokenizer(lang," ");
+        String t;
         while(tok.hasMoreTokens()) {
-            String t=tok.nextToken();
+            t=tok.nextToken();
             model.addStateVar("language",t);
         }
 

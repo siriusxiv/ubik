@@ -182,13 +182,15 @@ public abstract class FileStorage extends Storage implements ConfigurationListen
             mime_types=new Hashtable<String, String>();
             in=new BufferedReader(new InputStreamReader(new FileInputStream(f)));
             String line=in.readLine();
+            String type;
+            String key;
             while(line != null) {
                 if(!line.startsWith("#")) {
                     StringTokenizer tok=new StringTokenizer(line);
                     if(tok.hasMoreTokens()) {
-                        String type=tok.nextToken();
+                        type=tok.nextToken();
                         while(tok.hasMoreTokens()) {
-                            String key=tok.nextToken();
+                            key=tok.nextToken();
                             mime_types.put(key,type);
                             log.debug(key+" -> "+type);
                         }
