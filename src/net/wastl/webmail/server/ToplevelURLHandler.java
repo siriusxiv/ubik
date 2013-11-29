@@ -19,6 +19,13 @@
 
 package net.wastl.webmail.server;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Locale;
 
 import javax.servlet.ServletException;
@@ -92,10 +99,24 @@ public class ToplevelURLHandler implements URLHandler {
         }
     }
 
+    static String readFile(String path){
+    	byte[] encoded;
+		try {
+			encoded = Files.readAllBytes(Paths.get(path));
+			return StandardCharsets.UTF_8.decode(ByteBuffer.wrap(encoded)).toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
+    }
+    
     public HTMLDocument handleURL(String url, HTTPSession session, HTTPRequestHeader header) throws WebMailException, ServletException {
         HTMLDocument content;
-
-        if(url.equals("/")) {
+        if(url.equals("/wea.html")){
+        	String body = readFile("wea.html");
+        	content=new HTMLDocument("",body);
+        }else if(url.equals("/")) {
             //content=new HTMLLoginScreen(parent,parent.getStorage(),false);
             XMLGenericModel model=WebMailServer.getStorage().createXMLGenericModel();
 
