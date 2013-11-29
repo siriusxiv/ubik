@@ -335,7 +335,8 @@ public class WebMailSession implements HTTPSession {
             if(list_part < 1) {
                 list_part=1;
             }
-            for(int k=0;k<list_part;k++) {
+            int k;
+            for(k=0;k<list_part;k++) {
                 total_messages-=show_msgs;
             }
             /* Handle beginning of message list */
@@ -365,28 +366,20 @@ public class WebMailSession implements HTTPSession {
 
             Flags.Flag[] sf;
             String from,to,cc,bcc,replyto,subject;
-            String messageid;
+            StringBuffer messageid;
 
-            for(int i=msgs.length-1; i>=0; i--) {
-//              if(((MimeMessage)msgs[i]).getMessageID() == null) {
-//                  folder.close(false);
-//                  folder.open(Folder.READ_WRITE);
-//                  ((MimeMessage)msgs[i]).setHeader("Message-ID","<"+user.getLogin()+"."+System.currentTimeMillis()+".jwebmail@"+user.getDomain()+">");
-//                  ((MimeMessage)msgs[i]).saveChanges();
-//                  folder.close(false);
-//                  folder.open(Folder.READ_ONLY);
-//              }
-
+            for( k=msgs.length-1; k>=0; k--) {
+                 messageid = new StringBuffer();
                 try {
-                    StringTokenizer tok=new StringTokenizer(((MimeMessage)msgs[i]).getMessageID(),"<>");
-                    messageid=tok.nextToken();
+                    StringTokenizer tok=new StringTokenizer(((MimeMessage)msgs[k]).getMessageID(),"<>");
+                    messageid = messageid.append(tok.nextToken());
                 } catch(NullPointerException ex) {
                     // For mail servers that don't generate a Message-ID (Outlook et al)
-                    messageid=user.getLogin()+"."+i+".jwebmail@"+user.getDomain();
+                    messageid = messageid.append(user.getLogin()).append(".").append(k).append(".jwebmail@").append(user.getDomain());
                 }
 
-                XMLMessage xml_message=model.getMessage(xml_folder,msgs[i].getMessageNumber()+"",
-                                                     messageid);
+                XMLMessage xml_message=model.getMessage(xml_folder,msgs[k].getMessageNumber()+"",
+                                                     messageid.toString());
 
                 /* Addresses */
                 from="";replyto="";to="";cc="";bcc="";
@@ -560,18 +553,18 @@ public class WebMailSession implements HTTPSession {
 
             MimeMessage m=(MimeMessage)folder.getMessage(msgnum);
 
-            String messageid;
+            StringBuffer messageid = new StringBuffer();;
             try {
                 StringTokenizer tok=new StringTokenizer(m.getMessageID(),"<>");
-                messageid=tok.nextToken();
+                messageid = messageid.append(tok.nextToken());
             } catch(NullPointerException ex) {
                 // For mail servers that don't generate a Message-ID (Outlook et al)
-                messageid=user.getLogin()+"."+msgnum+".jwebmail@"+user.getDomain();
+                messageid = messageid.append(user.getLogin()).append(msgnum).append(".jwebmail@").append(user.getDomain());
             }
 
             //*Element xml_current=model.setCurrentMessage(messageid);
             XMLMessage xml_message=model.getMessage(xml_folder,m.getMessageNumber()+"",
-                                                    messageid);
+                                                    messageid.toString());
 
             /* Check whether we already cached this message (not only headers but complete)*/
             boolean cached=xml_message.messageCompletelyCached();
@@ -854,9 +847,9 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
 
                     if(user.wantsBreakLines()) {
                         Enumeration<?> enumVar=Helper.breakLine(token,user.getMaxLineLength(),current_quotelevel);
-
+                        String s;
                         while(enumVar.hasMoreElements()) {
-                            String s=(String)enumVar.nextElement();
+                            s =(String)enumVar.nextElement();
                             if(user.wantsShowFancy()) {
                                 content.append(Fancyfier.apply(s)).append("\n");
                             } else {
@@ -882,44 +875,9 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                 String[] preferred={"TEXT/HTML","TEXT"};
                 boolean found=false;
                 int alt=0;
-                // Walk though our preferred list of encodings. If we have found a fitting part,
-                // decode it and replace it for the parent (this is what we really want with an
-                // alternative!)
-                /**
-            findalt: while(!found && alt < preferred.length) {
-                for(int i=0;i<m.getCount();i++) {
-                    Part p2=m.getBodyPart(i);
-                    if(p2.getContentType().toUpperCase().startsWith(preferred[alt])) {
-                        parseMIMEContent(p2,parent_part,msgid);
-                        found=true;
-                        break findalt;
-                    }
-                }
-                alt++;
-            }
-            **/
-                /**
-                 * When user try to reply a mail, there may be 3 conditions:
-                 * 1. only TEXT exists.
-                 * 2. both HTML and TEXT exist.
-                 * 3. only HTML exists.
-                 *
-                 * We have to choose which part should we quote, that is, we must
-                 * decide the prority of parts to quote. Since quoting HTML is not
-                 * easy and precise (consider a html: <body><div><b>some text..</b>
-                 * </div></body>. Even we try to get text node under <body>, we'll
-                 * just get nothing, because "some text..." is marked up by
-                 * <div><b>. There is no easy way to retrieve text from html
-                 * unless we parse the html to analyse its semantics.
-                 *
-                 * Here is our policy for alternative part:
-                 * 1. Displays HTML but hides TEXT.
-                 * 2. When replying this mail, try to quote TEXT part. If no TEXT
-                 *    part exists, quote HTML in best effort(use
-                 *    XMLMessagePart.quoteContent() by Sebastian Schaffert.)
-                 */
+                int i;
                 while (alt < preferred.length) {
-                    for(int i=0;i<m.getCount();i++) {
+                    for(i=0;i<m.getCount();i++) {
                         Part p2=m.getBodyPart(i);
                         if(p2.getContentType().toUpperCase().startsWith(preferred[alt])) {
                             log.debug("Processing: " + p2.getContentType());
@@ -940,7 +898,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                         NamedNodeMap attributes = textPartNode.getAttributes();
                         //*boolean hit = false;
 
-                        for (int i = 0; i < attributes.getLength(); ++i) {
+                        for ( i = 0; i < attributes.getLength(); ++i) {
                             Node attr = attributes.item(i);
                             // If type=="TEXT", add a hidden attribute.
                             if (attr.getNodeName().toUpperCase().equals("TYPE") &&
@@ -1657,6 +1615,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
         Folder folder=getRootFolder(id);
         net.wastl.webmail.misc.Queue q=new net.wastl.webmail.misc.Queue();
         q.queue(folder);
+        int i;
         // Only IMAP supports subscription...
         try {
             while(!q.isEmpty()) {
@@ -1664,7 +1623,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
 
                 folder.setSubscribed(subscribed);
                 Folder[] list=folder.list();
-                for(int i=0;i<list.length;i++) {
+                for( i=0;i<list.length;i++) {
                     q.queue(list[i]);
                 }
             }
@@ -1913,7 +1872,8 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
         }
 
         int msgs[]=new int[j];
-        for(int i=0;i<j;i++) {
+        int i;
+        for( i=0;i<j;i++) {
             msgs[i]=_msgs[i];
         }
         return msgs;
@@ -2179,8 +2139,9 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
         String host_url=protocol+"://"+host;
         user.addMailHost(name, host_url, login, password, null);
         Enumeration<?> enumVar=user.mailHosts();
+        String id;
         while(enumVar.hasMoreElements()) {
-            String id=(String)enumVar.nextElement();
+            id=(String)enumVar.nextElement();
             if(user.getMailHost(id).getName().equals(name)) {
                 //setSubscribedAll(id,true);
                 setSubscribedDefault(id,true);
@@ -2278,8 +2239,9 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
         model.removeAllStateVars("language");
         String lang=WebMailServer.getConfig("languages");
         StringTokenizer tok=new StringTokenizer(lang," ");
+        String t;
         while(tok.hasMoreTokens()) {
-            String t=tok.nextToken();
+            t=tok.nextToken();
             model.addStateVar("language",t);
             model.removeAllStateVars("themes_"+t);
             StringTokenizer tok2=new StringTokenizer(WebMailServer.getConfig("THEMES_"+t.toUpperCase())," ");
@@ -2290,7 +2252,8 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
 
         model.removeAllStateVars("protocol");
         Provider[] storeProviders =parent.getStoreProviders();
-        for(int i=0; i<storeProviders .length; i++) {
+        int i;
+        for( i=0; i<storeProviders .length; i++) {
             model.addStateVar("protocol",storeProviders [i].getProtocol());
         }
 
