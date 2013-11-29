@@ -384,35 +384,35 @@ public class WebMailSession implements HTTPSession {
                 /* Addresses */
                 from="";replyto="";to="";cc="";bcc="";
                 try {
-                    from=MimeUtility.decodeText(Helper.joinAddress(msgs[i].getFrom()));
+                    from=MimeUtility.decodeText(Helper.joinAddress(msgs[k].getFrom()));
                 } catch(UnsupportedEncodingException e) {
-                        from=Helper.joinAddress(msgs[i].getFrom());
+                        from=Helper.joinAddress(msgs[k].getFrom());
                 }
                 try {
-                    replyto=MimeUtility.decodeText(Helper.joinAddress(msgs[i].getReplyTo()));
+                    replyto=MimeUtility.decodeText(Helper.joinAddress(msgs[k].getReplyTo()));
                 } catch(UnsupportedEncodingException e) {
-                        replyto=Helper.joinAddress(msgs[i].getReplyTo());
+                        replyto=Helper.joinAddress(msgs[k].getReplyTo());
                 }
                 try {
-                    to=MimeUtility.decodeText(Helper.joinAddress(msgs[i].getRecipients(Message.RecipientType.TO)));
+                    to=MimeUtility.decodeText(Helper.joinAddress(msgs[k].getRecipients(Message.RecipientType.TO)));
                 } catch(UnsupportedEncodingException e) {
-                        to=Helper.joinAddress(msgs[i].getRecipients(Message.RecipientType.TO));
+                        to=Helper.joinAddress(msgs[k].getRecipients(Message.RecipientType.TO));
                 }
                 try {
-                        cc=MimeUtility.decodeText(Helper.joinAddress(msgs[i].getRecipients(Message.RecipientType.CC)));
+                        cc=MimeUtility.decodeText(Helper.joinAddress(msgs[k].getRecipients(Message.RecipientType.CC)));
                 } catch(UnsupportedEncodingException e) {
-                        cc=Helper.joinAddress(msgs[i].getRecipients(Message.RecipientType.CC));
+                        cc=Helper.joinAddress(msgs[k].getRecipients(Message.RecipientType.CC));
                 }
                 try {
-                        bcc=MimeUtility.decodeText(Helper.joinAddress(msgs[i].getRecipients(Message.RecipientType.BCC)));
+                        bcc=MimeUtility.decodeText(Helper.joinAddress(msgs[k].getRecipients(Message.RecipientType.BCC)));
                 } catch(UnsupportedEncodingException e) {
-                        bcc=Helper.joinAddress(msgs[i].getRecipients(Message.RecipientType.BCC));
+                        bcc=Helper.joinAddress(msgs[k].getRecipients(Message.RecipientType.BCC));
                 }
                 if(from=="") from=getStringResource("unknown sender");
                 if(to == "") to = getStringResource("unknown recipient");
 
                                 /* Flags */
-                sf = msgs[i].getFlags().getSystemFlags();
+                sf = msgs[k].getFlags().getSystemFlags();
                 //*String basepath=parent.getBasePath();
 
                 for(int j=0;j<sf.length;j++) {
@@ -424,24 +424,24 @@ public class WebMailSession implements HTTPSession {
                     if(sf[j]==Flags.Flag.FLAGGED) xml_message.setAttribute("flagged","true");
                     if(sf[j]==Flags.Flag.USER) xml_message.setAttribute("user","true");
                 }
-                if(msgs[i] instanceof MimeMessage &&
-                   ((MimeMessage) msgs[i]).getContentType().toUpperCase().startsWith("MULTIPART/")) {
+                if(msgs[k] instanceof MimeMessage &&
+                   ((MimeMessage) msgs[k]).getContentType().toUpperCase().startsWith("MULTIPART/")) {
                     xml_message.setAttribute("attachment","true");
                 }
 
-                if(msgs[i] instanceof MimeMessage) {
-                    int size=((MimeMessage) msgs[i]).getSize();
+                if(msgs[k] instanceof MimeMessage) {
+                    int size=((MimeMessage) msgs[k]).getSize();
                     size/=1024;
                     xml_message.setAttribute("size",(size>0?size+"":"<1")+" kB");
                 }
 
                 /* Subject */
                 subject="";
-                if(msgs[i].getSubject() != null) {
+                if(msgs[k].getSubject() != null) {
                     try {
-                        subject=MimeUtility.decodeText(msgs[i].getSubject());
+                        subject=MimeUtility.decodeText(msgs[k].getSubject());
                     } catch(UnsupportedEncodingException ex) {
-                                subject=msgs[i].getSubject();
+                                subject=msgs[k].getSubject();
                                 log.warn("Unsupported Encoding: "+ex.getMessage());
                     }
                 }
@@ -464,7 +464,7 @@ public class WebMailSession implements HTTPSession {
                 xml_message.setHeader("REPLY-TO",replyto);
 
                 /* Date */
-                Date d=msgs[i].getSentDate();
+                Date d=msgs[k].getSentDate();
                 String ds="";
                 if(d!=null) {
                     ds=df.format(d);
@@ -622,7 +622,7 @@ public class WebMailSession implements HTTPSession {
 
                     /* Decode MIME contents recursively */
                     xml_message.removeAllParts();
-                    parseMIMEContent(m,xml_message,messageid);
+                    parseMIMEContent(m,xml_message,messageid.toString());
 
                 } catch(UnsupportedEncodingException e) {
                     log.warn("Unsupported Encoding in parseMIMEContent: "+e.getMessage());
