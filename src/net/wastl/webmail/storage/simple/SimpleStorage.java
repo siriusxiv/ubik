@@ -240,9 +240,7 @@ public class SimpleStorage extends FileStorage {
          throws UserDataException
     {
         if(authenticate) {
-            if(!auth.authenticatePreUserData(user,domain,password)){
-            	return null;
-            }
+            auth.authenticatePreUserData(user,domain,password);
         }
 
         if(user.equals("")) {
@@ -279,9 +277,7 @@ public class SimpleStorage extends FileStorage {
                     +domain+" took "+(t_end-t_start)+"ms.");
 
                 if(authenticate) {
-                	if(!auth.authenticatePostUserData(data,domain,password)){
-                		return null;
-                	}
+                	auth.authenticatePostUserData(data,domain,password);
                 }
             }
 
@@ -293,9 +289,7 @@ public class SimpleStorage extends FileStorage {
                 error=false;
 
                 if(authenticate) {
-                    if(!auth.authenticatePostUserData(data,domain,password)){
-                    	return null;
-                    }
+                    auth.authenticatePostUserData(data,domain,password);
                 }
             }
             if(error) {
@@ -306,9 +300,7 @@ public class SimpleStorage extends FileStorage {
         } else {
             user_cache.hit();
             if(authenticate) {
-                if(!auth.authenticatePostUserData(data,domain,password)){
-                	return null;
-                }
+                auth.authenticatePostUserData(data,domain,password);
             }
         }
 
