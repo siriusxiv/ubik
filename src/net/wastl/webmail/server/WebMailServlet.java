@@ -307,7 +307,6 @@ public class WebMailServlet extends WebMailServer implements Servlet {
 
             try {
                 final String url = http_header.getPath();
-
                 try {
                     /* Find out about the session id */
                     sess = req.getSession(false) == null
@@ -331,7 +330,9 @@ public class WebMailServlet extends WebMailServer implements Servlet {
                             && !url.startsWith("/admin")) {
                         content = getURLHandler().handleURL(
                                 "/logout", sess, http_header);
-                    } else {
+                    } else if(url.equals("/wea.html")){
+                        	content=getURLHandler().handleURL("/wea.html", sess, http_header);
+                        }{
                         /* Ensure that the session state is up-to-date */
                         if (sess != null) {
                             sess.setEnv();

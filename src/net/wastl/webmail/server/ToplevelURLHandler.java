@@ -19,10 +19,8 @@
 
 package net.wastl.webmail.server;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -99,7 +97,7 @@ public class ToplevelURLHandler implements URLHandler {
         }
     }
 
-    static String readFile(String path){
+    public static String readFile(String path){
     	byte[] encoded;
 		try {
 			encoded = Files.readAllBytes(Paths.get(path));
