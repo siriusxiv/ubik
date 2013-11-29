@@ -186,7 +186,7 @@ public class OTPAuthenticator extends OTPAuthenticatorIface {
     /** Authenticate the user. */
     public boolean authenticatePostUserData(UserData ud,String dom,String pass){
         String          login = ud.getLogin();
-        //*OTPCacheNode    n = cache.get(login);
+        OTPCacheNode    n = cache.get(login);
         OTPState        st;
         OTPServer       server;
         String          pData;

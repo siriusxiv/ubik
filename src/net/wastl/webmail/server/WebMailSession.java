@@ -119,12 +119,12 @@ public class WebMailSession implements HTTPSession {
 
     private boolean sent;
 
-    //*private String remote_agent;
-    //*private String remote_accepts;
+    private String remote_agent;
+    private String remote_accepts;
 
     private int attachments_size=0;
 
-    //*private String last_login;
+    private String last_login;
 
     /** Save the login password. It will be used for the second try password if
      * opening a folder fails.
@@ -179,8 +179,8 @@ public class WebMailSession implements HTTPSession {
         String domain;
         setLastAccess();
         this.parent=parent;
-        //*remote_agent=h.getHeader("User-Agent").replace('\n',' ');
-        //*remote_accepts=h.getHeader("Accept").replace('\n',' ');
+        remote_agent=h.getHeader("User-Agent").replace('\n',' ');
+        remote_accepts=h.getHeader("Accept").replace('\n',' ');
         log.info("WebMail: New Session ("+session_code+")");
         if(WebMailServer.getStorage().getVirtuals()==true && h.getContent("vdom") != null) {
             domain=h.getContent("vdom");
@@ -188,7 +188,7 @@ public class WebMailSession implements HTTPSession {
             domain="localnet";
         }
         user=WebMailServer.getStorage().getUserData(h.getContent("login"),domain,h.getContent("password"),true);
-        //*last_login=user.getLastLogin();
+        last_login=user.getLastLogin();
         user.login();
         login_password=h.getContent("password");
         model=WebMailServer.getStorage().createXMLUserModel(user);
@@ -251,7 +251,7 @@ public class WebMailSession implements HTTPSession {
 
     /**
      * Login to this session.
-     * Establishes connections to a user�s Mailhosts
+     * Establishes connections to a user���s Mailhosts
      *
      * @param h RequestHeader with content from Login-POST operation.
      * @return 
@@ -361,7 +361,7 @@ public class WebMailSession implements HTTPSession {
             folder.fetch(msgs,fp);
             long fetch_stop=System.currentTimeMillis();
 
-            //*Map<?, ?> header=new Hashtable<Object, Object>(15);
+            Map<?, ?> header=new Hashtable<Object, Object>(15);
 
             Flags.Flag[] sf;
             String from,to,cc,bcc,replyto,subject;
@@ -420,7 +420,7 @@ public class WebMailSession implements HTTPSession {
 
                                 /* Flags */
                 sf = msgs[i].getFlags().getSystemFlags();
-                //*String basepath=parent.getBasePath();
+                String basepath=parent.getBasePath();
 
                 for(int j=0;j<sf.length;j++) {
                     if(sf[j]==Flags.Flag.RECENT) xml_message.setAttribute("recent","true");
@@ -569,7 +569,7 @@ public class WebMailSession implements HTTPSession {
                 messageid=user.getLogin()+"."+msgnum+".jwebmail@"+user.getDomain();
             }
 
-            //*Element xml_current=model.setCurrentMessage(messageid);
+            Element xml_current=model.setCurrentMessage(messageid);
             XMLMessage xml_message=model.getMessage(xml_folder,m.getMessageNumber()+"",
                                                     messageid);
 
@@ -672,7 +672,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                                       getStringResource("reply message postfix"));
 
                 } else if(work != null && (mode & GETMESSAGE_MODE_FORWARD) == GETMESSAGE_MODE_FORWARD) {
-                    //*String from=work.getHeader("FROM");
+                    String from=work.getHeader("FROM");
                     work.setHeader("FROM",user.getDefaultEmail());
                     work.setHeader("TO","");
                     work.setHeader("CC","");
@@ -806,9 +806,9 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                 log.debug("Content-Type: "+p.getContentType());
 
                 String token="";
-                //*int quote_level=0;
+                int quote_level=0;
                 int old_quotelevel=0;
-                //*boolean javascript_mode=false;
+                boolean javascript_mode=false;
                 /* Read in the message part line by line */
                 while((token=in.readLine()) != null) {
                     /* First decode all language and MIME dependant stuff */
@@ -938,7 +938,7 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
                     if (found && (alt == 1)) {
                         Node textPartNode = parent_part.getPartElement().getLastChild();
                         NamedNodeMap attributes = textPartNode.getAttributes();
-                        //*boolean hit = false;
+                        boolean hit = false;
 
                         for (int i = 0; i < attributes.getLength(); ++i) {
                             Node attr = attributes.item(i);
@@ -2256,12 +2256,12 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
 
     public void setEnv() {
         // This will soon replace "ENV":
-        model.setStateVar("base uri",parent.getBasePath());
+    	model.setStateVar("base uri",parent.getBasePath());
         model.setStateVar("img base uri",parent.getImageBasePath()+
                           "/"+user.getPreferredLocale().getLanguage()+
                           "/"+user.getTheme());
 
-        model.setStateVar("webmail version",WebMailServer.getVersion());
+        model.setStateVar("webmail version",parent.getVersion());
         model.setStateVar("operating system",System.getProperty("os.name")+" "+
                           System.getProperty("os.version")+"/"+System.getProperty("os.arch"));
         model.setStateVar("java virtual machine",System.getProperty("java.vendor")+" "+
@@ -2271,18 +2271,18 @@ String newmsgid=WebMailServer.generateMessageID(user.getUserName());
         model.setStateVar("first login",user.getFirstLogin());
         model.setStateVar("session id",session_code);
         model.setStateVar("date",formatDate(System.currentTimeMillis()));
-        model.setStateVar("max attach size",WebMailServer.getStorage().getConfig("MAX ATTACH SIZE"));
+        model.setStateVar("max attach size",parent.getStorage().getConfig("MAX ATTACH SIZE"));
         model.setStateVar("current attach size",""+attachments_size);
 
         // Add all languages to the state
         model.removeAllStateVars("language");
-        String lang=WebMailServer.getConfig("languages");
+        String lang=parent.getConfig("languages");
         StringTokenizer tok=new StringTokenizer(lang," ");
         while(tok.hasMoreTokens()) {
             String t=tok.nextToken();
             model.addStateVar("language",t);
             model.removeAllStateVars("themes_"+t);
-            StringTokenizer tok2=new StringTokenizer(WebMailServer.getConfig("THEMES_"+t.toUpperCase())," ");
+            StringTokenizer tok2=new StringTokenizer(parent.getConfig("THEMES_"+t.toUpperCase())," ");
             while(tok2.hasMoreElements()) {
                 model.addStateVar("themes_"+t,(String)tok2.nextToken());
             }

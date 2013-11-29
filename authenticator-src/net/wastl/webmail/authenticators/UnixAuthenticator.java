@@ -90,7 +90,7 @@ public class UnixAuthenticator extends Authenticator {
 
 
             StringTokenizer tok=new StringTokenizer(line,":");
-            //*String my_login=tok.nextToken();
+            String my_login=tok.nextToken();
             String password=tok.nextToken();
 
             if(!password.equals(Helper.crypt(password,given_passwd))) {

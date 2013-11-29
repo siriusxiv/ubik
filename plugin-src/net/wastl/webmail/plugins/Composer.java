@@ -81,7 +81,7 @@ public class Composer implements Plugin, URLHandler {
 
 
     public HTMLDocument handleURL(String suburl, HTTPSession sess, HTTPRequestHeader header) throws WebMailException {
-        //*HTMLDocument content;
+        HTMLDocument content;
 
         WebMailSession session=(WebMailSession)sess;
         UserData user=session.getUser();

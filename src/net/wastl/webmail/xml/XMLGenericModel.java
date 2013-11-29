@@ -61,6 +61,8 @@ public class XMLGenericModel extends XMLData {
 
     protected DocumentBuilder parser;
 
+    protected Element var;
+
     public XMLGenericModel(WebMailServer parent, Element rsysdata)
         throws ParserConfigurationException, org.xml.sax.SAXException, java.io.IOException {
         super();
@@ -173,7 +175,6 @@ public class XMLGenericModel extends XMLData {
         } else {
             statedata.appendChild(exception);
         }
-        invalidateCache();
 
         //XMLCommon.debugXML(root);
     }
@@ -182,11 +183,11 @@ public class XMLGenericModel extends XMLData {
      * We need to synchronize that to avoid problems, but this should be fast anyway
      */
     public synchronized void setStateVar(String name, String value) {
-        Element var= null;
+        this.var= null;
         String xPathString = "//STATEDATA/VAR[@name='"+name+"']";
         //XMLCommon.getElementByAttribute(statedata,"VAR","name",name);
         try {
-            var = (Element) getNodeXPath(xPathString);
+            this.var = (Element) getNodeXPath(xPathString);
         } catch (TransformerException te) {
             log.warn("'" + xPathString + "' query threw, "
                     + "but it's probably an XPath library bug.  "
@@ -202,31 +203,28 @@ public class XMLGenericModel extends XMLData {
             XMLCommon.dumpXML(log, xPathString, root);
             */
         }
-        if(var == null) {
-            var=root.createElement("VAR");
-            var.setAttribute("name",name);
-            statedata.appendChild(var);
-            invalidateCache();
+        if(this.var == null) {
+            this.var=root.createElement("VAR");
+            this.var.setAttribute("name",name);
+            statedata.appendChild(this.var);
         }
-        if(!var.getAttribute("value").equals(value)) {
-            var.setAttribute("value",value);
-            invalidateCache();
+        if(!this.var.getAttribute("value").equals(value)) {
+            this.var.setAttribute("value",value);
         }
     }
 
     public Element createStateVar(String name, String value) {
-        Element var=root.createElement("VAR");
-        var.setAttribute("name",name);
-        var.setAttribute("value",value);
-        return var;
+        this.var=root.createElement("VAR");
+        this.var.setAttribute("name",name);
+        this.var.setAttribute("value",value);
+        return this.var;
     }
 
     public void addStateVar(String name, String value) {
-        Element var=root.createElement("VAR");
-        var.setAttribute("name",name);
-        statedata.appendChild(var);
-        var.setAttribute("value",value);
-        invalidateCache();
+        this.var=root.createElement("VAR");
+        this.var.setAttribute("name",name);
+        statedata.appendChild(this.var);
+        this.var.setAttribute("value",value);
     }
 
     /**
@@ -251,21 +249,20 @@ public class XMLGenericModel extends XMLData {
                 statedata.removeChild(n);
             }
         }
-        invalidateCache();
     }
 
 
     public String getStateVar(String name) {
-        Element var = null;
+        this.var = null;
         String xPathString = "//STATEDATA/VAR[@name='"+name+"']";
         //XMLCommon.getElementByAttribute(statedata,"VAR","name",name);
         try {
-            var = (Element) getNodeXPath(xPathString);
+            this.var = (Element) getNodeXPath(xPathString);
         } catch (TransformerException te) {
             log.error("Failed to get extract node for XPath '"
                     + xPathString + "'", te);
             XMLCommon.dumpXML(log, xPathString, root);
         }
-        return (var == null) ? "" : var.getAttribute("value");
+        return (this.var == null) ? "" : this.var.getAttribute("value");
     }
 }

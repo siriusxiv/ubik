@@ -336,7 +336,7 @@ public abstract class Storage {
     @Deprecated
     public void deleteUserData(String user) {
         StringTokenizer tok=new StringTokenizer(user,"@");
-        //*String login=tok.nextToken();
+        String login=tok.nextToken();
         String domain="nodomain";
         if(tok.hasMoreTokens()) {
             domain=tok.nextToken();
