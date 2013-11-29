@@ -60,8 +60,8 @@ public class AdminSession implements HTTPSession {
     protected WebMailServer parent;
 
     protected InetAddress remote;
-    //*private String remote_agent;
-    //*private String remote_accepts;
+    private String remote_agent;
+    private String remote_accepts;
 
     protected XMLAdminModel model;
 
@@ -102,14 +102,14 @@ public class AdminSession implements HTTPSession {
             session_code=Helper.calcSessionCode(remote,h);
         }
     	}
-        doInit(parent);
+        doInit(parent,h);
     }
 
-    protected void doInit(WebMailServer parent) throws WebMailException {
+    protected void doInit(WebMailServer parent, HTTPRequestHeader h) throws WebMailException {
         this.parent=parent;
         this.last_access=System.currentTimeMillis();
-        //*remote_agent=h.getHeader("User-Agent").replace('\n',' ');
-        //*remote_accepts=h.getHeader("Accept").replace('\n',' ');
+        remote_agent=h.getHeader("User-Agent").replace('\n',' ');
+        remote_accepts=h.getHeader("Accept").replace('\n',' ');
         //env=new Hashtable();
         this.model=WebMailServer.getStorage().createXMLAdminModel();
         log.info("WebMail: New Session ("+session_code+")");

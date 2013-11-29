@@ -26,7 +26,7 @@ import javax.mail.Store;
 
 import net.wastl.webmail.config.ConfigScheme;
 import net.wastl.webmail.server.Storage;
-//*import net.wastl.webmail.server.UserData;
+import net.wastl.webmail.server.UserData;
 import net.wastl.webmail.server.WebMailVirtualDomain;
 
 import org.apache.commons.logging.Log;

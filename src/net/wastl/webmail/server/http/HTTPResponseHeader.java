@@ -37,8 +37,8 @@ import net.wastl.webmail.server.WebMailServer;
  * @author Sebastian Schaffert
  */
 public class HTTPResponseHeader  {
-    //*private String status;
-    //*private int response_code;
+    private String status;
+    private int response_code;
     private String http_version="HTTP/1.1";
 
     private String response_line;
@@ -47,8 +47,8 @@ public class HTTPResponseHeader  {
 
     public HTTPResponseHeader(int response_code,String status) {
         headers = new Hashtable<String, String>();
-        //*this.response_code=response_code;
-        //*this.status=status;
+        this.response_code=response_code;
+        this.status=status;
 
         response_line=http_version+" "+response_code+" "+status;
 

@@ -244,7 +244,7 @@ public abstract class WebMailServer  {
     public String getBaseURI(HTTPRequestHeader header) {
         String host=header.getHeader("Host");
         StringTokenizer tok=new StringTokenizer(host,":");
-        //*String hostname=tok.nextToken();
+        String hostname=tok.nextToken();
         int port=80;
         if(tok.hasMoreElements()) {
             try {

@@ -23,7 +23,7 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.xpath.CachedXPathAPI;
+import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
@@ -40,15 +40,15 @@ public class XMLData {
     private static Log log = LogFactory.getLog(XMLData.class);
     protected Document root;
     protected Element data;
-    protected CachedXPathAPI xpath_api;
+    protected XPathAPI xpath_api;
 
     public XMLData() {
-        xpath_api=new CachedXPathAPI();
+        xpath_api=new XPathAPI();
     }
 
 
     public XMLData (Document d){
-        xpath_api=new CachedXPathAPI();
+        xpath_api=new XPathAPI();
         this.root = d;
         this.data = d.getDocumentElement();
     }
@@ -115,7 +115,7 @@ public class XMLData {
             if(n != null) {
                 if(!n.getNodeValue().equals(value)) {
                     n.setNodeValue(value);
-                    invalidateCache();
+                    
                 }
             } else {
                 addNodeXPath(getParentXPath(path),root.createTextNode(value));
@@ -140,7 +140,7 @@ public class XMLData {
         try {
             Node n = xpath_api.selectSingleNode(data,path);
             n.appendChild(child);
-            invalidateCache();
+            
         } catch(Exception ex) {
             // We get here SOMETIMES if there is no Sent folder to add
             // sent mail to.
@@ -172,7 +172,4 @@ public class XMLData {
      * Invalidate the XPath cache as the source document has been modified and thus
      * it is necessary to update the tables.
      */
-    protected void invalidateCache() {
-        xpath_api=new CachedXPathAPI();
-    }
 }

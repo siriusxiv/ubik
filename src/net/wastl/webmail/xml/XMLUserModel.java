@@ -81,7 +81,6 @@ public class XMLUserModel extends XMLGenericModel {
         try {
             NodeList nl=root.getElementsByTagName("USERDATA");
             usermodel.replaceChild(root.importNode(userdata,true),nl.item(0));
-            invalidateCache();
         } catch(ArrayIndexOutOfBoundsException ex) {
             log.error("The WebMail UserModel template file didn't contain a USERDATA tag.");
         } catch(DOMException ex) {
@@ -130,7 +129,6 @@ public class XMLUserModel extends XMLGenericModel {
 
     public synchronized void removeMessageList(Element folder) {
         XMLCommon.genericRemoveAll(folder,"MESSAGELIST");
-        invalidateCache();
     }
 
     /**
@@ -167,7 +165,6 @@ public class XMLUserModel extends XMLGenericModel {
             msglist.appendChild(message);
         }
         message.setAttribute("msgnr",msgnr);
-        invalidateCache();
         return new XMLMessage(message);
     }
 
@@ -182,7 +179,7 @@ public class XMLUserModel extends XMLGenericModel {
         } else {
             work=root.createElement("WORK");
             usermodel.appendChild(work);
-            invalidateCache();
+            
         }
         nl=work.getElementsByTagName("MESSAGE");
 
@@ -196,7 +193,7 @@ public class XMLUserModel extends XMLGenericModel {
             message.setAttribute("msgid",WebMailServer.generateMessageID("webmailuser"));
             XMLMessagePart multipart=message.createPart("multi");
             multipart.createPart("text");
-            invalidateCache();
+            
         }
         return message;
     }
@@ -214,7 +211,7 @@ public class XMLUserModel extends XMLGenericModel {
             while(enumVar.hasMoreElements()) {
                 work.removeChild(enumVar.nextElement());
             }
-            invalidateCache();
+            
         }
     }
 
@@ -236,7 +233,7 @@ public class XMLUserModel extends XMLGenericModel {
 
         Element newmessage=(Element)root.importNode(message.getMessageElement(),true);
         work.appendChild(newmessage);
-        invalidateCache();
+        
         return new XMLMessage(newmessage);
     }
 
@@ -262,7 +259,7 @@ public class XMLUserModel extends XMLGenericModel {
         } else {
             usermodel.replaceChild(mh,elem);
         }
-        invalidateCache();
+        
     }
 
     protected synchronized Element setCurrent(String type, String id) {
@@ -280,7 +277,6 @@ public class XMLUserModel extends XMLGenericModel {
             usermodel.appendChild(current);
         }
         current.setAttribute("id",id);
-        invalidateCache();
         return current;
     }
 

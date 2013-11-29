@@ -166,7 +166,7 @@ public class XMLUserData extends XMLData implements UserData {
             elem.setAttribute(attribute,att_value==null?"":att_value);
         if (tag.equalsIgnoreCase("BOOLVAR")) elem.setAttribute("value", "no");
         data.appendChild(elem);
-        invalidateCache();
+
     }
 
     public void login() {
@@ -222,7 +222,7 @@ public class XMLUserData extends XMLData implements UserData {
             data.appendChild(mailhost);
             log.debug("Done with mailhost "+name);
             //XMLCommon.writeXML(root,System.err,"");
-            invalidateCache();
+            
         } catch(Exception ex) {
             log.error("Failed to add mailhost.  Just aborting and continuing.",
                     ex);
@@ -241,7 +241,7 @@ public class XMLUserData extends XMLData implements UserData {
         }
         if (n == null) return;
         data.removeChild(n);
-        invalidateCache();
+        
     }
 
     public MailHostData getMailHost(String id) {
@@ -403,7 +403,7 @@ public class XMLUserData extends XMLData implements UserData {
                 break;
             }
         }
-        invalidateCache();
+        
     }
 
     /**
@@ -428,7 +428,7 @@ public class XMLUserData extends XMLData implements UserData {
             return;
         }
         email.setAttribute("default","yes");
-        invalidateCache();
+        
     }
 
     public String getDefaultEmail()
@@ -620,7 +620,7 @@ public class XMLUserData extends XMLData implements UserData {
             return;
         }
         e.setAttribute("value",value+"");
-        invalidateCache();
+        
     }
 
     /**
@@ -664,7 +664,7 @@ public class XMLUserData extends XMLData implements UserData {
             return;
         }
         e.setAttribute("value",value?"yes":"no");
-        invalidateCache();
+        
     }
 
     protected boolean getBoolVarWrapper(String var) {
@@ -682,6 +682,6 @@ public class XMLUserData extends XMLData implements UserData {
             Element elem=(Element)nl.item(i);
             elem.setAttribute("value","no");
         }
-        invalidateCache();
+        
     }
 }

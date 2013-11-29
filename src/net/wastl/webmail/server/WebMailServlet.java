@@ -36,7 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-//*import net.wastl.webmail.exceptions.DocumentNotFoundException;
+import net.wastl.webmail.exceptions.DocumentNotFoundException;
 import net.wastl.webmail.exceptions.UserDataException;
 import net.wastl.webmail.exceptions.WebMailException;
 import net.wastl.webmail.misc.ByteStore;
@@ -227,7 +227,7 @@ public class WebMailServlet extends WebMailServer implements Servlet {
         }
 
         HTMLDocument content = null;
-        //*final int err_code = 400;
+        final int err_code = 400;
         HTTPSession sess = null;
 
         /*

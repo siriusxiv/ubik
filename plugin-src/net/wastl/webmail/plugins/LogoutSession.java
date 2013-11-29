@@ -55,7 +55,7 @@ public class LogoutSession implements Plugin, URLHandler {
     public static final String URL="/logout";
 
     Storage store;
-    //*private static WebMailServer parent;
+    private static WebMailServer parent;
 
     public LogoutSession() {
     }
@@ -64,7 +64,7 @@ public class LogoutSession implements Plugin, URLHandler {
         parent.getURLHandler().registerHandler(URL,this);
         //parent.getContentBar().registerContentItem(this);
         store=WebMailServer.getStorage();
-        //*LogoutSession.parent=parent;
+        LogoutSession.parent=parent;
     }
 
     public String getName() {
