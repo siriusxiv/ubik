@@ -268,7 +268,8 @@ public class XMLUserModel extends XMLGenericModel {
     protected synchronized Element setCurrent(String type, String id) {
         NodeList nl=usermodel.getElementsByTagName("CURRENT");
         Element current=null;
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             if(((Element)nl.item(i)).getAttribute("type").equals(type)) {
                 current=(Element)nl.item(i);
                 break;
@@ -287,7 +288,8 @@ public class XMLUserModel extends XMLGenericModel {
     protected synchronized Element getCurrent(String type, String id) {
         NodeList nl=usermodel.getElementsByTagName("CURRENT");
         Element current=null;
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             if(((Element)nl.item(i)).getAttribute("type").equals(type)) {
                 current=(Element)nl.item(i);
                 break;

@@ -70,7 +70,8 @@ public class XMLMessagePart  {
     public void quoteContent() {
         NodeList nl=part.getChildNodes();
         StringBuilder text=new StringBuilder();
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             Element elem=(Element)nl.item(i);
             if(elem.getNodeName().equals("CONTENT")) {
                 String value=XMLCommon.getElementTextValue(elem);
@@ -98,11 +99,13 @@ public class XMLMessagePart  {
             NodeList nl=content.getDocumentElement().getElementsByTagName(count==0?"BODY":"body");
             log.debug("While parsing HTML content: Found "+nl.getLength()
                     +" body elements");
-            for(int i=0; i<nl.getLength();i++) {
+            int i;
+            int j;
+            for(i=0; i<nl.getLength();i++) {
                 NodeList nl2=nl.item(i).getChildNodes();
                 log.debug("While parsing HTML content: Found "
-                        +nl2.getLength()+" child elements");
-                for(int j=0;j<nl2.getLength();j++) {
+                        +nl2.getLength()+" child elements");             
+                for( j=0;j<nl2.getLength();j++) {
                     log.debug("Element: "+j);
                     content_elem.appendChild(XMLCommon.importNode(root,nl2.item(j),true));
                 }
@@ -161,7 +164,8 @@ public class XMLMessagePart  {
         // Sucking NodeList needs a Vector to store Elements that will be removed!
         Vector<XMLMessagePart> v = new Vector<XMLMessagePart>();
         NodeList parts=part.getChildNodes();
-        for(int j=0;j<parts.getLength();j++) {
+        int j;
+        for(j=0;j<parts.getLength();j++) {
             Element elem=(Element)parts.item(j);
             if(elem.getTagName().equals("PART"))
                 v.addElement(new XMLMessagePart(elem));

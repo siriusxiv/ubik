@@ -87,7 +87,8 @@ public class XMLMessage extends XMLMessagePart {
 
         XMLMessagePart mainpart=null;
         NodeList nl=message.getChildNodes();
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             Element elem=(Element)nl.item(i);
             if(elem.getTagName().equals("PART")) {
                 mainpart=new XMLMessagePart(elem);
@@ -163,7 +164,8 @@ public class XMLMessage extends XMLMessagePart {
          * Maybe here we should modify the algorithm:
          * If no appropriate text/plain is found, try to search for text/html.
          */
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             Element elem=(Element)nl.item(i);
             if(elem.getTagName().equals("PART")) {
                 if(elem.getAttribute("type").equals("multi")) {
@@ -176,7 +178,7 @@ public class XMLMessage extends XMLMessagePart {
                 }
             }
         }
-        for(int i=0;i<nl.getLength();i++) {
+        for(i=0;i<nl.getLength();i++) {
             Element elem=(Element)nl.item(i);
             if(elem.getTagName().equals("PART")) {
                 if(elem.getAttribute("type").equals("multi")) {
@@ -198,7 +200,8 @@ public class XMLMessage extends XMLMessagePart {
 
     public XMLMessagePart getFirstMessageMultiPart() {
         NodeList nl=message.getChildNodes();
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             Element elem=(Element)nl.item(i);
             if(elem.getTagName().equals("PART")) {
                 if(elem.getAttribute("type").equals("multi")) {

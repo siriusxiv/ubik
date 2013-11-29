@@ -157,7 +157,8 @@ public final class XMLCommon  {
     @Deprecated
     public static Element getElementByAttribute(Element root, String tagname, String attribute, String att_value) {
         NodeList nl=root.getElementsByTagName(tagname);
-        for(int i=0; i<nl.getLength();i++) {
+        int i;
+        for(i=0; i<nl.getLength();i++) {
             Element elem=(Element)nl.item(i);
             if(elem.getAttribute(attribute).equals(att_value)) {
                 return elem;
@@ -181,7 +182,8 @@ public final class XMLCommon  {
             return "";
         } else {
             String s="";
-            for(int i=0;i<nl.getLength();i++) {
+            int i;
+            for(i=0;i<nl.getLength();i++) {
                 if(nl.item(i) instanceof CharacterData) {
                     s+=nl.item(i).getNodeValue();
                 }
@@ -205,7 +207,8 @@ public final class XMLCommon  {
             int length=nl.getLength();
 
             List<Node> v = new ArrayList<Node>(nl.getLength());
-            for(int i=0;i<length;i++)
+            int i;
+            for(i=0;i<length;i++)
                 if(nl.item(i) instanceof CharacterData) v.add(nl.item(i));
             for (Node n : v) e.removeChild(n);
         }
@@ -259,7 +262,8 @@ public final class XMLCommon  {
         if(unique) {
             // Check for double entries!
             NodeList nl=((Element)e.getParentNode()).getElementsByTagName(tagname);
-            for(int i=0;i<nl.getLength();i++) {
+            int i;
+            for(i=0;i<nl.getLength();i++) {
                 if(getElementTextValue((Element)nl.item(0)).equals(text)) {
                     throw new Exception(errormsg);
                 }
@@ -281,7 +285,8 @@ public final class XMLCommon  {
     public static void genericRemoveAll(Element parent, String tagname) {
         NodeList nl=parent.getChildNodes();
         List<Element> parts = new ArrayList<Element>();
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             if(nl.item(i) instanceof Element) {
                 Element elem=(Element)nl.item(i);
                 if(elem.getTagName().equals(tagname))
@@ -314,40 +319,40 @@ public final class XMLCommon  {
     protected static void writeXMLwalkTree(Node node, int indent, PrintWriter out) {
         if (node == null) throw new NullPointerException(
                 "Null node passed to writeXMLwalkTree()");
+        int i;
+        int j;
         if(node.hasChildNodes()) {
             if(node instanceof Element) {
                 Element elem=(Element)node;
                 //elem.normalize();
                 out.print("\n");
-                for(int j=0;j<indent;j++) {
+                for(j=0;j<indent;j++) {
                     out.print(" ");
                 }
                 out.print("<"+elem.getTagName());
                 NamedNodeMap attrs=elem.getAttributes();
-                for(int i=0;i<attrs.getLength();i++) {
+                
+                for(i=0;i<attrs.getLength();i++) {
                     Attr a=(Attr)attrs.item(i);
                     out.print(" "+a.getName()+"=\""+a.getValue()+"\"");
                 }
                 out.print(">");
                 NodeList nl=node.getChildNodes();
-                for(int i=0;i<nl.getLength();i++) {
+                for(i=0;i<nl.getLength();i++) {
                     writeXMLwalkTree(nl.item(i),indent+2,out);
                 }
-//              for(int j=0;j<indent;j++) {
-//                  out.print(" ");
-//              }
                 out.println("</"+elem.getTagName()+">");
             }
         } else {
             if(node instanceof Element) {
                 Element elem=(Element)node;
                 out.print("\n");
-                for(int j=0;j<indent;j++) {
+                for(j=0;j<indent;j++) {
                     out.print(" ");
                 }
                 out.print("<"+elem.getTagName());
                 NamedNodeMap attrs=elem.getAttributes();
-                for(int i=0;i<attrs.getLength();i++) {
+                for(i=0;i<attrs.getLength();i++) {
                     Attr a=(Attr)attrs.item(i);
                     out.print(" "+a.getName()+"=\""+a.getValue()+"\"");
                 }
@@ -361,7 +366,7 @@ public final class XMLCommon  {
             } else if(node instanceof Text) {
                 Text text=(Text)node;
                 StringBuilder buf=new StringBuilder(text.getData().length());
-                for(int i=0;i<text.getData().length();i++) {
+                for(i=0;i<text.getData().length();i++) {
                     if(text.getData().charAt(i) == '\n' ||
                        text.getData().charAt(i) == '\r' ||
                        text.getData().charAt(i) == ' ' ||
@@ -393,7 +398,8 @@ public final class XMLCommon  {
         Node r=cloneNode(d,n);
         if(deep) {
             NodeList nl=n.getChildNodes();
-            for(int i=0;i<nl.getLength();i++) {
+            int i;
+            for(i=0;i<nl.getLength();i++) {
                 Node n1=importNode(d,nl.item(i),deep);
                 r.appendChild(n1);
             }
@@ -413,7 +419,8 @@ public final class XMLCommon  {
         case Node.ELEMENT_NODE:
             r = d.createElement(((Element)n).getTagName());
             NamedNodeMap map=n.getAttributes();
-            for(int i=0;i<map.getLength();i++) {
+            int i;
+            for(i=0;i<map.getLength();i++) {
                 ((Element)r).setAttribute(((Attr)map.item(i)).getName(),
                                           ((Attr)map.item(i)).getValue());
             }

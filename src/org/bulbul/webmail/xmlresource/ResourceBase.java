@@ -144,19 +144,22 @@ public abstract class ResourceBase extends ResourceBundle {
 
     protected void getKeys(Element element, Hashtable<String, String> hash) {
         NodeList nl = element.getElementsByTagName("RESOURCE");
-        for (int i=0; i < nl.getLength(); i++) {
+        int i;
+        for (i=0; i < nl.getLength(); i++) {
             hash.put(((Element)nl.item(i)).getAttribute("name"), "");
         }
     }
 
     protected String getResult(Element element, String key) {
         NodeList nl = element.getElementsByTagName("RESOURCE");
-        for(int i = 0; i < nl.getLength(); i++) {
+        int i;
+        for(i = 0; i < nl.getLength(); i++) {
             Element e = (Element)nl.item(i);
             if (e.getAttribute("name").equals(key)) {
                 String s="";
                 NodeList textl = e.getChildNodes();
-                for (int j=0; j < textl.getLength(); j++) {
+                int j;
+                for ( j=0; j < textl.getLength(); j++) {
                     log.debug("XMLResourceBundle ("+key+"): Type "+textl.item(j).getNodeName());
                     if (textl.item(j).getNodeName().equals("#text") ||
                         textl.item(j).getNodeName().equals("#cdata-section")) {

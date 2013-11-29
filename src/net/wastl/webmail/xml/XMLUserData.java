@@ -387,7 +387,8 @@ public class XMLUserData extends XMLData implements UserData {
         if(nl.getLength()==1) {
                 throw new WebMailException("Can not delete last email address!");
         }
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for( i=0;i<nl.getLength();i++) {
             Element addy=(Element) nl.item(i);
             if(XMLCommon.getElementTextValue(addy).equals(s)) {
                 Element email=(Element)addy.getParentNode();
@@ -411,7 +412,8 @@ public class XMLUserData extends XMLData implements UserData {
      */
     public void setDefaultEmail(String s) {
         NodeList nl=getNodeListXPath("/USERDATA/EMAIL/ADDY");
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             Element email=(Element) nl.item(i);
             // Be sure there is no other 'default'
             email.removeAttribute("default");
@@ -678,7 +680,8 @@ public class XMLUserData extends XMLData implements UserData {
      */
     public void resetBoolVars() {
         NodeList nl=getNodeListXPath("/USERDATA/BOOLVAR");
-        for(int i=0;i<nl.getLength();i++) {
+        int i;
+        for(i=0;i<nl.getLength();i++) {
             Element elem=(Element)nl.item(i);
             elem.setAttribute("value","no");
         }
