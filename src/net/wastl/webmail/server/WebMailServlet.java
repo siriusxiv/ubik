@@ -36,6 +36,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
+
 //*import net.wastl.webmail.exceptions.DocumentNotFoundException;
 import net.wastl.webmail.exceptions.UserDataException;
 import net.wastl.webmail.exceptions.WebMailException;
@@ -473,18 +475,46 @@ public class WebMailServlet extends WebMailServer implements Servlet {
         return imgbase;
     }
 
+    /**
+     * Malik:
+     * Returns null if authentication failed
+     * @param parent
+     * @param parm
+     * @param h
+     * @return
+     * @throws UserDataException
+     * @throws WebMailException
+     */
+    public WebMailSession getWebMailSession(WebMailServer parent, Object parm, HTTPRequestHeader h) throws UserDataException, WebMailException{
+    	String domain;
+    	if(WebMailServer.getStorage().getVirtuals()==true && h.getContent("vdom") != null) {
+            domain=h.getContent("vdom");
+        } else {
+            domain="localnet";
+        }
+    	if(WebMailServer.getStorage().getUserData(h.getContent("login"),domain,h.getContent("password"),true)!=null){
+    		return new WebMailSession(parent, parm, h);
+    	}else{
+    		return null;
+    	}
+    }
+    
     public WebMailSession newSession(HttpServletRequest req,
             HTTPRequestHeader h) throws UserDataException, WebMailException {
         final HttpSession sess = req.getSession(true);
 
         if (sess.getAttribute("webmail.session") == null) {
-            final WebMailSession n = new WebMailSession(this, req, h);
+            final WebMailSession n = getWebMailSession(this, req, h);
+            if(n!=null){
             timer.addTimeableConnection(n);
             n.login();
             sess.setAttribute("webmail.session", n);
             sessions.put(sess.getId(), n);
             log.debug("Created new Session: " + sess.getId());
             return n;
+            }else{
+            	return null;
+            }
         } else {
             final Object tmp = sess.getAttribute("webmail.session");
             if (tmp instanceof WebMailSession) {
