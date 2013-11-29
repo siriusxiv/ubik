@@ -38,7 +38,9 @@ public class HTMLImage extends HTMLDocument {
     }
 
     public HTMLImage(Storage store,String name, Locale locale, String theme) throws WebMailException {
-        cont=new ByteStore(store.getBinaryFile(name,locale,theme));
+        byte[] b = null;
+        b = store.getBinaryFile(name,locale,theme);
+    	cont=new ByteStore(b);
         cont.setContentType(store.getMimeType(name));
         cont.setContentEncoding("BINARY");
     }

@@ -46,7 +46,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
 import net.wastl.webmail.config.ConfigurationListener;
-import net.wastl.webmail.exceptions.BinaryNotFoundException;
 import net.wastl.webmail.exceptions.StylesheetNotFoundException;
 import net.wastl.webmail.exceptions.WebMailException;
 import net.wastl.webmail.misc.AttributedExpireableCache;
@@ -392,7 +391,7 @@ public abstract class FileStorage extends Storage implements ConfigurationListen
      * @param key Identifier for the String
      * @param locale locale of the String to fetch
      */
-    public synchronized byte[] getBinaryFile(String name, Locale locale, String theme) throws BinaryNotFoundException {
+    public synchronized byte[] getBinaryFile(String name, Locale locale, String theme) {
         String key = locale.getLanguage()+"/"+theme;
 
         AttributedExpireableCache cache = binary_cache.get(key);
@@ -408,7 +407,7 @@ public abstract class FileStorage extends Storage implements ConfigurationListen
         String basepath=getBasePath(locale,theme);
         File f=new File(basepath+name);
         if(!f.exists()) {
-            throw new BinaryNotFoundException("The file "+name+" could not be found!");
+            return null;
         }
 
         if(cache.get(name) != null && ((Long)cache.getAttributes(name)).longValue() >= f.lastModified()) {

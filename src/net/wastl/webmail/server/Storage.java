@@ -31,7 +31,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Templates;
 
 import net.wastl.webmail.config.ConfigScheme;
-import net.wastl.webmail.exceptions.BinaryNotFoundException;
 import net.wastl.webmail.exceptions.CreateUserDataException;
 import net.wastl.webmail.exceptions.UserDataException;
 import net.wastl.webmail.exceptions.WebMailException;
@@ -147,7 +146,7 @@ public abstract class Storage {
      * @param locale locale of the String to fetch
      * @param theme theme where to look for the file
      */
-    public abstract byte[] getBinaryFile(String name, Locale locale, String theme) throws BinaryNotFoundException;
+    public abstract byte[] getBinaryFile(String name, Locale locale, String theme);
 
 
     /**
